@@ -1,3 +1,4 @@
+
 # Tools
 
 ## Catalog.swift
@@ -9,6 +10,10 @@
     * cd <文件夹路径>
     * swiftc Catalog.swift && ./Catalog && rm ./Catalog
 * 示例
+    * 修改前 Test.md
+    * 终端操作
+    * 修改后 Test.md
+    
 ```
 // 修改前 Test.md
 
@@ -20,7 +25,12 @@
     正文
 ## 标题2.1
     正文
+```
 
+![](https://github.com/huangmubin/MyronWorkSpace/blob/master/Image/屏幕快照%202016-07-31%20上午11.02.25.png?raw=true)
+
+
+```
 // 修改后 Test.md
 
 <!--Catalog-->

@@ -1,3 +1,4 @@
+
 # Myron Work Space
 
 * 前言
@@ -34,6 +35,9 @@ I hope my github will be helpful to you.
     * swiftc Catalog.swift && ./Catalog && rm ./Catalog
 * 示例
     * 修改前 Test.md
+    * 终端操作
+    * 修改后 Test.md
+    
 ```
 // 修改前 Test.md
 
@@ -46,9 +50,10 @@ I hope my github will be helpful to you.
 ## 标题2.1
     正文
 ```
-    * 终端操作
-![]()
-    * 修改后 Test.md
+
+![](https://github.com/huangmubin/MyronWorkSpace/blob/master/Image/屏幕快照%202016-07-31%20上午11.02.25.png?raw=true)
+
+
 ```
 // 修改后 Test.md
 
