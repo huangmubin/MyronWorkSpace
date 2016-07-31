@@ -15,6 +15,13 @@
       </FileRef>
    </Group>
    <Group
+      location = "group:UIKit"
+      name = "UIKit">
+      <FileRef
+         location = "group:View.swift">
+      </FileRef>
+   </Group>
+   <Group
       location = "group:Swift"
       name = "Swift">
       <FileRef
@@ -23,5 +30,8 @@
    </Group>
    <FileRef
       location = "group:SwiftOS/SwiftOS.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:SwiftiOS/SwiftiOS.xcodeproj">
    </FileRef>
 </Workspace>
