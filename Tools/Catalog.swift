@@ -10,7 +10,18 @@
     3. $ cd <程序所在文件目录>
     4. $ swiftc Catalog.swift && ./Catalog && rm ./Catalog
  
+ * 任何疑问请到 Github 上联系我。
+    https://github.com/huangmubin/MyronWorkSpace/blob/master/Tools/Catalog.swift
  
+ * What is it?
+    A markdown file catalog inset tool.
+ * Use:
+    1. Change let file = "/Users/Myron/职业生涯文档/GitHub/MyronWorkSpace/Notes/Test.md" to your markdown file path.
+    2. Open the terminal, and input:
+    3. $ cd <This file's floder path.>
+    4. $ swiftc Catalog.swift && ./Catalog && rm ./Catalog
+ * My GitHub:
+    https://github.com/huangmubin/MyronWorkSpace/blob/master/Tools/Catalog.swift
  */
 
 import Foundation
