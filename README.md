@@ -33,6 +33,7 @@ I hope my github will be helpful to you.
     * cd <文件夹路径>
     * swiftc Catalog.swift && ./Catalog && rm ./Catalog
 * 示例
+    * 修改前 Test.md
 ```
 // 修改前 Test.md
 
@@ -44,7 +45,11 @@ I hope my github will be helpful to you.
     正文
 ## 标题2.1
     正文
-
+```
+    * 终端操作
+![]()
+    * 修改后 Test.md
+```
 // 修改后 Test.md
 
 <!--Catalog-->
