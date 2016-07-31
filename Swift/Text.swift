@@ -4,11 +4,37 @@ import Foundation
 
 extension String {
     
+    // MARK: 从文档中获取字符串和保存成文档
+    
+    /// 文件操作: 把路径读取成字符串
+    func read() -> String? {
+        if let data = NSData(contentsOfFile: self) {
+            if let text = NSString(data: data, encoding: NSUTF8StringEncoding) as? String {
+                return text
+            }
+        }
+        return nil
+    }
+    
+    /// 文件操作: 把字符串保存成文档
+    func save(path: String) -> Bool {
+        if let data = dataUsingEncoding(NSUTF8StringEncoding) {
+            return data.writeToFile(path, atomically: true)
+        } else {
+            return false
+        }
+    }
+    
     // MARK: 字符截取
     
     /// 根据范围获取字符串
     func sub(start: Int, end: Int) -> String {
         return substringWithRange(startIndex.advancedBy(start) ..< startIndex.advancedBy(end))
+    }
+    
+    /// 根据范围替代字符串
+    mutating func replace(start: Int, end: Int, text: String) {
+        replaceRange(startIndex.advancedBy(start) ..< startIndex.advancedBy(end), with: text)
     }
     
     // MARK: 正则表达式

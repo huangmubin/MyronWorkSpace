@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9C3CC6511D4CFBAD000FCD38"
-               BuildableName = "iOS.app"
-               BlueprintName = "iOS"
-               ReferencedContainer = "container:iOS.xcodeproj">
+               BlueprintIdentifier = "9C3CC6B91D4D135B000FCD38"
+               BuildableName = "SwiftOS"
+               BlueprintName = "SwiftOS"
+               ReferencedContainer = "container:SwiftOS.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +32,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "9C3CC6511D4CFBAD000FCD38"
-            BuildableName = "iOS.app"
-            BlueprintName = "iOS"
-            ReferencedContainer = "container:iOS.xcodeproj">
+            BlueprintIdentifier = "9C3CC6B91D4D135B000FCD38"
+            BuildableName = "SwiftOS"
+            BlueprintName = "SwiftOS"
+            ReferencedContainer = "container:SwiftOS.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -55,10 +55,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "9C3CC6511D4CFBAD000FCD38"
-            BuildableName = "iOS.app"
-            BlueprintName = "iOS"
-            ReferencedContainer = "container:iOS.xcodeproj">
+            BlueprintIdentifier = "9C3CC6B91D4D135B000FCD38"
+            BuildableName = "SwiftOS"
+            BlueprintName = "SwiftOS"
+            ReferencedContainer = "container:SwiftOS.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -74,10 +74,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "9C3CC6511D4CFBAD000FCD38"
-            BuildableName = "iOS.app"
-            BlueprintName = "iOS"
-            ReferencedContainer = "container:iOS.xcodeproj">
+            BlueprintIdentifier = "9C3CC6B91D4D135B000FCD38"
+            BuildableName = "SwiftOS"
+            BlueprintName = "SwiftOS"
+            ReferencedContainer = "container:SwiftOS.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

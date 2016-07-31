@@ -5,7 +5,13 @@
       location = "group:Notes"
       name = "Notes">
       <FileRef
+         location = "group:Test.md">
+      </FileRef>
+      <FileRef
          location = "group:&#x6b63;&#x5219;&#x8868;&#x8fbe;&#x5f0f;.md">
+      </FileRef>
+      <FileRef
+         location = "group:Test2.md">
       </FileRef>
    </Group>
    <Group
@@ -16,12 +22,6 @@
       </FileRef>
    </Group>
    <FileRef
-      location = "group:Playground.playground">
-   </FileRef>
-   <FileRef
-      location = "group:iOS/iOS.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:OS/OS.xcodeproj">
+      location = "group:SwiftOS/SwiftOS.xcodeproj">
    </FileRef>
 </Workspace>

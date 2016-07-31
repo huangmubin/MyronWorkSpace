@@ -7,11 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9C3CC6941D4CFE8D000FCD38 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3CC6931D4CFE8D000FCD38 /* main.swift */; };
+		9C3CC6BE1D4D135B000FCD38 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3CC6BD1D4D135B000FCD38 /* main.swift */; };
+		9C3CC6C51D4D13F3000FCD38 /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3CC6C41D4D13F3000FCD38 /* Text.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		9C3CC68E1D4CFE8D000FCD38 /* CopyFiles */ = {
+		9C3CC6B81D4D135B000FCD38 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
@@ -23,12 +24,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		9C3CC6901D4CFE8D000FCD38 /* OS */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = OS; sourceTree = BUILT_PRODUCTS_DIR; };
-		9C3CC6931D4CFE8D000FCD38 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		9C3CC6BA1D4D135B000FCD38 /* SwiftOS */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SwiftOS; sourceTree = BUILT_PRODUCTS_DIR; };
+		9C3CC6BD1D4D135B000FCD38 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		9C3CC6C41D4D13F3000FCD38 /* Text.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Text.swift; path = ../../Swift/Text.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		9C3CC68D1D4CFE8D000FCD38 /* Frameworks */ = {
+		9C3CC6B71D4D135B000FCD38 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -38,95 +40,97 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		9C3CC6871D4CFE8D000FCD38 = {
+		9C3CC6B11D4D135B000FCD38 = {
 			isa = PBXGroup;
 			children = (
-				9C3CC6921D4CFE8D000FCD38 /* OS */,
-				9C3CC6911D4CFE8D000FCD38 /* Products */,
+				9C3CC6BC1D4D135B000FCD38 /* SwiftOS */,
+				9C3CC6BB1D4D135B000FCD38 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		9C3CC6911D4CFE8D000FCD38 /* Products */ = {
+		9C3CC6BB1D4D135B000FCD38 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9C3CC6901D4CFE8D000FCD38 /* OS */,
+				9C3CC6BA1D4D135B000FCD38 /* SwiftOS */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		9C3CC6921D4CFE8D000FCD38 /* OS */ = {
+		9C3CC6BC1D4D135B000FCD38 /* SwiftOS */ = {
 			isa = PBXGroup;
 			children = (
-				9C3CC6931D4CFE8D000FCD38 /* main.swift */,
+				9C3CC6BD1D4D135B000FCD38 /* main.swift */,
+				9C3CC6C41D4D13F3000FCD38 /* Text.swift */,
 			);
-			path = OS;
+			path = SwiftOS;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		9C3CC68F1D4CFE8D000FCD38 /* OS */ = {
+		9C3CC6B91D4D135B000FCD38 /* SwiftOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9C3CC6971D4CFE8D000FCD38 /* Build configuration list for PBXNativeTarget "OS" */;
+			buildConfigurationList = 9C3CC6C11D4D135B000FCD38 /* Build configuration list for PBXNativeTarget "SwiftOS" */;
 			buildPhases = (
-				9C3CC68C1D4CFE8D000FCD38 /* Sources */,
-				9C3CC68D1D4CFE8D000FCD38 /* Frameworks */,
-				9C3CC68E1D4CFE8D000FCD38 /* CopyFiles */,
+				9C3CC6B61D4D135B000FCD38 /* Sources */,
+				9C3CC6B71D4D135B000FCD38 /* Frameworks */,
+				9C3CC6B81D4D135B000FCD38 /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = OS;
-			productName = OS;
-			productReference = 9C3CC6901D4CFE8D000FCD38 /* OS */;
+			name = SwiftOS;
+			productName = SwiftOS;
+			productReference = 9C3CC6BA1D4D135B000FCD38 /* SwiftOS */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		9C3CC6881D4CFE8D000FCD38 /* Project object */ = {
+		9C3CC6B21D4D135B000FCD38 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = MuBinHuang;
 				TargetAttributes = {
-					9C3CC68F1D4CFE8D000FCD38 = {
+					9C3CC6B91D4D135B000FCD38 = {
 						CreatedOnToolsVersion = 7.3.1;
 					};
 				};
 			};
-			buildConfigurationList = 9C3CC68B1D4CFE8D000FCD38 /* Build configuration list for PBXProject "OS" */;
+			buildConfigurationList = 9C3CC6B51D4D135B000FCD38 /* Build configuration list for PBXProject "SwiftOS" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 			);
-			mainGroup = 9C3CC6871D4CFE8D000FCD38;
-			productRefGroup = 9C3CC6911D4CFE8D000FCD38 /* Products */;
+			mainGroup = 9C3CC6B11D4D135B000FCD38;
+			productRefGroup = 9C3CC6BB1D4D135B000FCD38 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				9C3CC68F1D4CFE8D000FCD38 /* OS */,
+				9C3CC6B91D4D135B000FCD38 /* SwiftOS */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		9C3CC68C1D4CFE8D000FCD38 /* Sources */ = {
+		9C3CC6B61D4D135B000FCD38 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9C3CC6941D4CFE8D000FCD38 /* main.swift in Sources */,
+				9C3CC6C51D4D13F3000FCD38 /* Text.swift in Sources */,
+				9C3CC6BE1D4D135B000FCD38 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		9C3CC6951D4CFE8D000FCD38 /* Debug */ = {
+		9C3CC6BF1D4D135B000FCD38 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -171,7 +175,7 @@
 			};
 			name = Debug;
 		};
-		9C3CC6961D4CFE8D000FCD38 /* Release */ = {
+		9C3CC6C01D4D135B000FCD38 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -208,14 +212,14 @@
 			};
 			name = Release;
 		};
-		9C3CC6981D4CFE8D000FCD38 /* Debug */ = {
+		9C3CC6C21D4D135B000FCD38 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
-		9C3CC6991D4CFE8D000FCD38 /* Release */ = {
+		9C3CC6C31D4D135B000FCD38 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -225,24 +229,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		9C3CC68B1D4CFE8D000FCD38 /* Build configuration list for PBXProject "OS" */ = {
+		9C3CC6B51D4D135B000FCD38 /* Build configuration list for PBXProject "SwiftOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				9C3CC6951D4CFE8D000FCD38 /* Debug */,
-				9C3CC6961D4CFE8D000FCD38 /* Release */,
+				9C3CC6BF1D4D135B000FCD38 /* Debug */,
+				9C3CC6C01D4D135B000FCD38 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9C3CC6971D4CFE8D000FCD38 /* Build configuration list for PBXNativeTarget "OS" */ = {
+		9C3CC6C11D4D135B000FCD38 /* Build configuration list for PBXNativeTarget "SwiftOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				9C3CC6981D4CFE8D000FCD38 /* Debug */,
-				9C3CC6991D4CFE8D000FCD38 /* Release */,
+				9C3CC6C21D4D135B000FCD38 /* Debug */,
+				9C3CC6C31D4D135B000FCD38 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 9C3CC6881D4CFE8D000FCD38 /* Project object */;
+	rootObject = 9C3CC6B21D4D135B000FCD38 /* Project object */;
 }

@@ -4,15 +4,15 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>OS.xcscheme</key>
+		<key>SwiftOS.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>1</integer>
+			<integer>0</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>9C3CC68F1D4CFE8D000FCD38</key>
+		<key>9C3CC6B91D4D135B000FCD38</key>
 		<dict>
 			<key>primary</key>
 			<true/>
