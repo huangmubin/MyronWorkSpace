@@ -39,6 +39,12 @@
       <FileRef
          location = "group:Text.swift">
       </FileRef>
+      <FileRef
+         location = "group:AutoLayout.swift">
+      </FileRef>
+      <FileRef
+         location = "group:README.md">
+      </FileRef>
    </Group>
    <Group
       location = "group:Tools"

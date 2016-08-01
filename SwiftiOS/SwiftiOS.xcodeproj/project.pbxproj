@@ -13,6 +13,8 @@
 		9CE8ACA81D4E108700AE8204 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9CE8ACA71D4E108700AE8204 /* Assets.xcassets */; };
 		9CE8ACAB1D4E108700AE8204 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CE8ACA91D4E108700AE8204 /* LaunchScreen.storyboard */; };
 		9CE8ACB51D4E134C00AE8204 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE8ACB41D4E134C00AE8204 /* View.swift */; };
+		9CF80F971D4F69B30019C333 /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF80F951D4F69B30019C333 /* Text.swift */; };
+		9CF80F981D4F69B30019C333 /* AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF80F961D4F69B30019C333 /* AutoLayout.swift */; };
 		B1DB4A261D4EDC8700C9BC50 /* HUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DB4A251D4EDC8700C9BC50 /* HUD.swift */; };
 /* End PBXBuildFile section */
 
@@ -25,6 +27,8 @@
 		9CE8ACAA1D4E108700AE8204 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9CE8ACAC1D4E108700AE8204 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9CE8ACB41D4E134C00AE8204 /* View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = View.swift; path = ../../UIKit/View.swift; sourceTree = "<group>"; };
+		9CF80F951D4F69B30019C333 /* Text.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Text.swift; path = ../../Swift/Text.swift; sourceTree = "<group>"; };
+		9CF80F961D4F69B30019C333 /* AutoLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AutoLayout.swift; path = ../../Swift/AutoLayout.swift; sourceTree = "<group>"; };
 		B1DB4A251D4EDC8700C9BC50 /* HUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HUD.swift; path = ../../UIKit/HUD.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -58,6 +62,7 @@
 		9CE8AC9F1D4E108700AE8204 /* SwiftiOS */ = {
 			isa = PBXGroup;
 			children = (
+				9CF80F941D4F69A80019C333 /* Swift */,
 				9CE8ACB31D4E133F00AE8204 /* UIKit */,
 				9CE8ACB21D4E133100AE8204 /* Dome */,
 			);
@@ -84,6 +89,15 @@
 				B1DB4A251D4EDC8700C9BC50 /* HUD.swift */,
 			);
 			name = UIKit;
+			sourceTree = "<group>";
+		};
+		9CF80F941D4F69A80019C333 /* Swift */ = {
+			isa = PBXGroup;
+			children = (
+				9CF80F951D4F69B30019C333 /* Text.swift */,
+				9CF80F961D4F69B30019C333 /* AutoLayout.swift */,
+			);
+			name = Swift;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -157,7 +171,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9CF80F981D4F69B30019C333 /* AutoLayout.swift in Sources */,
 				9CE8ACA31D4E108700AE8204 /* ViewController.swift in Sources */,
+				9CF80F971D4F69B30019C333 /* Text.swift in Sources */,
 				B1DB4A261D4EDC8700C9BC50 /* HUD.swift in Sources */,
 				9CE8ACA11D4E108700AE8204 /* AppDelegate.swift in Sources */,
 				9CE8ACB51D4E134C00AE8204 /* View.swift in Sources */,
