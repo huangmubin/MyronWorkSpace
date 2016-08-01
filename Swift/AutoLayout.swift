@@ -79,6 +79,11 @@ class AutoLayout {
     
     var _constrants: [NSLayoutConstraint] = []
     
+    func clearConstrants() -> AutoLayout {
+        _constrants.removeAll(keepCapacity: true)
+        return self
+    }
+    
     func constrants(block: ([NSLayoutConstraint]) -> Void) -> AutoLayout {
         block(_constrants)
         return self
@@ -111,64 +116,100 @@ extension AutoLayout {
 
 extension AutoLayout {
     
-    func Top(constant: CGFloat = 0, _ multiplier: CGFloat = 1, _ related: NSLayoutRelation = .Equal) -> AutoLayout {
-        view.addConstraint(NSLayoutConstraint(item: first, attribute: .Top, relatedBy: related, toItem: second, attribute: .Top, multiplier: multiplier, constant: constant))
+    func Top(constant: CGFloat = 0, _ multiplier: CGFloat = 1, _ related: NSLayoutRelation = .Equal, priority: Float = 1000) -> AutoLayout {
+        let constraint = NSLayoutConstraint(item: first, attribute: .Top, relatedBy: related, toItem: second, attribute: .Top, multiplier: multiplier, constant: constant)
+        constraint.priority = priority
+        _constrants.append(constraint)
+        view.addConstraint(constraint)
         return self
     }
     
-    func Bottom(constant: CGFloat = 0, _ multiplier: CGFloat = 1, _ related: NSLayoutRelation = .Equal) -> AutoLayout {
-        view.addConstraint(NSLayoutConstraint(item: first, attribute: .Bottom, relatedBy: related, toItem: second, attribute: .Bottom, multiplier: multiplier, constant: constant))
+    func Bottom(constant: CGFloat = 0, _ multiplier: CGFloat = 1, _ related: NSLayoutRelation = .Equal, priority: Float = 1000) -> AutoLayout {
+        let constraint = NSLayoutConstraint(item: first, attribute: .Bottom, relatedBy: related, toItem: second, attribute: .Bottom, multiplier: multiplier, constant: constant)
+        constraint.priority = priority
+        _constrants.append(constraint)
+        view.addConstraint(constraint)
         return self
     }
     
-    func Leading(constant: CGFloat = 0, _ multiplier: CGFloat = 1, _ related: NSLayoutRelation = .Equal) -> AutoLayout {
-        view.addConstraint(NSLayoutConstraint(item: first, attribute: .Leading, relatedBy: related, toItem: second, attribute: .Leading, multiplier: multiplier, constant: constant))
+    func Leading(constant: CGFloat = 0, _ multiplier: CGFloat = 1, _ related: NSLayoutRelation = .Equal, priority: Float = 1000) -> AutoLayout {
+        let constraint = NSLayoutConstraint(item: first, attribute: .Leading, relatedBy: related, toItem: second, attribute: .Leading, multiplier: multiplier, constant: constant)
+        constraint.priority = priority
+        _constrants.append(constraint)
+        view.addConstraint(constraint)
         return self
     }
     
-    func Trailing(constant: CGFloat = 0, _ multiplier: CGFloat = 1, _ related: NSLayoutRelation = .Equal) -> AutoLayout {
-        view.addConstraint(NSLayoutConstraint(item: first, attribute: .Trailing, relatedBy: related, toItem: second, attribute: .Trailing, multiplier: multiplier, constant: constant))
+    func Trailing(constant: CGFloat = 0, _ multiplier: CGFloat = 1, _ related: NSLayoutRelation = .Equal, priority: Float = 1000) -> AutoLayout {
+        let constraint = NSLayoutConstraint(item: first, attribute: .Trailing, relatedBy: related, toItem: second, attribute: .Trailing, multiplier: multiplier, constant: constant)
+        constraint.priority = priority
+        _constrants.append(constraint)
+        view.addConstraint(constraint)
         return self
     }
     
-    func CenterX(constant: CGFloat = 0, _ multiplier: CGFloat = 1, _ related: NSLayoutRelation = .Equal) -> AutoLayout {
-        view.addConstraint(NSLayoutConstraint(item: first, attribute: .CenterX, relatedBy: related, toItem: second, attribute: .CenterX, multiplier: multiplier, constant: constant))
+    func CenterX(constant: CGFloat = 0, _ multiplier: CGFloat = 1, _ related: NSLayoutRelation = .Equal, priority: Float = 1000) -> AutoLayout {
+        let constraint = NSLayoutConstraint(item: first, attribute: .CenterX, relatedBy: related, toItem: second, attribute: .CenterX, multiplier: multiplier, constant: constant)
+        constraint.priority = priority
+        _constrants.append(constraint)
+        view.addConstraint(constraint)
         return self
     }
-    func CenterY(constant: CGFloat = 0, _ multiplier: CGFloat = 1, _ related: NSLayoutRelation = .Equal) -> AutoLayout {
-        view.addConstraint(NSLayoutConstraint(item: first, attribute: .CenterY, relatedBy: related, toItem: second, attribute: .CenterY, multiplier: multiplier, constant: constant))
-        return self
-    }
-    
-    func Width(constant: CGFloat = 0, _ multiplier: CGFloat = 1, _ related: NSLayoutRelation = .Equal) -> AutoLayout {
-        view.addConstraint(NSLayoutConstraint(item: first, attribute: .Width, relatedBy: related, toItem: second, attribute: .Width, multiplier: multiplier, constant: constant))
-        return self
-    }
-    
-    func Height(constant: CGFloat = 0, _ multiplier: CGFloat = 1, _ related: NSLayoutRelation = .Equal) -> AutoLayout {
-        view.addConstraint(NSLayoutConstraint(item: first, attribute: .Height, relatedBy: related, toItem: second, attribute: .Height, multiplier: multiplier, constant: constant))
+    func CenterY(constant: CGFloat = 0, _ multiplier: CGFloat = 1, _ related: NSLayoutRelation = .Equal, priority: Float = 1000) -> AutoLayout {
+        let constraint = NSLayoutConstraint(item: first, attribute: .CenterY, relatedBy: related, toItem: second, attribute: .CenterY, multiplier: multiplier, constant: constant)
+        constraint.priority = priority
+        _constrants.append(constraint)
+        view.addConstraint(constraint)
         return self
     }
     
-    func Width(view: UIView, _ constant: CGFloat, _ related: NSLayoutRelation = .Equal) -> AutoLayout {
-        view.addConstraint(NSLayoutConstraint(item: view, attribute: .Width, relatedBy: related, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: constant))
+    func Width(constant: CGFloat = 0, _ multiplier: CGFloat = 1, _ related: NSLayoutRelation = .Equal, priority: Float = 1000) -> AutoLayout {
+        let constraint = NSLayoutConstraint(item: first, attribute: .Width, relatedBy: related, toItem: second, attribute: .Width, multiplier: multiplier, constant: constant)
+        constraint.priority = priority
+        _constrants.append(constraint)
+        view.addConstraint(constraint)
         return self
     }
     
-    func Height(view: UIView, _ constant: CGFloat, _ related: NSLayoutRelation = .Equal) -> AutoLayout {
-        view.addConstraint(NSLayoutConstraint(item: view, attribute: .Height, relatedBy: related, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: constant))
+    func Height(constant: CGFloat = 0, _ multiplier: CGFloat = 1, _ related: NSLayoutRelation = .Equal, priority: Float = 1000) -> AutoLayout {
+        let constraint = NSLayoutConstraint(item: first, attribute: .Height, relatedBy: related, toItem: second, attribute: .Height, multiplier: multiplier, constant: constant)
+        constraint.priority = priority
+        _constrants.append(constraint)
+        view.addConstraint(constraint)
+        return self
+    }
+    
+    func Width(view: UIView, _ constant: CGFloat, _ related: NSLayoutRelation = .Equal, priority: Float = 1000) -> AutoLayout {
+        let constraint = NSLayoutConstraint(item: view, attribute: .Width, relatedBy: related, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: constant)
+        constraint.priority = priority
+        _constrants.append(constraint)
+        view.addConstraint(constraint)
+        return self
+    }
+    
+    func Height(view: UIView, _ constant: CGFloat, _ related: NSLayoutRelation = .Equal, priority: Float = 1000) -> AutoLayout {
+        let constraint = NSLayoutConstraint(item: view, attribute: .Height, relatedBy: related, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: constant)
+        constraint.priority = priority
+        _constrants.append(constraint)
+        view.addConstraint(constraint)
         return self
     }
     
     /// 水平距离，first.Leading to second.Trailing
-    func HorizontalSpace(constant: CGFloat = 0, _ multiplier: CGFloat = 1, _ related: NSLayoutRelation = .Equal) -> AutoLayout {
-        view.addConstraint(NSLayoutConstraint(item: first, attribute: .Leading, relatedBy: related, toItem: second, attribute: .Trailing, multiplier: multiplier, constant: constant))
+    func HorizontalSpace(constant: CGFloat = 0, _ multiplier: CGFloat = 1, _ related: NSLayoutRelation = .Equal, priority: Float = 1000) -> AutoLayout {
+        let constraint = NSLayoutConstraint(item: first, attribute: .Leading, relatedBy: related, toItem: second, attribute: .Trailing, multiplier: multiplier, constant: constant)
+        constraint.priority = priority
+        _constrants.append(constraint)
+        view.addConstraint(constraint)
         return self
     }
     
     /// 垂直距离，first.Top to second.Bottom
-    func VerticalSpace(constant: CGFloat = 0, _ multiplier: CGFloat = 1, _ related: NSLayoutRelation = .Equal) -> AutoLayout {
-        view.addConstraint(NSLayoutConstraint(item: first, attribute: .Top, relatedBy: related, toItem: second, attribute: .Bottom, multiplier: multiplier, constant: constant))
+    func VerticalSpace(constant: CGFloat = 0, _ multiplier: CGFloat = 1, _ related: NSLayoutRelation = .Equal, priority: Float = 1000) -> AutoLayout {
+        let constraint = NSLayoutConstraint(item: first, attribute: .Top, relatedBy: related, toItem: second, attribute: .Bottom, multiplier: multiplier, constant: constant)
+        constraint.priority = priority
+        _constrants.append(constraint)
+        view.addConstraint(constraint)
         return self
     }
 }
@@ -179,58 +220,101 @@ extension AutoLayout {
     
     // MARK: 中心两边
     
-    /// 中心对齐，first.CenterX to second.CenterX && first.CenterY to second.CenterY
-    func Center(constant: CGFloat = 0, _ multiplier: CGFloat = 1) -> AutoLayout {
-        view.addConstraint(NSLayoutConstraint(item: first, attribute: .CenterX, relatedBy: .Equal, toItem: second, attribute: .CenterX, multiplier: multiplier, constant: constant))
-        view.addConstraint(NSLayoutConstraint(item: first, attribute: .CenterY, relatedBy: .Equal, toItem: second, attribute: .CenterY, multiplier: multiplier, constant: constant))
+    /// 中心对齐. CenterX * multiplier + constant; CenterY * multiplier + constant;
+    func Center(constant: CGFloat = 0, _ multiplier: CGFloat = 1, priority: Float = 1000) -> AutoLayout {
+        _constrants.removeAll(keepCapacity: true)
+        _constrants.append(NSLayoutConstraint(item: first, attribute: .CenterX, relatedBy: .Equal, toItem: second, attribute: .CenterX, multiplier: multiplier, constant: constant))
+        _constrants.append(NSLayoutConstraint(item: first, attribute: .CenterY, relatedBy: .Equal, toItem: second, attribute: .CenterY, multiplier: multiplier, constant: constant))
+        _constrants.forEach {
+            $0.priority = priority
+            view.addConstraint($0)
+        }
         return self
     }
     
-    /// 大小一致 Width Height
-    func Size(constant: CGFloat = 0, _ multiplier: CGFloat = 1) -> AutoLayout {
-        view.addConstraint(NSLayoutConstraint(item: first, attribute: .Width, relatedBy: .Equal, toItem: second, attribute: .Width, multiplier: multiplier, constant: constant))
-        view.addConstraint(NSLayoutConstraint(item: first, attribute: .Height, relatedBy: .Equal, toItem: second, attribute: .Height, multiplier: multiplier, constant: constant))
+    /// 大小 Width * multiplier + constant; Height * multiplier + constant;
+    func Size(constant: CGFloat = 0, _ multiplier: CGFloat = 1, priority: Float = 1000) -> AutoLayout {
+        _constrants.removeAll(keepCapacity: true)
+        _constrants.append(NSLayoutConstraint(item: first, attribute: .Width, relatedBy: .Equal, toItem: second, attribute: .Width, multiplier: multiplier, constant: constant))
+        _constrants.append(NSLayoutConstraint(item: first, attribute: .Height, relatedBy: .Equal, toItem: second, attribute: .Height, multiplier: multiplier, constant: constant))
+        _constrants.forEach {
+            $0.priority = priority
+            view.addConstraint($0)
+        }
         return self
     }
     
     /// 左右两边对齐
-    func LeadingTrailing(constant: CGFloat = 0, _ multiplier: CGFloat = 1) -> AutoLayout {
-        view.addConstraint(NSLayoutConstraint(item: first, attribute: .Leading, relatedBy: .Equal, toItem: second, attribute: .Leading, multiplier: multiplier, constant: constant))
-        view.addConstraint(NSLayoutConstraint(item: first, attribute: .Trailing, relatedBy: .Equal, toItem: second, attribute: .Trailing, multiplier: multiplier, constant: constant))
+    func LeadingTrailing(constant: CGFloat = 0, _ multiplier: CGFloat = 1, priority: Float = 1000) -> AutoLayout {
+        _constrants.removeAll(keepCapacity: true)
+        _constrants.append(NSLayoutConstraint(item: first, attribute: .Leading, relatedBy: .Equal, toItem: second, attribute: .Leading, multiplier: multiplier, constant: constant))
+        _constrants.append(NSLayoutConstraint(item: first, attribute: .Trailing, relatedBy: .Equal, toItem: second, attribute: .Trailing, multiplier: multiplier, constant: constant))
+        _constrants.forEach {
+            $0.priority = priority
+            view.addConstraint($0)
+        }
         return self
     }
     
     /// 上下两边对齐
-    func TopBottom(constant: CGFloat = 0, _ multiplier: CGFloat = 1) -> AutoLayout {
-        view.addConstraint(NSLayoutConstraint(item: first, attribute: .Top, relatedBy: .Equal, toItem: second, attribute: .Top, multiplier: multiplier, constant: constant))
-        view.addConstraint(NSLayoutConstraint(item: first, attribute: .Bottom, relatedBy: .Equal, toItem: second, attribute: .Bottom, multiplier: multiplier, constant: constant))
+    func TopBottom(constant: CGFloat = 0, _ multiplier: CGFloat = 1, priority: Float = 1000) -> AutoLayout {
+        _constrants.removeAll(keepCapacity: true)
+        _constrants.append(NSLayoutConstraint(item: first, attribute: .Top, relatedBy: .Equal, toItem: second, attribute: .Top, multiplier: multiplier, constant: constant))
+        _constrants.append(NSLayoutConstraint(item: first, attribute: .Bottom, relatedBy: .Equal, toItem: second, attribute: .Bottom, multiplier: multiplier, constant: constant))
+        _constrants.forEach {
+            $0.priority = priority
+            view.addConstraint($0)
+        }
         return self
     }
     
     // MARK: 角对齐
     
-    /// 左上角对齐
-    func LeadingTop(constant: CGFloat = 0, _ multiplier: CGFloat = 1) -> AutoLayout {
-        view.addConstraint(NSLayoutConstraint(item: first, attribute: .Leading, relatedBy: .Equal, toItem: second, attribute: .Leading, multiplier: multiplier, constant: constant))
-        view.addConstraint(NSLayoutConstraint(item: first, attribute: .Top, relatedBy: .Equal, toItem: second, attribute: .Top, multiplier: multiplier, constant: constant))
+    /// 左上角对齐. Leading += constant; Top += constant;
+    func LeadingTop(constant: CGFloat = 0, _ multiplier: CGFloat = 1, priority: Float = 1000) -> AutoLayout {
+        _constrants.removeAll(keepCapacity: true)
+        _constrants.append(NSLayoutConstraint(item: first, attribute: .Leading, relatedBy: .Equal, toItem: second, attribute: .Leading, multiplier: multiplier, constant: constant))
+        _constrants.append(NSLayoutConstraint(item: first, attribute: .Top, relatedBy: .Equal, toItem: second, attribute: .Top, multiplier: multiplier, constant: constant))
+        _constrants.forEach {
+            $0.priority = priority
+            view.addConstraint($0)
+        }
         return self
     }
-    /// 右上角对齐
-    func TopTrailing(constant: CGFloat = 0, _ multiplier: CGFloat = 1) -> AutoLayout {
-        view.addConstraint(NSLayoutConstraint(item: first, attribute: .Top, relatedBy: .Equal, toItem: second, attribute: .Top, multiplier: multiplier, constant: constant))
-        view.addConstraint(NSLayoutConstraint(item: first, attribute: .Trailing, relatedBy: .Equal, toItem: second, attribute: .Trailing, multiplier: multiplier, constant: constant))
+    
+    /// 右上角对齐. Top += constant; Trailing -= constant
+    func TopTrailing(constant: CGFloat = 0, _ multiplier: CGFloat = 1, priority: Float = 1000) -> AutoLayout {
+        _constrants.removeAll(keepCapacity: true)
+        _constrants.append(NSLayoutConstraint(item: first, attribute: .Top, relatedBy: .Equal, toItem: second, attribute: .Top, multiplier: multiplier, constant: constant))
+        _constrants.append(NSLayoutConstraint(item: first, attribute: .Trailing, relatedBy: .Equal, toItem: second, attribute: .Trailing, multiplier: multiplier, constant: -constant))
+        _constrants.forEach {
+            $0.priority = priority
+            view.addConstraint($0)
+        }
         return self
     }
-    /// 左下角对齐
-    func TrailingBottom(constant: CGFloat = 0, _ multiplier: CGFloat = 1) -> AutoLayout {
-        view.addConstraint(NSLayoutConstraint(item: first, attribute: .Trailing, relatedBy: .Equal, toItem: second, attribute: .Trailing, multiplier: multiplier, constant: constant))
-        view.addConstraint(NSLayoutConstraint(item: first, attribute: .Bottom, relatedBy: .Equal, toItem: second, attribute: .Bottom, multiplier: multiplier, constant: constant))
+    
+    /// 右下角对齐. Trailing -= constant; Bottom -= constant;
+    func TrailingBottom(constant: CGFloat = 0, _ multiplier: CGFloat = 1, priority: Float = 1000) -> AutoLayout {
+        _constrants.removeAll(keepCapacity: true)
+        _constrants.append(NSLayoutConstraint(item: first, attribute: .Trailing, relatedBy: .Equal, toItem: second, attribute: .Trailing, multiplier: multiplier, constant: -constant))
+        _constrants.append(NSLayoutConstraint(item: first, attribute: .Bottom, relatedBy: .Equal, toItem: second, attribute: .Bottom, multiplier: multiplier, constant: -constant))
+        _constrants.forEach {
+            $0.priority = priority
+            view.addConstraint($0)
+        }
         return self
     }
-    /// 右下角对齐
-    func BottomLeading(constant: CGFloat = 0, _ multiplier: CGFloat = 1) -> AutoLayout {
-        view.addConstraint(NSLayoutConstraint(item: first, attribute: .Leading, relatedBy: .Equal, toItem: second, attribute: .Leading, multiplier: multiplier, constant: constant))
-        view.addConstraint(NSLayoutConstraint(item: first, attribute: .Bottom, relatedBy: .Equal, toItem: second, attribute: .Bottom, multiplier: multiplier, constant: constant))
+    
+    /// 左下角对齐. Bottom -= constant; Leading += constant;
+    func BottomLeading(constant: CGFloat = 0, _ multiplier: CGFloat = 1, priority: Float = 1000) -> AutoLayout {
+        _constrants.removeAll(keepCapacity: true)
+        _constrants.append(NSLayoutConstraint(item: first, attribute: .Bottom, relatedBy: .Equal, toItem: second, attribute: .Bottom, multiplier: multiplier, constant: -constant))
+        _constrants.append(NSLayoutConstraint(item: first, attribute: .Leading, relatedBy: .Equal, toItem: second, attribute: .Leading, multiplier: multiplier, constant: constant))
+        _constrants.forEach {
+            $0.priority = priority
+            view.addConstraint($0)
+        }
         return self
     }
 }
@@ -239,27 +323,42 @@ extension AutoLayout {
 
 extension AutoLayout {
     
-    /// 前对齐
-    func LeadingTopBottom(constant: CGFloat = 0) -> AutoLayout {
-        view.addConstraint(NSLayoutConstraint(item: first, attribute: .Leading, relatedBy: .Equal, toItem: second, attribute: .Leading, multiplier: 1, constant: constant))
-        view.addConstraint(NSLayoutConstraint(item: first, attribute: .Top, relatedBy: .Equal, toItem: second, attribute: .Top, multiplier: 1, constant: constant))
-        view.addConstraint(NSLayoutConstraint(item: first, attribute: .Bottom, relatedBy: .Equal, toItem: second, attribute: .Bottom, multiplier: 1, constant: -constant))
+    /// 前对齐. Leading += constant; Top += constant; Bottom -= constant;
+    func LeadingTopBottom(constant: CGFloat = 0, priority: Float = 1000) -> AutoLayout {
+        _constrants.removeAll(keepCapacity: true)
+        _constrants.append(NSLayoutConstraint(item: first, attribute: .Leading, relatedBy: .Equal, toItem: second, attribute: .Leading, multiplier: 1, constant: constant))
+        _constrants.append(NSLayoutConstraint(item: first, attribute: .Top, relatedBy: .Equal, toItem: second, attribute: .Top, multiplier: 1, constant: constant))
+        _constrants.append(NSLayoutConstraint(item: first, attribute: .Bottom, relatedBy: .Equal, toItem: second, attribute: .Bottom, multiplier: 1, constant: -constant))
+        _constrants.forEach {
+            $0.priority = priority
+            view.addConstraint($0)
+        }
         return self
     }
     
-    /// 后对齐
-    func TrailingTopBottom(constant: CGFloat = 0) -> AutoLayout {
-        view.addConstraint(NSLayoutConstraint(item: first, attribute: .Trailing, relatedBy: .Equal, toItem: second, attribute: .Trailing, multiplier: 1, constant: constant))
-        view.addConstraint(NSLayoutConstraint(item: first, attribute: .Top, relatedBy: .Equal, toItem: second, attribute: .Top, multiplier: 1, constant: constant))
-        view.addConstraint(NSLayoutConstraint(item: first, attribute: .Bottom, relatedBy: .Equal, toItem: second, attribute: .Bottom, multiplier: 1, constant: constant))
+    /// 后对齐. Trailing -= constant; Top += constant; Bottom -= constant;
+    func TrailingTopBottom(constant: CGFloat = 0, priority: Float = 1000) -> AutoLayout {
+        _constrants.removeAll(keepCapacity: true)
+        _constrants.append(NSLayoutConstraint(item: first, attribute: .Trailing, relatedBy: .Equal, toItem: second, attribute: .Trailing, multiplier: 1, constant: -constant))
+        _constrants.append(NSLayoutConstraint(item: first, attribute: .Top, relatedBy: .Equal, toItem: second, attribute: .Top, multiplier: 1, constant: constant))
+        _constrants.append(NSLayoutConstraint(item: first, attribute: .Bottom, relatedBy: .Equal, toItem: second, attribute: .Bottom, multiplier: 1, constant: -constant))
+        _constrants.forEach {
+            $0.priority = priority
+            view.addConstraint($0)
+        }
         return self
     }
     
-    /// 上对齐
-    func TopLeadingTrailing(constant: CGFloat = 0) -> AutoLayout {
-        view.addConstraint(NSLayoutConstraint(item: first, attribute: .Trailing, relatedBy: .Equal, toItem: second, attribute: .Trailing, multiplier: 1, constant: constant))
-        view.addConstraint(NSLayoutConstraint(item: first, attribute: .Top, relatedBy: .Equal, toItem: second, attribute: .Top, multiplier: 1, constant: constant))
-        view.addConstraint(NSLayoutConstraint(item: first, attribute: .Leading, relatedBy: .Equal, toItem: second, attribute: .Leading, multiplier: 1, constant: constant))
+    /// 上对齐。Top += constant; Leading += constant; Trailing -= constant;
+    func TopLeadingTrailing(constant: CGFloat = 0, priority: Float = 1000) -> AutoLayout {
+        _constrants.removeAll(keepCapacity: true)
+        _constrants.append(NSLayoutConstraint(item: first, attribute: .Top, relatedBy: .Equal, toItem: second, attribute: .Top, multiplier: 1, constant: constant))
+        _constrants.append(NSLayoutConstraint(item: first, attribute: .Leading, relatedBy: .Equal, toItem: second, attribute: .Leading, multiplier: 1, constant: constant))
+        _constrants.append(NSLayoutConstraint(item: first, attribute: .Trailing, relatedBy: .Equal, toItem: second, attribute: .Trailing, multiplier: 1, constant: -constant))
+        _constrants.forEach {
+            $0.priority = priority
+            view.addConstraint($0)
+        }
         return self
     }
     

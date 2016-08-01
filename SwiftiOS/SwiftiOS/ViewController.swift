@@ -49,11 +49,19 @@ class ViewController: UIViewController {
         
         func use4() {
             AutoLayout(view, gray)
-                .Width(gray, 100)
-                .LeadingTopBottom(50)
+                .Width(gray, view.frame.width - 100)
+                //.LeadingTopBottom(50)
+                .TrailingTopBottom(50)
         }
         
-        use3()
+        func use5() {
+            AutoLayout(view, gray)
+                .Height(gray, view.frame.height-100)
+                .TopLeadingTrailing(50)
+                //.BottomLeadingTrailing(50)
+        }
+        
+        use5()
     }
     /*
             AutoLayout(view, gray)

@@ -20,5 +20,8 @@
 	4. 约束计算公式： first = second * multiplier + constant
 
 * Use
-	测试中
+	1. 使用初始化以及相应的 View 方法设置 superview, first, second
+	2. 使用 constraints 方法获取当前记录的约束。
+	3. 使用 clearConstrants 方法清理约束
+	4. 添加单一约束时不会清理 _constraints， 添加多约束时会自动先进行清理。
 
