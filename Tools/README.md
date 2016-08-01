@@ -3,6 +3,8 @@
 
 ## Catalog.swift
 
+* 更新: 修改 file 为 files 字符串数组。可一次性修改多个文件。
+
 * markdown 目录插入程序 Markdown catalog inset tool
 * Use
     * 修改文件的 file 变量为 markdown 文件路径。

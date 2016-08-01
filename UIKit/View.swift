@@ -8,41 +8,52 @@
 
 import UIKit
 
+/**
+ 需要把背景颜色设置为 UIColor.clearColor()
+ */
 class View: UIView {
     
-    /// 视图圆角: 统一圆角
-    @IBInspectable var cornerRadius: CGFloat = 0
-    /// 视图圆角: x 左上角, y 右上角, h 左下角, w 右下角, 设置后 cornerRadius 失效
-    @IBInspectable var cornerRadius2: CGRect? = CGRectZero
+    // MARK: - Values
     
-    /// 阴影透明度以及扩展程序
-    @IBInspectable var shadowOpacity: CGFloat = 0
+    /// 视图圆角: x 左上角, y 右上角, h 右下角, w 左下角
+    @IBInspectable var cornerRadius: CGRect = CGRectZero { didSet { setNeedsDisplay() } }
+    /// 阴影透明度
+    @IBInspectable var shadowOpacity: Float = 0 { didSet { setNeedsDisplay() } }
+    /// 阴影扩展
+    @IBInspectable var shadowRadius: CGFloat = 0 { didSet { setNeedsDisplay() } }
+    /// 阴影偏移
+    @IBInspectable var shadowOffset: CGSize = CGSizeZero { didSet { setNeedsDisplay() } }
+    /// 视图颜色
+    @IBInspectable var color: UIColor = UIColor.blueColor() { didSet { setNeedsDisplay() } }
     
-    
-//    /// 视图圆角
-//    @IBInspectable var cornerRadius: CGFloat = 0
-//    
-//    /// 阴影透明度
-//    @IBInspectable var shadowOpacity: Float = 0
-//    
-//    ///
-//    @IBInspectable var shadowOffset: CGSize = CGSize(width: 0, height: 0)
-//    
-//    @IBInspectable var A: CGRect = CGRect(x: 0, y: 0, width: 0, height: 0)
-//    @IBInspectable var B: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-//    
-//    @IBInspectable var offsetW: CGFloat = 0
-//    @IBInspectable var offsetH: CGFloat = 0
-//    @IBInspectable var radius: CGFloat = 0
-//    @IBInspectable var masks: Bool = false
+    // MARK: - Draw
     
     override func drawRect(rect: CGRect) {
-        
-//        layer.cornerRadius = cornerRadius
-//        layer.shadowOpacity = shadowOpacity
-//        layer.shadowOffset = CGSize(width: offsetW, height: offsetH)
-//        layer.shadowRadius = radius
-//        layer.masksToBounds = masks
+        backgroundColor = UIColor.clearColor()
+        layer.backgroundColor = UIColor.clearColor().CGColor
+        let path = roundedPath(rect.size, a: cornerRadius.origin.x, b: cornerRadius.origin.y, c: cornerRadius.height, d: cornerRadius.width)
+        color.setFill()
+        path.fill()
+        layer.shadowOpacity = shadowOpacity
+        layer.shadowRadius = shadowRadius
+        layer.shadowOffset = shadowOffset
+        layer.masksToBounds = clipsToBounds
+    }
+    
+    // MARK: - Drawer
+    
+    func roundedPath(size: CGSize, a: CGFloat, b: CGFloat, c: CGFloat, d: CGFloat) -> UIBezierPath {
+        let path = UIBezierPath()
+        path.moveToPoint(CGPoint(x: 0, y: a))
+        path.addArcWithCenter(CGPoint(x: a, y: a), radius: a, startAngle: CGFloat(M_PI), endAngle: CGFloat(M_PI_2) * 3, clockwise: true)
+        path.addLineToPoint(CGPoint(x: size.width - b, y: 0))
+        path.addArcWithCenter(CGPoint(x: size.width - b, y: b), radius: b, startAngle: CGFloat(M_PI_2) * 3, endAngle: CGFloat(M_PI_2) * 4, clockwise: true)
+        path.addLineToPoint(CGPoint(x: size.width, y: size.height - c))
+        path.addArcWithCenter(CGPoint(x: size.width - c, y: size.height - c), radius: c, startAngle: 0, endAngle: CGFloat(M_PI_2), clockwise: true)
+        path.addLineToPoint(CGPoint(x: d, y: size.height))
+        path.addArcWithCenter(CGPoint(x: d, y: size.height - d), radius: d, startAngle: CGFloat(M_PI_2), endAngle: CGFloat(M_PI), clockwise: true)
+        path.closePath()
+        return path
     }
 
 }

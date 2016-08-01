@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workspace
    version = "1.0">
+   <FileRef
+      location = "group:README.md">
+   </FileRef>
    <Group
       location = "group:Notes"
       name = "Notes">
@@ -20,12 +23,25 @@
       <FileRef
          location = "group:View.swift">
       </FileRef>
+      <FileRef
+         location = "group:Drawer.swift">
+      </FileRef>
    </Group>
    <Group
       location = "group:Swift"
       name = "Swift">
       <FileRef
          location = "group:Text.swift">
+      </FileRef>
+   </Group>
+   <Group
+      location = "group:Tools"
+      name = "Tools">
+      <FileRef
+         location = "group:Catalog.swift">
+      </FileRef>
+      <FileRef
+         location = "group:README.md">
       </FileRef>
    </Group>
    <FileRef

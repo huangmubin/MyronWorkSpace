@@ -19,6 +19,12 @@ I hope my github will be helpful to you.
 
 * 正则表达式 Regular expression
 
+# UIKit Views
+
+## View
+
+* 可通过 Storyboard 设置圆角，阴影等属性的 View.
+
 # Note
 
 * 正则表达式笔记 Regular Expression Note
