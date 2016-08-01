@@ -13,6 +13,7 @@
 		9CE8ACA81D4E108700AE8204 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9CE8ACA71D4E108700AE8204 /* Assets.xcassets */; };
 		9CE8ACAB1D4E108700AE8204 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CE8ACA91D4E108700AE8204 /* LaunchScreen.storyboard */; };
 		9CE8ACB51D4E134C00AE8204 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE8ACB41D4E134C00AE8204 /* View.swift */; };
+		B1DB4A261D4EDC8700C9BC50 /* HUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DB4A251D4EDC8700C9BC50 /* HUD.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		9CE8ACAA1D4E108700AE8204 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9CE8ACAC1D4E108700AE8204 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9CE8ACB41D4E134C00AE8204 /* View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = View.swift; path = ../../UIKit/View.swift; sourceTree = "<group>"; };
+		B1DB4A251D4EDC8700C9BC50 /* HUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HUD.swift; path = ../../UIKit/HUD.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				9CE8ACB41D4E134C00AE8204 /* View.swift */,
+				B1DB4A251D4EDC8700C9BC50 /* HUD.swift */,
 			);
 			name = UIKit;
 			sourceTree = "<group>";
@@ -155,6 +158,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9CE8ACA31D4E108700AE8204 /* ViewController.swift in Sources */,
+				B1DB4A261D4EDC8700C9BC50 /* HUD.swift in Sources */,
 				9CE8ACA11D4E108700AE8204 /* AppDelegate.swift in Sources */,
 				9CE8ACB51D4E134C00AE8204 /* View.swift in Sources */,
 			);

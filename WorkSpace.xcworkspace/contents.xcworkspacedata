@@ -26,6 +26,9 @@
       <FileRef
          location = "group:Drawer.swift">
       </FileRef>
+      <FileRef
+         location = "group:HUD.swift">
+      </FileRef>
    </Group>
    <Group
       location = "group:Swift"
