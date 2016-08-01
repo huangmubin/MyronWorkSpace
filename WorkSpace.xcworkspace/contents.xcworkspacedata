@@ -14,6 +14,9 @@
          location = "group:&#x6b63;&#x5219;&#x8868;&#x8fbe;&#x5f0f;.md">
       </FileRef>
       <FileRef
+         location = "group:PiecemealNote.md">
+      </FileRef>
+      <FileRef
          location = "group:Test2.md">
       </FileRef>
    </Group>
