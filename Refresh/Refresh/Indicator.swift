@@ -8,9 +8,26 @@
 
 import UIKit
 
+@objc protocol IndicatorDelegate: NSObjectProtocol {
+    optional func indicatorStartAnimation()
+    optional func indicatorEndAnimation()
+}
+
+/**
+ strokeStart
+ lineColor
+ progress
+ 
+ animation()
+ stropAnimation()
+ */
 class Indicator: UIView {
     
-    // MARK: Init
+    // MARK: Delegate
+    
+    weak var delegate: IndicatorDelegate?
+    
+    // MARK: - Init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -24,12 +41,18 @@ class Indicator: UIView {
     
     // MARK: Deploy
     
-    var subLayers: [CAShapeLayer] = []
-    var trans: CGAffineTransform!
+    var strokeStart: CGFloat = 0.3 {
+        didSet {
+            for shape in subLayers {
+                shape.strokeStart = strokeStart
+            }
+        }
+    }
     
+    private var subLayers: [CAShapeLayer] = []
+    private var trans: CGAffineTransform!
     
-    let strokeStart: CGFloat = 0.3
-    func load() {
+    private func load() {
         trans = transform
         for i in 0 ..< 12 {
             let path = UIBezierPath()
@@ -64,8 +87,18 @@ class Indicator: UIView {
         }
     }
     
-    func show() {
-        progress = 0
+    // MRAK: - Override
+    
+    override var frame: CGRect {
+        didSet {
+            deploy()
+        }
+    }
+    
+    override var bounds: CGRect {
+        didSet {
+            deploy()
+        }
     }
     
     // MARK: - Values
@@ -91,10 +124,11 @@ class Indicator: UIView {
                 if CGFloat(i) > value {
                     shape.strokeEnd = 0
                 } else if CGFloat(i+1) > value {
-                    shape.strokeEnd = (value % 1) * 0.7 + 0.3
+                    shape.strokeEnd = (value%1) * (1-strokeStart) + strokeStart
                 } else {
                     shape.strokeEnd = 1
                 }
+                shape.strokeStart = strokeStart
             }
             CATransaction.commit()
         }
@@ -102,7 +136,6 @@ class Indicator: UIView {
     
     // MARK: - Animation
     
-    //private let opacitys: [Float] = [1.0, 0.0833333135, 0.166666627, 0.25, 0.333333313, 0.416666627, 0.5, 0.583333313, 0.666666627, 0.75, 0.833333313, 0.916666687]
     private var animating = false
     
     func animation() {
@@ -116,6 +149,7 @@ class Indicator: UIView {
                 }
             }
             dispatch_async(dispatch_get_main_queue()) {
+                self.delegate?.indicatorStartAnimation?()
                 self.opacityAnimation()
                 self.retateAnimation()
             }
@@ -146,16 +180,20 @@ class Indicator: UIView {
     }
     
     func stopAnimation() {
+        guard animating else { return }
+        
         CATransaction.begin()
         CATransaction.setCompletionBlock {
             for shape in self.subLayers {
                 shape.removeAllAnimations()
             }
             self.animating = false
+            self.delegate?.indicatorEndAnimation?()
         }
         for shape in subLayers {
             CATransaction.begin()
-            shape.strokeEnd = 0.3
+            shape.strokeEnd = 0.1
+            shape.strokeStart = 0.1
             CATransaction.commit()
         }
         CATransaction.commit()

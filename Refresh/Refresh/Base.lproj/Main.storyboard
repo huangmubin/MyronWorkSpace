@@ -44,10 +44,17 @@
                                     <action selector="cAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cdW-kg-nfm"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1aV-Lg-P9V" customClass="Refresh" customModule="Refresh" customModuleProvider="target">
+                                <rect key="frame" x="105" y="28" width="111" height="117"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="refresh" destination="1aV-Lg-P9V" id="Bx8-Sd-cdF"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
