@@ -8,18 +8,22 @@
 
 /* Begin PBXBuildFile section */
 		9CA32F501D500ECC00AEB3DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA32F4F1D500ECC00AEB3DF /* AppDelegate.swift */; };
-		9CA32F521D500ECC00AEB3DF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA32F511D500ECC00AEB3DF /* ViewController.swift */; };
 		9CA32F541D500ECC00AEB3DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9CA32F531D500ECC00AEB3DF /* Assets.xcassets */; };
 		9CA32F571D500ECC00AEB3DF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CA32F551D500ECC00AEB3DF /* Main.storyboard */; };
+		9CA32F631D5021D100AEB3DF /* Catalog.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CA32F611D5021D100AEB3DF /* Catalog.storyboard */; };
+		9CA32F641D5021D100AEB3DF /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA32F621D5021D100AEB3DF /* CatalogViewController.swift */; };
+		9CA32F6E1D50225300AEB3DF /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA32F6A1D50225300AEB3DF /* Text.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		9CA32F4C1D500ECC00AEB3DF /* OSTools.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OSTools.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CA32F4F1D500ECC00AEB3DF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		9CA32F511D500ECC00AEB3DF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		9CA32F531D500ECC00AEB3DF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9CA32F561D500ECC00AEB3DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9CA32F581D500ECC00AEB3DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9CA32F611D5021D100AEB3DF /* Catalog.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Catalog.storyboard; sourceTree = "<group>"; };
+		9CA32F621D5021D100AEB3DF /* CatalogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
+		9CA32F6A1D50225300AEB3DF /* Text.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,13 +56,32 @@
 		9CA32F4E1D500ECC00AEB3DF /* OSTools */ = {
 			isa = PBXGroup;
 			children = (
+				9CA32F6D1D50225300AEB3DF /* Swift */,
+				9CA32F601D5021D100AEB3DF /* CatalogTool */,
 				9CA32F4F1D500ECC00AEB3DF /* AppDelegate.swift */,
-				9CA32F511D500ECC00AEB3DF /* ViewController.swift */,
 				9CA32F531D500ECC00AEB3DF /* Assets.xcassets */,
 				9CA32F551D500ECC00AEB3DF /* Main.storyboard */,
 				9CA32F581D500ECC00AEB3DF /* Info.plist */,
 			);
 			path = OSTools;
+			sourceTree = "<group>";
+		};
+		9CA32F601D5021D100AEB3DF /* CatalogTool */ = {
+			isa = PBXGroup;
+			children = (
+				9CA32F611D5021D100AEB3DF /* Catalog.storyboard */,
+				9CA32F621D5021D100AEB3DF /* CatalogViewController.swift */,
+			);
+			path = CatalogTool;
+			sourceTree = "<group>";
+		};
+		9CA32F6D1D50225300AEB3DF /* Swift */ = {
+			isa = PBXGroup;
+			children = (
+				9CA32F6A1D50225300AEB3DF /* Text.swift */,
+			);
+			name = Swift;
+			path = ../../Swift;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -119,6 +142,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9CA32F631D5021D100AEB3DF /* Catalog.storyboard in Resources */,
 				9CA32F541D500ECC00AEB3DF /* Assets.xcassets in Resources */,
 				9CA32F571D500ECC00AEB3DF /* Main.storyboard in Resources */,
 			);
@@ -131,7 +155,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9CA32F521D500ECC00AEB3DF /* ViewController.swift in Sources */,
+				9CA32F641D5021D100AEB3DF /* CatalogViewController.swift in Sources */,
+				9CA32F6E1D50225300AEB3DF /* Text.swift in Sources */,
 				9CA32F501D500ECC00AEB3DF /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -275,6 +300,7 @@
 				9CA32F5D1D500ECC00AEB3DF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

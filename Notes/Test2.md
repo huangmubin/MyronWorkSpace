@@ -1,17 +1,4 @@
 <!--Catalog-->
-<h5 id="Myron_Catalog_0"> </h5>
-# iOS Human Interface Guidelines
-
-The world’s most advanced mobile OS offers everything you need to design beautiful, engaging apps that radiate power and simplicity.
-
-> 翻译
-
-iOS 人性化界面指引手册
-
-世界上最先进的移动系统会提供一切你需要的东西，让你设计漂亮，有趣，而且性能强大操作简单的应用。
-
-====
-<!--Catalog-->
 <!--Myron Catalog Start-->
 
 * [ iOS Human Interface Guidelines](#Myron_Catalog_0)
@@ -31,6 +18,22 @@ iOS 人性化界面指引手册
         * [Interface Essentials](#Myron_Catalog_14)
 
 <!--Myron Catalog End-->
+
+
+<h5 id="Myron_Catalog_0"> </h5>
+# iOS Human Interface Guidelines
+
+The world’s most advanced mobile OS offers everything you need to design beautiful, engaging apps that radiate power and simplicity.
+
+> 翻译
+
+iOS 人性化界面指引手册
+
+世界上最先进的移动系统会提供一切你需要的东西，让你设计漂亮，有趣，而且性能强大操作简单的应用。
+
+====
+<!--Catalog-->
+
 
 
 ====

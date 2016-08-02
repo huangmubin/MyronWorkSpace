@@ -62,4 +62,7 @@
    <FileRef
       location = "group:SwiftiOS/SwiftiOS.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:OSTools/OSTools.xcodeproj">
+   </FileRef>
 </Workspace>
