@@ -9,22 +9,6 @@
 import UIKit
 
 class TextView: UITextView, UITextViewDelegate {
-
-    weak var textViewDelegate: UITextViewDelegate?
-    var transformDelegate: Bool = true
-    override var delegate: UITextViewDelegate? {
-        didSet {
-            if transformDelegate {
-                print("set Delegate")
-                transformDelegate = false
-                textViewDelegate = delegate
-                delegate = self
-            } else {
-                transformDelegate = true
-            }
-        }
-    }
-    
     // MARK: - Init
     
     override init(frame: CGRect, textContainer: NSTextContainer?) {
@@ -38,11 +22,12 @@ class TextView: UITextView, UITextViewDelegate {
     }
     
     func deploy() {
-        placeholderLabel.text = placeholder
-        placeholderLabel.textColor = textColor?.colorWithAlphaComponent(0.7)
+        delegate = self
         
+        placeholderLabel.text = placeholder
+        placeholderLabel.textColor = placeColor
         placeholderLabel.sizeToFit()
-        placeholderLabel.frame.origin = CGPoint(x: 5, y: 6)
+        placeholderLabel.frame.origin = CGPoint(x: 5, y: 8)
         addSubview(placeholderLabel)
     }
     
@@ -58,43 +43,77 @@ class TextView: UITextView, UITextViewDelegate {
             placeholderLabel.sizeToFit()
         }
     }
+    
+    @IBInspectable var placeColor: UIColor = UIColor.grayColor() {
+        didSet {
+            placeholderLabel.textColor = placeColor
+        }
+    }
+    
+    override var font: UIFont? {
+        didSet {
+            print("set font")
+            placeholderLabel.font = font
+        }
+    }
+    
     // MARK: - UITextViewDelegate
     
-//    func textViewShouldBeginEditing(textView: UITextView) -> Bool {
-//        return textViewDelegate?.textViewShouldBeginEditing?(textView) ?? true
-//    }
-//    
-//    func textViewShouldEndEditing(textView: UITextView) -> Bool {
-//        
-//    }
-//    
-//    func textViewDidBeginEditing(textView: UITextView) {
-//        
-//    }
-//    
-//    func textViewDidEndEditing(textView: UITextView) {
-//        
-//    }
-//    
-//    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
-//        
-//    }
-//    
-    func textViewDidChange(textView: UITextView) {
-        textViewDelegate?.textViewDidChange?(textView)
-        
+    // MARK: Delegate
+    
+    weak var textViewDelegate: UITextViewDelegate?
+    
+    private var transformDelegate: Bool = true
+    
+    override var delegate: UITextViewDelegate? {
+        didSet {
+            if transformDelegate && delegate !== self {
+                transformDelegate = false
+                textViewDelegate = delegate
+                delegate = self
+            } else {
+                transformDelegate = true
+            }
+        }
     }
-//
-//    func textViewDidChangeSelection(textView: UITextView) {
-//        
-//    }
-//    
-//    func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
-//        
-//    }
-//    
-//    func textView(textView: UITextView, shouldInteractWithTextAttachment textAttachment: NSTextAttachment, inRange characterRange: NSRange) -> Bool {
-//        
-//    }
+    
+    func textViewDidChange(textView: UITextView) {
+        placeholderLabel.hidden = (text.isEmpty == false)
+        textViewDelegate?.textViewDidChange?(textView)
+    }
+    
+    /*
+    func textViewShouldBeginEditing(textView: UITextView) -> Bool {
+        return textViewDelegate?.textViewShouldBeginEditing?(textView) ?? true
+    }
+    
+    func textViewShouldEndEditing(textView: UITextView) -> Bool {
+        return textViewDelegate?.textViewShouldEndEditing?(textView) ?? true
+    }
+    
+    func textViewDidBeginEditing(textView: UITextView) {
+        textViewDelegate?.textViewDidBeginEditing?(textView)
+    }
+    
+    func textViewDidEndEditing(textView: UITextView) {
+        textViewDelegate?.textViewDidEndEditing?(textView)
+    }
+    
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        return textViewDelegate?.textView?(textView, shouldChangeTextInRange: range, replacementText: text) ?? true
+    }
+    
+    func textViewDidChangeSelection(textView: UITextView) {
+        textViewDelegate?.textViewDidChangeSelection?(textView)
+    }
+    
+    func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
+        return textViewDelegate?.textView?(textView, shouldInteractWithURL: URL, inRange: characterRange) ?? true
+    }
+    
+    func textView(textView: UITextView, shouldInteractWithTextAttachment textAttachment: NSTextAttachment, inRange characterRange: NSRange) -> Bool {
+        return textViewDelegate?.textView?(textView, shouldInteractWithTextAttachment: textAttachment, inRange: characterRange) ?? true
+    }
+    */
 
 }

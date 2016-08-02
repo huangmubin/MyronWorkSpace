@@ -38,6 +38,9 @@
       <FileRef
          location = "group:Button.swift">
       </FileRef>
+      <FileRef
+         location = "group:README.md">
+      </FileRef>
    </Group>
    <Group
       location = "group:Swift"
