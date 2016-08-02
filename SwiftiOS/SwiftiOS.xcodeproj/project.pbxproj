@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9CA32F731D50443A00AEB3DF /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA32F711D50443A00AEB3DF /* TextView.swift */; };
+		9CA32F741D50443A00AEB3DF /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA32F721D50443A00AEB3DF /* Button.swift */; };
 		9CE8ACA11D4E108700AE8204 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE8ACA01D4E108700AE8204 /* AppDelegate.swift */; };
 		9CE8ACA31D4E108700AE8204 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE8ACA21D4E108700AE8204 /* ViewController.swift */; };
 		9CE8ACA61D4E108700AE8204 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CE8ACA41D4E108700AE8204 /* Main.storyboard */; };
@@ -19,6 +21,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9CA32F711D50443A00AEB3DF /* TextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextView.swift; path = ../../UIKit/TextView.swift; sourceTree = "<group>"; };
+		9CA32F721D50443A00AEB3DF /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Button.swift; path = ../../UIKit/Button.swift; sourceTree = "<group>"; };
 		9CE8AC9D1D4E108700AE8204 /* SwiftiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CE8ACA01D4E108700AE8204 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9CE8ACA21D4E108700AE8204 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -85,6 +89,8 @@
 		9CE8ACB31D4E133F00AE8204 /* UIKit */ = {
 			isa = PBXGroup;
 			children = (
+				9CA32F711D50443A00AEB3DF /* TextView.swift */,
+				9CA32F721D50443A00AEB3DF /* Button.swift */,
 				9CE8ACB41D4E134C00AE8204 /* View.swift */,
 				B1DB4A251D4EDC8700C9BC50 /* HUD.swift */,
 			);
@@ -174,6 +180,8 @@
 				9CF80F981D4F69B30019C333 /* AutoLayout.swift in Sources */,
 				9CE8ACA31D4E108700AE8204 /* ViewController.swift in Sources */,
 				9CF80F971D4F69B30019C333 /* Text.swift in Sources */,
+				9CA32F741D50443A00AEB3DF /* Button.swift in Sources */,
+				9CA32F731D50443A00AEB3DF /* TextView.swift in Sources */,
 				B1DB4A261D4EDC8700C9BC50 /* HUD.swift in Sources */,
 				9CE8ACA11D4E108700AE8204 /* AppDelegate.swift in Sources */,
 				9CE8ACB51D4E134C00AE8204 /* View.swift in Sources */,

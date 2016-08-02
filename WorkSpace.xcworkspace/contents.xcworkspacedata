@@ -32,6 +32,12 @@
       <FileRef
          location = "group:HUD.swift">
       </FileRef>
+      <FileRef
+         location = "group:TextView.swift">
+      </FileRef>
+      <FileRef
+         location = "group:Button.swift">
+      </FileRef>
    </Group>
    <Group
       location = "group:Swift"
