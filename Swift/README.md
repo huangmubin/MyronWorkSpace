@@ -25,3 +25,14 @@
 	3. 使用 clearConstrants 方法清理约束
 	4. 添加单一约束时不会清理 _constraints， 添加多约束时会自动先进行清理。
 
+## Color
+
+* UIColor 扩展
+    * 简易的颜色创建方法
+    * 获取颜色值
+    * 新增更多常用色
+
+## CGSize
+
+* CGRect 扩展
+    * 添加多个 CGRect 变化方法

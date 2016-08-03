@@ -19,6 +19,8 @@
 		9CF80F981D4F69B30019C333 /* AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF80F961D4F69B30019C333 /* AutoLayout.swift */; };
 		B177C1771D51D1090017499D /* Progress.swift in Sources */ = {isa = PBXBuildFile; fileRef = B177C1761D51D1090017499D /* Progress.swift */; };
 		B177C1791D51D1400017499D /* ValueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B177C1781D51D1400017499D /* ValueViewController.swift */; };
+		B177C17B1D51EA330017499D /* Drawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B177C17A1D51EA330017499D /* Drawer.swift */; };
+		B177C17D1D51F5F70017499D /* CGSizes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B177C17C1D51F5F70017499D /* CGSizes.swift */; };
 		B1DB4A261D4EDC8700C9BC50 /* HUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DB4A251D4EDC8700C9BC50 /* HUD.swift */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +39,8 @@
 		9CF80F961D4F69B30019C333 /* AutoLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AutoLayout.swift; path = ../../Swift/AutoLayout.swift; sourceTree = "<group>"; };
 		B177C1761D51D1090017499D /* Progress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Progress.swift; path = ../../UIKit/Progress.swift; sourceTree = "<group>"; };
 		B177C1781D51D1400017499D /* ValueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueViewController.swift; sourceTree = "<group>"; };
+		B177C17A1D51EA330017499D /* Drawer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Drawer.swift; path = ../../UIKit/Drawer.swift; sourceTree = "<group>"; };
+		B177C17C1D51F5F70017499D /* CGSizes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CGSizes.swift; path = /Users/Myron/GitHub/MyronWorkSpace/Swift/CGSizes.swift; sourceTree = "<absolute>"; };
 		B1DB4A251D4EDC8700C9BC50 /* HUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HUD.swift; path = ../../UIKit/HUD.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -94,6 +98,7 @@
 		9CE8ACB31D4E133F00AE8204 /* UIKit */ = {
 			isa = PBXGroup;
 			children = (
+				B177C17A1D51EA330017499D /* Drawer.swift */,
 				9CA32F711D50443A00AEB3DF /* TextView.swift */,
 				9CA32F721D50443A00AEB3DF /* Button.swift */,
 				9CE8ACB41D4E134C00AE8204 /* View.swift */,
@@ -108,6 +113,7 @@
 			children = (
 				9CF80F951D4F69B30019C333 /* Text.swift */,
 				9CF80F961D4F69B30019C333 /* AutoLayout.swift */,
+				B177C17C1D51F5F70017499D /* CGSizes.swift */,
 			);
 			name = Swift;
 			sourceTree = "<group>";
@@ -183,10 +189,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B177C17D1D51F5F70017499D /* CGSizes.swift in Sources */,
 				B177C1771D51D1090017499D /* Progress.swift in Sources */,
 				9CF80F981D4F69B30019C333 /* AutoLayout.swift in Sources */,
 				9CE8ACA31D4E108700AE8204 /* ViewController.swift in Sources */,
 				9CF80F971D4F69B30019C333 /* Text.swift in Sources */,
+				B177C17B1D51EA330017499D /* Drawer.swift in Sources */,
 				9CA32F741D50443A00AEB3DF /* Button.swift in Sources */,
 				9CA32F731D50443A00AEB3DF /* TextView.swift in Sources */,
 				B177C1791D51D1400017499D /* ValueViewController.swift in Sources */,

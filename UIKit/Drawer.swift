@@ -9,8 +9,10 @@
 import UIKit
 
 class Drawer: UIView {
-
+    
     // MARK: - Layer
+    
+    // MARK: 形状
     
     /// 绘制圆角矩形 Layer，a 点为左上角，b 为右上角，c 为右下角，d 为左下角
     class func roundedRect(size: CGSize, a: CGFloat, b: CGFloat, c: CGFloat, d: CGFloat) -> CAShapeLayer {
@@ -52,7 +54,21 @@ class Drawer: UIView {
         return layer
     }
     
+    // MARK: 颜色
+    
+    /// CAGradientLayer
+    class func gradientLayer(frame: CGRect, colors: [CGColor], point: (x1: CGFloat, y1: CGFloat, x2: CGFloat, y2: CGFloat) = (0.5, 0, 0.5, 1), locations: [NSNumber] = [0, 1]) -> CAGradientLayer {
+        let gradient = CAGradientLayer()
+        gradient.frame = frame
+        gradient.colors = colors
+        gradient.locations = locations
+        gradient.startPoint = CGPoint(x: point.x1, y: point.y1)
+        gradient.endPoint = CGPoint(x: point.x2, y: point.y2)
+        return gradient
+    }
+    
     // MARK: - Path
+    
     /// 绘制圆角矩形 Layer，a 点为左上角，b 为右上角，c 为右下角，d 为左下角
     class func roundedPath(size: CGSize, a: CGFloat, b: CGFloat, c: CGFloat, d: CGFloat) -> UIBezierPath {
         let path = UIBezierPath()

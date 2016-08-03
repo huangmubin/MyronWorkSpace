@@ -39,10 +39,10 @@
          location = "group:Button.swift">
       </FileRef>
       <FileRef
-         location = "group:README.md">
+         location = "group:Progress.swift">
       </FileRef>
       <FileRef
-         location = "group:Progress.swift">
+         location = "group:README.md">
       </FileRef>
    </Group>
    <Group
@@ -50,6 +50,12 @@
       name = "Swift">
       <FileRef
          location = "group:Text.swift">
+      </FileRef>
+      <FileRef
+         location = "group:Color.swift">
+      </FileRef>
+      <FileRef
+         location = "group:/Users/Myron/GitHub/MyronWorkSpace/Swift/CGSizes.swift">
       </FileRef>
       <FileRef
          location = "group:AutoLayout.swift">
