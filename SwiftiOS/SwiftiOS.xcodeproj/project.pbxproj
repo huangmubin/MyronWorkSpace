@@ -17,6 +17,8 @@
 		9CE8ACB51D4E134C00AE8204 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE8ACB41D4E134C00AE8204 /* View.swift */; };
 		9CF80F971D4F69B30019C333 /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF80F951D4F69B30019C333 /* Text.swift */; };
 		9CF80F981D4F69B30019C333 /* AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF80F961D4F69B30019C333 /* AutoLayout.swift */; };
+		B177C1771D51D1090017499D /* Progress.swift in Sources */ = {isa = PBXBuildFile; fileRef = B177C1761D51D1090017499D /* Progress.swift */; };
+		B177C1791D51D1400017499D /* ValueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B177C1781D51D1400017499D /* ValueViewController.swift */; };
 		B1DB4A261D4EDC8700C9BC50 /* HUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DB4A251D4EDC8700C9BC50 /* HUD.swift */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +35,8 @@
 		9CE8ACB41D4E134C00AE8204 /* View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = View.swift; path = ../../UIKit/View.swift; sourceTree = "<group>"; };
 		9CF80F951D4F69B30019C333 /* Text.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Text.swift; path = ../../Swift/Text.swift; sourceTree = "<group>"; };
 		9CF80F961D4F69B30019C333 /* AutoLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AutoLayout.swift; path = ../../Swift/AutoLayout.swift; sourceTree = "<group>"; };
+		B177C1761D51D1090017499D /* Progress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Progress.swift; path = ../../UIKit/Progress.swift; sourceTree = "<group>"; };
+		B177C1781D51D1400017499D /* ValueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueViewController.swift; sourceTree = "<group>"; };
 		B1DB4A251D4EDC8700C9BC50 /* HUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HUD.swift; path = ../../UIKit/HUD.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -78,6 +82,7 @@
 			children = (
 				9CE8ACA01D4E108700AE8204 /* AppDelegate.swift */,
 				9CE8ACA21D4E108700AE8204 /* ViewController.swift */,
+				B177C1781D51D1400017499D /* ValueViewController.swift */,
 				9CE8ACA41D4E108700AE8204 /* Main.storyboard */,
 				9CE8ACA71D4E108700AE8204 /* Assets.xcassets */,
 				9CE8ACA91D4E108700AE8204 /* LaunchScreen.storyboard */,
@@ -93,6 +98,7 @@
 				9CA32F721D50443A00AEB3DF /* Button.swift */,
 				9CE8ACB41D4E134C00AE8204 /* View.swift */,
 				B1DB4A251D4EDC8700C9BC50 /* HUD.swift */,
+				B177C1761D51D1090017499D /* Progress.swift */,
 			);
 			name = UIKit;
 			sourceTree = "<group>";
@@ -177,11 +183,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B177C1771D51D1090017499D /* Progress.swift in Sources */,
 				9CF80F981D4F69B30019C333 /* AutoLayout.swift in Sources */,
 				9CE8ACA31D4E108700AE8204 /* ViewController.swift in Sources */,
 				9CF80F971D4F69B30019C333 /* Text.swift in Sources */,
 				9CA32F741D50443A00AEB3DF /* Button.swift in Sources */,
 				9CA32F731D50443A00AEB3DF /* TextView.swift in Sources */,
+				B177C1791D51D1400017499D /* ValueViewController.swift in Sources */,
 				B1DB4A261D4EDC8700C9BC50 /* HUD.swift in Sources */,
 				9CE8ACA11D4E108700AE8204 /* AppDelegate.swift in Sources */,
 				9CE8ACB51D4E134C00AE8204 /* View.swift in Sources */,

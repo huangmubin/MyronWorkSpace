@@ -41,6 +41,9 @@
       <FileRef
          location = "group:README.md">
       </FileRef>
+      <FileRef
+         location = "group:Progress.swift">
+      </FileRef>
    </Group>
    <Group
       location = "group:Swift"

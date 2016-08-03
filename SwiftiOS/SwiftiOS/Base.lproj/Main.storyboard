@@ -5,10 +5,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Value View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="SwiftiOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ValueViewController" customModule="SwiftiOS" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -17,162 +17,45 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jGj-et-hLr" customClass="Button" customModule="SwiftiOS" customModuleProvider="target">
-                                <rect key="frame" x="100" y="81" width="120" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="120" id="kGX-WE-Mkj"/>
-                                </constraints>
-                                <state key="normal" title="Button"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="corner">
-                                        <real key="value" value="2"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="opacity">
-                                        <real key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="radius">
-                                        <real key="value" value="2"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="type" value="YES"/>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="note" value="45"/>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="color">
-                                        <color key="value" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
+                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="qoI-dK-bVr">
+                                <rect key="frame" x="18" y="373" width="284" height="31"/>
                                 <connections>
-                                    <action selector="bbuttonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="KZM-EY-p0p"/>
+                                    <action selector="sliderAction:" destination="BYZ-38-t0r" eventType="valueChanged" id="1D8-QD-eKy"/>
                                 </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="amK-Gk-ich" customClass="Button" customModule="SwiftiOS" customModuleProvider="target">
-                                <rect key="frame" x="100" y="157" width="120" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="120" id="Sik-X7-NxU"/>
-                                </constraints>
-                                <state key="normal" image="Gear Set Center 30"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="type" value="YES"/>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="opacity">
-                                        <real key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="corner">
-                                        <real key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="radius">
-                                        <real key="value" value="2"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="note" value="21"/>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="color">
-                                        <color key="value" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="dbuttonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qqJ-oe-vZV"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" highlighted="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ylU-Og-Y3f" customClass="Button" customModule="SwiftiOS" customModuleProvider="target">
-                                <rect key="frame" x="100" y="119" width="120" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="120" id="5fR-hg-VC7"/>
-                                </constraints>
-                                <state key="normal" title="Button"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="type" value="NO"/>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="note" value="12"/>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="radius">
-                                        <real key="value" value="2"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="opacity">
-                                        <real key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="corner">
-                                        <real key="value" value="5"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="cbuttonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aNf-3K-FA6"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Wv-BC-Ce1">
-                                <rect key="frame" x="100" y="195" width="120" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="120" id="ECv-OA-a7p"/>
-                                </constraints>
+                            </slider>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MxG-f0-8Oz">
+                                <rect key="frame" x="137" y="404" width="46" height="30"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
-                                    <action selector="ebuttonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rWR-wi-vmb"/>
+                                    <action selector="bAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="O4h-4p-HQa"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tGV-sM-4E0">
-                                <rect key="frame" x="100" y="233" width="120" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="120" id="6XY-Hx-6Y1"/>
-                                </constraints>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t6q-eN-jOh">
+                                <rect key="frame" x="20" y="404" width="46" height="30"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
-                                    <action selector="fbuttonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kr5-DR-NlB"/>
+                                    <action selector="aAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8mv-11-2V9"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5aa-1e-P14" customClass="Button" customModule="SwiftiOS" customModuleProvider="target">
-                                <rect key="frame" x="100" y="43" width="120" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="120" id="hkG-gt-h0U"/>
-                                </constraints>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c0n-yM-Smb">
+                                <rect key="frame" x="254" y="404" width="46" height="30"/>
                                 <state key="normal" title="Button"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="corner">
-                                        <real key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="opacity">
-                                        <real key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="radius">
-                                        <real key="value" value="2"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="type" value="YES"/>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="color">
-                                        <color key="value" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="abuttonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="K5k-NU-Ld4"/>
+                                    <action selector="cAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="VuA-39-wS8"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
-                        <constraints>
-                            <constraint firstItem="tGV-sM-4E0" firstAttribute="top" secondItem="9Wv-BC-Ce1" secondAttribute="bottom" constant="8" id="0ge-fy-3hh"/>
-                            <constraint firstItem="9Wv-BC-Ce1" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="5Vy-C3-9D0"/>
-                            <constraint firstItem="5aa-1e-P14" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="23" id="EwE-Vu-EXF"/>
-                            <constraint firstItem="jGj-et-hLr" firstAttribute="top" secondItem="5aa-1e-P14" secondAttribute="bottom" constant="8" id="Fnk-DI-Swz"/>
-                            <constraint firstItem="amK-Gk-ich" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="GAt-0z-ZyC"/>
-                            <constraint firstItem="ylU-Og-Y3f" firstAttribute="top" secondItem="jGj-et-hLr" secondAttribute="bottom" constant="8" id="ROm-ax-c75"/>
-                            <constraint firstItem="5aa-1e-P14" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="TUB-O8-KAc"/>
-                            <constraint firstItem="tGV-sM-4E0" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Vyb-wV-5sP"/>
-                            <constraint firstItem="9Wv-BC-Ce1" firstAttribute="top" secondItem="amK-Gk-ich" secondAttribute="bottom" constant="8" id="XPG-ks-g3t"/>
-                            <constraint firstItem="ylU-Og-Y3f" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="k0V-Et-1mX"/>
-                            <constraint firstItem="jGj-et-hLr" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="vbd-Xn-z6e"/>
-                            <constraint firstItem="amK-Gk-ich" firstAttribute="top" secondItem="ylU-Og-Y3f" secondAttribute="bottom" constant="8" id="zuq-w8-RF1"/>
-                        </constraints>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="PQp-DY-hRg" appends="YES" id="OqZ-hL-mpJ"/>
-                        </connections>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
-                        <outlet property="abutton" destination="5aa-1e-P14" id="Xer-ra-I7d"/>
-                        <outlet property="bbutton" destination="jGj-et-hLr" id="md0-ZT-dxy"/>
-                        <outlet property="cbutton" destination="ylU-Og-Y3f" id="baw-2p-vBH"/>
-                        <outlet property="dbutton" destination="amK-Gk-ich" id="GsA-jD-4tw"/>
+                        <outlet property="slider" destination="qoI-dK-bVr" id="NHT-co-xI7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="PQp-DY-hRg"/>
             </objects>
             <point key="canvasLocation" x="358" y="393"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="Gear Set Center 30" width="30" height="30"/>
-    </resources>
 </document>
