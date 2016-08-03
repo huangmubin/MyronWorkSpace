@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Refresh: UIView, IndicatorDelegate {
+class Refresh: UIView, IndicatorDelegate, TableViewHeaderRefreshProtocol {
 
     // MARK: - Init
     
@@ -23,13 +23,13 @@ class Refresh: UIView, IndicatorDelegate {
     }
     
     private func load() {
-        self.backgroundColor = UIColor.grayColor()
+        self.backgroundColor = UIColor.clearColor()
         
         indicator = Indicator(frame: CGRect(x: (bounds.width - size) / 2, y: (bounds.height - size) / 2, width: size, height: size))
         indicator.delegate = self
         indicator.progress = value
         label = UILabel()
-        label.textColor = textColor
+        label.textColor = color
         setLabelText(loadText)
         
         addSubview(indicator)
@@ -47,20 +47,23 @@ class Refresh: UIView, IndicatorDelegate {
     
     @IBInspectable var value: CGFloat = 0 {
         didSet {
-            if value > 1 {
-                indicator.animation()
+            if value <= 0 {
+                label.hidden = true
             } else {
+                label.hidden = false
                 indicator.progress = value
             }
         }
     }
+    
     @IBInspectable var size: CGFloat = 30 {
         didSet {
             indicator = Indicator(frame: CGRect(x: (bounds.width - size) / 2, y: (bounds.height - size) / 2, width: size, height: size))
             label.center = CGPoint(x: bounds.width / 2, y: indicator.frame.maxY + label.bounds.height / 2)
         }
     }
-    @IBInspectable var lineStart: CGFloat = 0.3 {
+    
+    @IBInspectable var lineStart: CGFloat = 0.5 {
         didSet {
             indicator.strokeStart = lineStart
         }
@@ -68,15 +71,10 @@ class Refresh: UIView, IndicatorDelegate {
     
     // MARK: Color
     
-    @IBInspectable var indicatorColor: UIColor = UIColor.blackColor() {
+    @IBInspectable var color: UIColor = UIColor.grayColor() {
         didSet {
-            indicator.lineColor = indicatorColor
-        }
-    }
-    
-    @IBInspectable var textColor: UIColor = UIColor.grayColor() {
-        didSet {
-            label.textColor = textColor
+            indicator.lineColor = color
+            label.textColor = color
         }
     }
     
@@ -92,8 +90,16 @@ class Refresh: UIView, IndicatorDelegate {
     
     // MARK: - Methods
     
-    func stop() {
+    func run() {
+        animting = true
+        setLabelText(loadingText)
+        value = 1
+        indicator.animation()
+    }
+    
+    func end() {
         setLabelText(stopText)
+        value = 0
         indicator.stopAnimation()
     }
     
@@ -110,7 +116,13 @@ class Refresh: UIView, IndicatorDelegate {
     
     // MARK: - Indicator Delegate
     
+    var animting = false
+    
     func indicatorStartAnimation() {
         setLabelText(loadingText)
+    }
+    
+    func indicatorEndAnimation() {
+        animting = false
     }
 }

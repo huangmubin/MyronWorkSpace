@@ -14,6 +14,7 @@
 		9CAD3E4D1D50A7F60063DC22 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9CAD3E4C1D50A7F60063DC22 /* Assets.xcassets */; };
 		9CAD3E501D50A7F60063DC22 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CAD3E4E1D50A7F60063DC22 /* LaunchScreen.storyboard */; };
 		9CAD3E581D50A8EF0063DC22 /* Indicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CAD3E571D50A8EF0063DC22 /* Indicator.swift */; };
+		B1E3523E1D517CF200B50CD0 /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E3523D1D517CF200B50CD0 /* TableView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		9CAD3E4F1D50A7F60063DC22 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9CAD3E511D50A7F70063DC22 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9CAD3E571D50A8EF0063DC22 /* Indicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Indicator.swift; sourceTree = "<group>"; };
+		B1E3523D1D517CF200B50CD0 /* TableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,9 +62,10 @@
 			children = (
 				9CAD3E451D50A7F50063DC22 /* AppDelegate.swift */,
 				9CAD3E471D50A7F50063DC22 /* ViewController.swift */,
-				9CAD1E7F1D51567D00FD60CE /* Refresh.swift */,
 				9CAD3E491D50A7F50063DC22 /* Main.storyboard */,
+				9CAD1E7F1D51567D00FD60CE /* Refresh.swift */,
 				9CAD3E571D50A8EF0063DC22 /* Indicator.swift */,
+				B1E3523D1D517CF200B50CD0 /* TableView.swift */,
 				9CAD3E4C1D50A7F60063DC22 /* Assets.xcassets */,
 				9CAD3E4E1D50A7F60063DC22 /* LaunchScreen.storyboard */,
 				9CAD3E511D50A7F70063DC22 /* Info.plist */,
@@ -142,6 +145,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9CAD3E481D50A7F50063DC22 /* ViewController.swift in Sources */,
+				B1E3523E1D517CF200B50CD0 /* TableView.swift in Sources */,
 				9CAD3E581D50A8EF0063DC22 /* Indicator.swift in Sources */,
 				9CAD3E461D50A7F50063DC22 /* AppDelegate.swift in Sources */,
 				9CAD1E801D51567D00FD60CE /* Refresh.swift in Sources */,

@@ -41,7 +41,7 @@ class Indicator: UIView {
     
     // MARK: Deploy
     
-    var strokeStart: CGFloat = 0.3 {
+    var strokeStart: CGFloat = 0.5 {
         didSet {
             for shape in subLayers {
                 shape.strokeStart = strokeStart
