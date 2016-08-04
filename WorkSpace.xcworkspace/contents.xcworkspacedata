@@ -61,6 +61,9 @@
          location = "group:AutoLayout.swift">
       </FileRef>
       <FileRef
+         location = "group:Network.swift">
+      </FileRef>
+      <FileRef
          location = "group:README.md">
       </FileRef>
    </Group>

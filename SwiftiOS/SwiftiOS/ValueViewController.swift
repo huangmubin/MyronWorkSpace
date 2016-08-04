@@ -10,7 +10,7 @@ import UIKit
 
 class ValueViewController: UIViewController {
 
-    var test = Progress(frame: CGRect(x: 30, y: 30, width: UIScreen.mainScreen().bounds.width - 60, height: UIScreen.mainScreen().bounds.width - 60))
+    var test = Progress(frame: CGRect(x: 100, y: 100, width: UIScreen.mainScreen().bounds.width - 200, height: UIScreen.mainScreen().bounds.width - 200))
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,16 +21,18 @@ class ValueViewController: UIViewController {
     
     @IBOutlet weak var slider: UISlider!
     @IBAction func sliderAction(sender: UISlider) {
-        
+        test.value = CGFloat(sender.value)
     }
     @IBAction func aAction(sender: UIButton) {
-        
+        //test.animationRun?()
+        test.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
     }
     @IBAction func bAction(sender: UIButton) {
         
     }
     @IBAction func cAction(sender: UIButton) {
-        
+        //test.animationStop?()
+        test.bounds = CGRect(x: 0, y: 0, width: 50, height: 50)
     }
 
 }
