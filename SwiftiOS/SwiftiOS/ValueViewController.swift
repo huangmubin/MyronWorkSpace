@@ -24,15 +24,15 @@ class ValueViewController: UIViewController {
         test.value = CGFloat(sender.value)
     }
     @IBAction func aAction(sender: UIButton) {
-        //test.animationRun?()
-        test.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+        test.animationRun?()
+        //test.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
     }
     @IBAction func bAction(sender: UIButton) {
         
     }
     @IBAction func cAction(sender: UIButton) {
-        //test.animationStop?()
-        test.bounds = CGRect(x: 0, y: 0, width: 50, height: 50)
+        test.animationStop?()
+        //test.bounds = CGRect(x: 0, y: 0, width: 50, height: 50)
     }
 
 }

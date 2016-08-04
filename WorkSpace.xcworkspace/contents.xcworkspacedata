@@ -55,7 +55,7 @@
          location = "group:Color.swift">
       </FileRef>
       <FileRef
-         location = "group:/Users/Myron/GitHub/MyronWorkSpace/Swift/CGSizes.swift">
+         location = "group:CGSizes.swift">
       </FileRef>
       <FileRef
          location = "group:AutoLayout.swift">

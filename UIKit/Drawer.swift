@@ -84,4 +84,12 @@ class Drawer: UIView {
         return path
     }
 
+    /// 绘制直线
+    class func linePath(x1: CGFloat, y1: CGFloat, x2: CGFloat, y2: CGFloat) -> UIBezierPath {
+        let path = UIBezierPath()
+        path.moveToPoint(CGPoint(x: x1, y: y1))
+        path.addLineToPoint(CGPoint(x: x2, y: y2))
+        return path
+    }
+    
 }

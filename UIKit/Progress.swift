@@ -9,7 +9,9 @@
 import UIKit
 
 enum ProgressType: Int {
+    case Line
     case ColorLine
+    case Round
 }
 
 class Progress: UIView {
@@ -33,25 +35,29 @@ class Progress: UIView {
     
     // MARK: Override
     
-    override var frame: CGRect {
-        didSet {
-            deploy()
-        }
-    }
-    
-    override var bounds: CGRect {
-        didSet {
-            deploy()
-        }
-    }
+    override var frame: CGRect  { didSet { deploy() } }
+    override var bounds: CGRect { didSet { deploy() } }
     
     // MARK: - Values
     
-    @IBInspectable var _type: Int = 0 {didSet{ type = ProgressType(rawValue: _type) ?? type }}
-    var type: ProgressType = .ColorLine
+    @IBInspectable var _type: Int = 0 {
+        didSet {
+            type = ProgressType(rawValue: _type) ?? type
+        }
+    }
+    var type: ProgressType = .Round {
+        didSet {
+            deploy()
+        }
+    }
     
     // MARK: Color
-    @IBInspectable var color: UIColor = UIColor.yellowColor()
+    
+    @IBInspectable var color: UIColor = UIColor.yellowColor() {
+        didSet {
+            progressLayer.strokeColor = color.CGColor
+        }
+    }
     
     /// 渐变色颜色
     var colors: [CGColor] = [
@@ -60,13 +66,32 @@ class Progress: UIView {
         UIColor.blueColor().CGColor
     ]
     
-    @IBInspectable var backColor: UIColor = UIColor.blackColor()
+    @IBInspectable var backColor: UIColor = UIColor.blackColor() {
+        didSet {
+            backLayer.strokeColor = backColor.CGColor
+        }
+    }
     
     // MARK: Layer
     
-    @IBInspectable var lineWidth: CGFloat = 2
-    @IBInspectable var shadowOpacity: Float = 1
-    @IBInspectable var shadowRadius: CGFloat = 1
+    @IBInspectable var lineWidth: CGFloat = 2 {
+        didSet {
+            backLayer.lineWidth      = lineWidth
+            progressLayer.lineWidth  = lineWidth
+            backLayer.position.y     = bounds.height / 2
+            progressLayer.position.y = bounds.height / 2
+        }
+    }
+    @IBInspectable var shadowOpacity: Float = 0 {
+        didSet {
+            progressLayer.shadowOpacity = shadowOpacity
+        }
+    }
+    @IBInspectable var shadowRadius: CGFloat = 1 {
+        didSet {
+            progressLayer.shadowRadius = shadowRadius
+        }
+    }
     
     
     @IBInspectable var value: CGFloat = 1 {
@@ -89,32 +114,32 @@ class Progress: UIView {
     
     // MARK: - Draw
     
-    func colorLine() {
-        func makeLayer() -> CAShapeLayer {
-            let newlayer = CAShapeLayer()
-            newlayer.frame = bounds
-            newlayer.lineWidth = lineWidth
-            newlayer.lineCap = kCALineCapRound
-            
-            let path = UIBezierPath()
-            path.moveToPoint(CGPoint(x: lineWidth, y: bounds.height/2))
-            path.addLineToPoint(CGPoint(x: bounds.width-lineWidth, y: bounds.height/2))
-            
-            newlayer.path = path.CGPath
-            return newlayer
-        }
-        
-        backLayer = makeLayer()
+    func line() {
+        backLayer = makeLineLayer(1)
         backLayer.strokeColor = backColor.CGColor
         layer.addSublayer(backLayer)
         
-        progressLayer = makeLayer()
-        progressLayer.frame.origin.x = bounds.width*4
-        progressLayer.strokeColor = color.CGColor
-        progressLayer.strokeEnd = value
+        progressLayer = makeLineLayer()
+        progressLayer.strokeColor   = color.CGColor
+        progressLayer.strokeEnd     = value
+        progressLayer.shadowOffset  = CGSizeZero
         progressLayer.shadowOpacity = shadowOpacity
-        progressLayer.shadowOffset = CGSizeZero
-        progressLayer.shadowRadius = shadowRadius
+        progressLayer.shadowRadius  = shadowRadius
+        layer.addSublayer(progressLayer)
+    }
+    
+    func colorLine() {
+        backLayer = makeLineLayer(1)
+        backLayer.strokeColor = backColor.CGColor
+        layer.addSublayer(backLayer)
+        
+        progressLayer = makeLineLayer()
+        progressLayer.frame.origin.x    = bounds.width*4
+        progressLayer.strokeColor       = color.CGColor
+        progressLayer.strokeEnd         = value
+        progressLayer.shadowOffset      = CGSizeZero
+        progressLayer.shadowOpacity     = shadowOpacity
+        progressLayer.shadowRadius      = shadowRadius
         
         gradientLayer = gradientLayer(CGRect(x: -bounds.width*4, y: 0, width: bounds.width*5, height: bounds.height), colors: colors + [colors[1], colors[0], colors[1]], point: (0,0.5,1,0.5), locations: [0, 0.2, 0.4, 0.6, 0.8, 1])
         gradientLayer.mask = progressLayer
@@ -122,6 +147,22 @@ class Progress: UIView {
         
         animationRun = colorLineAnimationRun
         animationStop = colorLineAnimationStop
+    }
+    
+    func round() {
+        backLayer = makeRoundLayer(1)
+        backLayer.fillColor     = UIColor.clearColor().CGColor
+        backLayer.strokeColor   = backColor.CGColor
+        layer.addSublayer(backLayer)
+        
+        progressLayer = makeRoundLayer()
+        progressLayer.fillColor     = UIColor.clearColor().CGColor
+        progressLayer.strokeColor   = color.CGColor
+        progressLayer.strokeEnd     = value
+        progressLayer.shadowOffset  = CGSizeZero
+        progressLayer.shadowOpacity = shadowOpacity
+        progressLayer.shadowRadius  = shadowRadius
+        layer.addSublayer(progressLayer)
     }
     
     // MARK: - Methods
@@ -132,15 +173,19 @@ class Progress: UIView {
         gradientLayer?.removeFromSuperlayer()
         
         switch type {
+        case .Line:
+            line()
         case .ColorLine:
             colorLine()
+        case .Round:
+            round()
         }
     }
 
     // MARK: - Animation
     
-    var animationRun: (() -> Void)!
-    var animationStop: (() -> Void)!
+    var animationRun: (() -> Void)?
+    var animationStop: (() -> Void)?
     
     // MARK: Color Line
     
@@ -164,6 +209,31 @@ class Progress: UIView {
     }
     
     // MARK: - Tools
+    
+    func makeLineLayer(offset: CGFloat = 0) -> CAShapeLayer {
+        let newlayer = CAShapeLayer()
+        newlayer.frame = bounds
+        newlayer.lineWidth = lineWidth
+        newlayer.lineCap = kCALineCapRound
+        
+        let path = UIBezierPath()
+        path.moveToPoint(CGPoint(x: lineWidth + offset, y: bounds.height/2))
+        path.addLineToPoint(CGPoint(x: bounds.width-lineWidth-offset, y: bounds.height/2))
+        newlayer.path = path.CGPath
+        return newlayer
+    }
+    
+    func makeRoundLayer(offset: CGFloat = 0) -> CAShapeLayer {
+        let newlayer = CAShapeLayer()
+        newlayer.frame = bounds
+        newlayer.lineWidth = lineWidth - offset
+        newlayer.lineCap = kCALineCapRound
+        
+        let path = UIBezierPath()
+        path.addArcWithCenter(CGPoint(x: bounds.width/2, y: bounds.height/2), radius: (bounds.width-lineWidth)/2, startAngle: 0, endAngle: CGFloat(M_PI*2), clockwise: true)
+        newlayer.path = path.CGPath
+        return newlayer
+    }
     
     func gradientLayer(frame: CGRect, colors: [CGColor], point: (x1: CGFloat, y1: CGFloat, x2: CGFloat, y2: CGFloat) = (0.5, 0, 0.5, 1),locations: [NSNumber] = [0, 1]) -> CAGradientLayer {
         let gradient = CAGradientLayer()
