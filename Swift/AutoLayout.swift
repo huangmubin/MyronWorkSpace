@@ -13,9 +13,11 @@ import UIKit
 class AutoLayout {
     
     // MARK: 初始化
+    /*
     deinit {
         print("AutoLayout deinit")
     }
+     */
     /// 设置 superview
     init(_ view: UIView) {
         self.view = view
@@ -442,7 +444,6 @@ extension AutoLayout {
             for constraint in superview.constraints {
                 if constraint.firstItem === view {
                     superview.removeConstraint(constraint)
-                    constraint.secondItem
                 }
             }
         }
