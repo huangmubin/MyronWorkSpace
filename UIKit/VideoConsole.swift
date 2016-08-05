@@ -194,13 +194,13 @@ class VideoConsole: UIView {
     // MARK: - Images
     
     /// 播放按钮：播放图片
-    @IBInspectable var playImage: UIImage? = UIImage(named: "Play_W")
+    @IBInspectable lazy var playImage: UIImage? = UIImage(named: "Play_W")
     /// 播放按钮：暂停图片
-    @IBInspectable var stopImage: UIImage? = UIImage(named: "Stop_W")
+    @IBInspectable lazy var stopImage: UIImage? = UIImage(named: "Stop_W")
     /// 全屏按钮：全屏图片
-    @IBInspectable var fullImage: UIImage? = UIImage(named: "Full_W")
+    @IBInspectable lazy var fullImage: UIImage? = UIImage(named: "Full_W")
     /// 全屏按钮：半屏图片
-    @IBInspectable var unFullImage: UIImage? = UIImage(named: "UnFull_W")
+    @IBInspectable lazy var unFullImage: UIImage? = UIImage(named: "UnFull_W")
     
     /// 上一曲按钮图片
     @IBInspectable lazy var previousImage: UIImage? = UIImage(named: "Previous_W")
@@ -456,11 +456,7 @@ class VideoConsole: UIView {
     /// 是否根据屏幕方向自动变化单行或双行
     @IBInspectable var autoType: Bool = true {
         didSet {
-            if autoType {
-                monitorOrientation(true)
-            } else {
-                monitorOrientation(false)
-            }
+            monitorOrientation(autoType)
         }
     }
     private var notify: Bool = false
@@ -474,9 +470,9 @@ class VideoConsole: UIView {
             NSNotificationCenter.defaultCenter().removeObserver(self)
             notify = false
         }
-        
     }
-    func orientationDidChanged() {
+    
+    @objc private func orientationDidChanged() {
         if autoType {
             switch UIDevice.currentDevice().orientation {
             case .LandscapeLeft, .LandscapeRight:
