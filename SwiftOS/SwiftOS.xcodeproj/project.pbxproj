@@ -27,6 +27,7 @@
 		9C3CC6BA1D4D135B000FCD38 /* SwiftOS */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SwiftOS; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C3CC6BD1D4D135B000FCD38 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		9C3CC6C41D4D13F3000FCD38 /* Text.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Text.swift; path = ../../Swift/Text.swift; sourceTree = "<group>"; };
+		9C79FD2C1D54024A00A20D7F /* TestFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestFile.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +62,7 @@
 			children = (
 				9C3CC6BD1D4D135B000FCD38 /* main.swift */,
 				9C3CC6C41D4D13F3000FCD38 /* Text.swift */,
+				9C79FD2C1D54024A00A20D7F /* TestFile.swift */,
 			);
 			path = SwiftOS;
 			sourceTree = "<group>";

@@ -1,6 +1,6 @@
 //
 //  Progress.swift
-//  
+//
 //
 //  Created by 黄穆斌 on 16/8/3.
 //
@@ -31,7 +31,6 @@ class Progress: UIView {
         load()
     }
     
-    /// 加载时调用的配置
     private func load() {
         self.backgroundColor = UIColor.clearColor()
         deploy()
@@ -39,20 +38,16 @@ class Progress: UIView {
     
     // MARK: Override
     
-    /// 每次修改大小都重载一下视图
     override var frame: CGRect  { didSet { deploy() } }
-    /// 每次修改大小都重载一下视图
     override var bounds: CGRect { didSet { deploy() } }
     
     // MARK: - Values
     
-    /// 通过 Storyboard 修改进度条类型
     @IBInspectable var _type: Int = 0 {
         didSet {
             type = Type(rawValue: _type) ?? type
         }
     }
-    /// 进度条类型
     var type: Type = .Round {
         didSet {
             deploy()
@@ -61,21 +56,19 @@ class Progress: UIView {
     
     // MARK: Color
     
-    /// 进度条颜色
     @IBInspectable var color: UIColor = UIColor.yellowColor() {
         didSet {
             progressLayer.strokeColor = color.CGColor
         }
     }
     
-    /// 进度条渐变色颜色，只有在使用渐变色时才会生效
+    /// 渐变色颜色
     var colors: [CGColor] = [
         UIColor.redColor().CGColor,
         UIColor.yellowColor().CGColor,
         UIColor.blueColor().CGColor
     ]
     
-    /// 进度条背景颜色
     @IBInspectable var backColor: UIColor = UIColor.blackColor() {
         didSet {
             backLayer.strokeColor = backColor.CGColor
@@ -190,7 +183,7 @@ class Progress: UIView {
             round()
         }
     }
-
+    
     // MARK: - Animation
     
     var animationRun: (() -> Void)?
