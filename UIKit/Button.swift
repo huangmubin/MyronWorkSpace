@@ -10,84 +10,110 @@ import UIKit
 
 class Button: UIButton {
     
+    // MAKR: - Init
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        deploy()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        deploy()
+    }
+    
+    func deploy() {
+        layer.shadowOffset = offset
+        
+        let select = self.selected
+        self.selected = true
+        self.selected = select
+        
+        let high = self.highlighted
+        self.highlighted = true
+        self.highlighted = high
+    }
+    
     // MARK: - Values
     
-    var backView: UIView?
+    // MAKR: Shadow
     
-    @IBInspectable var corner: CGFloat = 0
-    @IBInspectable var opacity: Float = 0
-    @IBInspectable var offset: CGSize = CGSizeZero
-    @IBInspectable var radius: CGFloat = 0
+    /// 圆角角度
+    @IBInspectable var corner: CGFloat = 0 {
+        didSet {
+            layer.cornerRadius = corner
+        }
+    }
+    /// 阴影透明度
+    @IBInspectable var opacity: Float = 0 {
+        didSet {
+            layer.shadowOpacity = opacity
+        }
+    }
+    /// 阴影偏移
+    @IBInspectable var offset: CGSize = CGSizeZero {
+        didSet {
+            layer.shadowOffset = offset
+        }
+    }
+    /// 阴影距离
+    @IBInspectable var radius: CGFloat = 0 {
+        didSet {
+            layer.shadowRadius = radius
+        }
+    }
+    
+    // MARK: Back View
+    
+    /// 背景颜色
+    var backColor: UIColor = UIColor.clearColor() {
+        didSet {
+            layer.backgroundColor = selected ? tintColor.CGColor : backColor.CGColor
+            backgroundColor = UIColor.clearColor()
+        }
+    }
+    
+    // MARK: Other
+    
+    /// 备注信息
     @IBInspectable var note: String = ""
-    @IBInspectable var color: UIColor = UIColor.whiteColor() {
-        didSet {
-            backView?.layer.backgroundColor = selected ? tintColor.CGColor : color.CGColor
-            setTitleColor(color, forState: .Selected)
-        }
-    }
     
-    @IBInspectable var type: Bool = false {
-        didSet {
-            if type {
-                if backView == nil {
-                    backView = UIView(frame: bounds)
-                    backView?.userInteractionEnabled = false
-                    backView?.backgroundColor = UIColor.clearColor()
-                    addSubview(backView!)
-                    if imageView != nil {
-                        bringSubviewToFront(imageView!)
-                    }
-                }
-                backView?.layer.backgroundColor = selected ? tintColor.CGColor : color.CGColor
-                backView?.layer.cornerRadius = corner
-                backView?.layer.shadowOpacity = opacity
-                backView?.layer.shadowOffset = offset
-                backView?.layer.shadowRadius = radius
-            }
-        }
-    }
+    // MAKR: - Override
     
-    // MARK: - Override
+    // MARK: Status
     
+    private var removeBackImageView: Bool = true
     override var selected: Bool {
         didSet {
-            if type {
+            if removeBackImageView {
                 for view in subviews {
                     if view is UIImageView && view !== imageView {
+                        removeBackImageView = false
                         view.removeFromSuperview()
                     }
                 }
-                backView?.layer.backgroundColor = selected ? tintColor.CGColor : color.CGColor
             }
+            layer.backgroundColor = selected ? tintColor.CGColor : backColor.CGColor
         }
     }
     
     override var highlighted: Bool {
         didSet {
-            if type {
-                for view in subviews {
-                    if view is UIImageView && view !== imageView {
-                        view.removeFromSuperview()
-                    }
-                }
-                UIView.animateWithDuration(0.2) {
-                    self.backView?.alpha = self.highlighted ? 0.2 : 1
-                }
+            UIView.animateWithDuration(0.2) {
+                self.alpha = self.highlighted ? 0.3 : 1
             }
         }
     }
     
-    override var frame: CGRect {
+    
+    // MARK: Color
+    
+    override var backgroundColor: UIColor? {
         didSet {
-            backView?.frame = bounds
+            if backgroundColor != UIColor.clearColor() {
+                backColor = backgroundColor ?? UIColor.clearColor()
+            }
         }
     }
-    
-    override var bounds: CGRect {
-        didSet {
-            backView?.frame = bounds
-        }
-    }
-    
     
 }
