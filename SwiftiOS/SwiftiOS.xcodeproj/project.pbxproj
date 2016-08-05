@@ -20,6 +20,7 @@
 		9CF80F981D4F69B30019C333 /* AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF80F961D4F69B30019C333 /* AutoLayout.swift */; };
 		B15540FD1D53247E00D37A7C /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15540FC1D53247E00D37A7C /* Color.swift */; };
 		B155411A1D532A6500D37A7C /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15541191D532A6500D37A7C /* Network.swift */; };
+		B1711B251D54459C00D3BAE4 /* VideoConsole.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1711B241D54459C00D3BAE4 /* VideoConsole.swift */; };
 		B177C1771D51D1090017499D /* Progress.swift in Sources */ = {isa = PBXBuildFile; fileRef = B177C1761D51D1090017499D /* Progress.swift */; };
 		B177C1791D51D1400017499D /* ValueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B177C1781D51D1400017499D /* ValueViewController.swift */; };
 		B177C17B1D51EA330017499D /* Drawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B177C17A1D51EA330017499D /* Drawer.swift */; };
@@ -42,6 +43,7 @@
 		9CF80F961D4F69B30019C333 /* AutoLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AutoLayout.swift; path = ../../Swift/AutoLayout.swift; sourceTree = "<group>"; };
 		B15540FC1D53247E00D37A7C /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Color.swift; path = ../../Swift/Color.swift; sourceTree = "<group>"; };
 		B15541191D532A6500D37A7C /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Network.swift; path = ../../Swift/Network.swift; sourceTree = "<group>"; };
+		B1711B241D54459C00D3BAE4 /* VideoConsole.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoConsole.swift; path = ../../UIKit/VideoConsole.swift; sourceTree = "<group>"; };
 		B177C1761D51D1090017499D /* Progress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Progress.swift; path = ../../UIKit/Progress.swift; sourceTree = "<group>"; };
 		B177C1781D51D1400017499D /* ValueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueViewController.swift; sourceTree = "<group>"; };
 		B177C17A1D51EA330017499D /* Drawer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Drawer.swift; path = ../../UIKit/Drawer.swift; sourceTree = "<group>"; };
@@ -102,6 +104,7 @@
 		9CE8ACB31D4E133F00AE8204 /* UIKit */ = {
 			isa = PBXGroup;
 			children = (
+				B1711B241D54459C00D3BAE4 /* VideoConsole.swift */,
 				B177C17A1D51EA330017499D /* Drawer.swift */,
 				9CA32F711D50443A00AEB3DF /* TextView.swift */,
 				9CA32F721D50443A00AEB3DF /* Button.swift */,
@@ -205,6 +208,7 @@
 				9CA32F731D50443A00AEB3DF /* TextView.swift in Sources */,
 				B177C1791D51D1400017499D /* ValueViewController.swift in Sources */,
 				B1DB4A261D4EDC8700C9BC50 /* HUD.swift in Sources */,
+				B1711B251D54459C00D3BAE4 /* VideoConsole.swift in Sources */,
 				9CE8ACA11D4E108700AE8204 /* AppDelegate.swift in Sources */,
 				B155411A1D532A6500D37A7C /* Network.swift in Sources */,
 				9C3F3D921D5376C700E6576C /* CGSizes.swift in Sources */,

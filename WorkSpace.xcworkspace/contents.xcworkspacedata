@@ -42,6 +42,9 @@
          location = "group:Progress.swift">
       </FileRef>
       <FileRef
+         location = "group:VideoConsole.swift">
+      </FileRef>
+      <FileRef
          location = "group:README.md">
       </FileRef>
    </Group>
