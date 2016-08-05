@@ -67,6 +67,9 @@
          location = "group:Network.swift">
       </FileRef>
       <FileRef
+         location = "group:GCD.swift">
+      </FileRef>
+      <FileRef
          location = "group:README.md">
       </FileRef>
    </Group>

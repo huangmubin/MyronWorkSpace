@@ -6,7 +6,8 @@
 //
 /*
  import file -> MyronWorkSpace/UIKit/AutoLayout.swift
- 
+ ARK: - Images 处可设置按钮具体的图片或图片获取方式
+ var autoType: Bool 默认为 false. 打开后会自动监听方向并改变类型。
  */
 
 import UIKit

@@ -161,7 +161,6 @@ public class HUD: NSObject {
         dispatch_source_set_event_handler(timer!) {
             if timeOut <= 0 {
                 dispatch_async(dispatch_get_main_queue()) {
-                    // TODO:
                     HUD.dismiss()
                     completion?()
                 }
