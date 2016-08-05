@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="14px" height="18px" viewBox="0 0 14 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 3.8.3 (29802) - http://www.bohemiancoding.com/sketch -->
+    <title>Stop</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-3" transform="translate(-8.000000, -6.000000)" fill="#323232">
+            <g id="Stop_B">
+                <path d="M18,6.99339768 C18,6.44475929 18.4433532,6 19.0093689,6 L20.9906311,6 C21.5480902,6 22,6.44494629 22,6.99339768 L22,23.0066023 C22,23.5552407 21.5566468,24 20.9906311,24 L19.0093689,24 C18.4519098,24 18,23.5550537 18,23.0066023 L18,6.99339768 Z M8,6.99339768 C8,6.44475929 8.44335318,6 9.0093689,6 L10.9906311,6 C11.5480902,6 12,6.44494629 12,6.99339768 L12,23.0066023 C12,23.5552407 11.5566468,24 10.9906311,24 L9.0093689,24 C8.45190985,24 8,23.5550537 8,23.0066023 L8,6.99339768 Z" id="Stop"></path>
+            </g>
+        </g>
+    </g>
+</svg>
