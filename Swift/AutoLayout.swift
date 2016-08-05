@@ -195,6 +195,19 @@ extension AutoLayout {
         return self
     }
     
+    /// 给指定的 View 添加 Height Width 约束
+    func Size(view: UIView, _ height: CGFloat, _ width: CGFloat, _ related: NSLayoutRelation = .Equal, priority: Float = 1000) -> AutoLayout {
+        let constraintH = NSLayoutConstraint(item: view, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: height)
+        constraintH.priority = priority
+        _constrants.append(constraintH)
+        view.addConstraint(constraintH)
+        let constraintW = NSLayoutConstraint(item: view, attribute: .Height, relatedBy: related, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: width)
+        constraintW.priority = priority
+        _constrants.append(constraintW)
+        view.addConstraint(constraintW)
+        return self
+    }
+    
     /// 水平距离，first.Leading to second.Trailing
     func HorizontalSpace(constant: CGFloat = 0, _ multiplier: CGFloat = 1, _ related: NSLayoutRelation = .Equal, priority: Float = 1000) -> AutoLayout {
         let constraint = NSLayoutConstraint(item: first, attribute: .Leading, relatedBy: related, toItem: second, attribute: .Trailing, multiplier: multiplier, constant: constant)
