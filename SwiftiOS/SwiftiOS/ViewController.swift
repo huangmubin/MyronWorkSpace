@@ -15,77 +15,58 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         //performSegueWithIdentifier("ValueViewControlller", sender: nil)
         
+        print("Portrait: \(UIInterfaceOrientationMask.Portrait.rawValue)")
+        print("LandscapeLeft: \(UIInterfaceOrientationMask.LandscapeLeft.rawValue)")
+        print("LandscapeRight: \(UIInterfaceOrientationMask.LandscapeRight.rawValue)")
+        print("PortraitUpsideDown: \(UIInterfaceOrientationMask.PortraitUpsideDown.rawValue)")
+        print("Landscape: \(UIInterfaceOrientationMask.Landscape.rawValue)")
+        print("All: \(UIInterfaceOrientationMask.All.rawValue)")
+        print("AllButUpsideDown: \(UIInterfaceOrientationMask.AllButUpsideDown.rawValue)")
+        print("")
+        print("Unknown \(UIInterfaceOrientation.Unknown.rawValue)")
+        print("Portrait \(UIInterfaceOrientation.Portrait.rawValue)")
+        print("PortraitUpsideDown \(UIInterfaceOrientation.PortraitUpsideDown.rawValue)")
+        print("LandscapeLeft \(UIInterfaceOrientation.LandscapeLeft.rawValue)")
+        print("LandscapeRight \(UIInterfaceOrientation.LandscapeRight.rawValue)")
+        print("")
+        print("\(Int(UIInterfaceOrientationMask.Portrait.rawValue) == 1 << UIInterfaceOrientation.Portrait.rawValue)")
+        print("\(Int(UIInterfaceOrientationMask.LandscapeLeft.rawValue) == 1 << UIInterfaceOrientation.LandscapeLeft.rawValue)")
+        print("\(Int(UIInterfaceOrientationMask.LandscapeRight.rawValue) == 1 << UIInterfaceOrientation.LandscapeRight.rawValue)")
+        print("\(Int(UIInterfaceOrientationMask.PortraitUpsideDown.rawValue) == 1 << UIInterfaceOrientation.PortraitUpsideDown.rawValue)")
         
-<<<<<<< Updated upstream
-        let a = 0
-        print(String(a, radix: 2))
-=======
-        let time: NSTimeInterval = 10
-        let timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue())
         
-        /*
-         /// 进行定时，倒数设定的时间之后，调用完成块或调用隐藏方法。
-         private func delayDismiss(time: NSTimeInterval?, completion: HUDCompletedBlock?) {
-         guard let time = time else { return }
-         guard time > 0 else { return }
-         var timeOut = time
-         timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue())
-         dispatch_source_set_timer(timer!, dispatch_walltime(nil, 0), NSEC_PER_SEC, 0)
-         dispatch_source_set_event_handler(timer!) {
-         if timeOut <= 0 {
-         dispatch_async(dispatch_get_main_queue()) {
-         HUD.dismiss()
-         completion?()
-         }
-         } else {
-         timeOut -= 1
-         }
-         }
-         dispatch_resume(timer!)
-         }
-         */
->>>>>>> Stashed changes
+        print("\(UIInterfaceOrientationMask.Landscape.rawValue == UIInterfaceOrientationMask.LandscapeLeft.rawValue | UIInterfaceOrientationMask.LandscapeRight.rawValue)")
+        print("\(UIInterfaceOrientationMask.All.rawValue == UIInterfaceOrientationMask.LandscapeLeft.rawValue | UIInterfaceOrientationMask.LandscapeRight.rawValue | UIInterfaceOrientationMask.Portrait.rawValue | UIInterfaceOrientationMask.PortraitUpsideDown.rawValue)")
+        print("\(UIInterfaceOrientationMask.AllButUpsideDown.rawValue == UIInterfaceOrientationMask.LandscapeLeft.rawValue | UIInterfaceOrientationMask.LandscapeRight.rawValue | UIInterfaceOrientationMask.Portrait.rawValue)")
     }
     
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-<<<<<<< Updated upstream
         print("Done")
     }
+}
+
+extension UIInterfaceOrientationMask {
     
-=======
-//        testView = VideoConsole(frame: CGRect(x: 20, y: 100, width: view.bounds.width-40, height: 30))
-//        testView.delegate = self
-//        view.addSubview(testView)
-//        testView.autoLayoutToSupview()
-        
-        
-        print("Done")
+    func orientations() -> [UIInterfaceOrientation] {
+        switch self {
+        case UIInterfaceOrientationMask.Portrait:
+            return [UIInterfaceOrientation.Portrait]
+        case UIInterfaceOrientationMask.LandscapeRight:
+            return [UIInterfaceOrientation.LandscapeRight]
+        case UIInterfaceOrientationMask.LandscapeLeft:
+            return [UIInterfaceOrientation.LandscapeLeft]
+        case UIInterfaceOrientationMask.PortraitUpsideDown:
+            return [UIInterfaceOrientation.PortraitUpsideDown]
+        case UIInterfaceOrientationMask.Landscape:
+            return [UIInterfaceOrientation.LandscapeLeft, UIInterfaceOrientation.LandscapeRight]
+        case UIInterfaceOrientationMask.All:
+            return [UIInterfaceOrientation.Portrait, UIInterfaceOrientation.PortraitUpsideDown, UIInterfaceOrientation.LandscapeLeft, UIInterfaceOrientation.LandscapeRight]
+        case UIInterfaceOrientationMask.AllButUpsideDown:
+            return [UIInterfaceOrientation.Portrait, UIInterfaceOrientation.PortraitUpsideDown, UIInterfaceOrientation.LandscapeLeft, UIInterfaceOrientation.LandscapeRight]
+        default:
+            return []
+        }
     }
-    
-    var layout: NSLayoutConstraint!
-    
-    func videoConsoleFullAction(console: VideoConsole, full: Bool) {
-        console.type = full ? .TwoLine : .OneLine
-        print("videoConsoleFullAction \(full)")
-        
-    }
-    
-    func videoConsolePlayAction(console: VideoConsole, play: Bool) {
-        print("videoConsolePlayAction \(play)")
-    }
-    
-    func videoConsoleValueChanged(console: VideoConsole, value: CGFloat, current: CGFloat) {
-        print("videoConsoleValueChanged \(value)")
-    }
-    
-    func videoConsolePreviousAndNextAction(console: VideoConsole, previous: Bool) {
-        print("videoConsolePreviousAndNextAction \(previous)")
-    }
-    
-    var testView: VideoConsole!
-    
-    
->>>>>>> Stashed changes
 }

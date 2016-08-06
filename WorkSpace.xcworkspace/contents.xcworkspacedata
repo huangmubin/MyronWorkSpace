@@ -75,6 +75,9 @@
       <FileRef
          location = "group:README.md">
       </FileRef>
+      <FileRef
+         location = "group:Type.swift">
+      </FileRef>
    </Group>
    <Group
       location = "group:Tools"

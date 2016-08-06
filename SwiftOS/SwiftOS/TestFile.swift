@@ -8,6 +8,21 @@
 
 import UIKit
 
+/*
+ Test
+     /*
+     Test2
+        /**
+        Test3
+        */
+     */
+ */
+
+var test = "dsfjk///*/*ldsf"
+var int = 10
+var double = 10.5
+var str = "dd"
+var ddd = CGRect()
 
 class Progress: UIView {
     
