@@ -163,6 +163,7 @@ public class HUD: NSObject {
                 dispatch_async(dispatch_get_main_queue()) {
                     HUD.dismiss()
                     completion?()
+                    self.timer = nil
                 }
             } else {
                 timeOut -= 1

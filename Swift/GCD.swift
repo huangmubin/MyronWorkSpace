@@ -43,6 +43,10 @@ class GCD: NSObject {
     private var queue: dispatch_queue_t!
     /// 调用的内容
     private var waitBlock: dispatch_block_t?
+    /// 计时器资源
+    private var timerSource: dispatch_source_t?
+    /// 计数值
+    private var value: Int = 0
     
     // MAKR: - Init
     
@@ -54,6 +58,8 @@ class GCD: NSObject {
     }
     
     // MARK: - Methods
+    
+    // MARK: 常用方法
     
     /// 给该队列添加一个并发任务(当前线程不会等待这个任务完成)
     func async(block: dispatch_block_t) {
@@ -75,6 +81,8 @@ class GCD: NSObject {
         dispatch_barrier_sync(queue, block)
     }
     
+    // MARK: 延迟方法
+    
     /// 延迟几秒后调用某方法，注意如果在串行队列中，该方法会堵塞进程，即使使用 cancel 方法，也依然会堵塞到时间结束。而且该方法无法在上一个任务完成之前再次调用，cancel 只能取消最后一次。
     func after(time: NSTimeInterval, block: dispatch_block_t) -> Bool {
         if waitBlock == nil {
@@ -95,10 +103,114 @@ class GCD: NSObject {
     /**
      取消当前正在长时间运行的 Block
      */
-    func cancel() {
+    func cancelAfter() {
         waitBlock = nil
     }
     
+    // MARK: 循环方法
+    
+    /**
+     开启一个循环计时器，每间隔一定时间就调用一次。
+     * handlerQueue: 事件分配到哪个队列
+     * interval: 间隔时间
+     * event: 间隔事件
+     * cancel: 取消时的事件处理
+     */
+    func cycle(handlerQueue: dispatch_queue_t, interval: UInt64, event: dispatch_block_t, cancel: dispatch_block_t) {
+        timerSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, handlerQueue)
+        dispatch_source_set_timer(timerSource!, dispatch_walltime(nil, 0), NSEC_PER_SEC * interval, 0)
+        dispatch_source_set_event_handler(timerSource!, event)
+        dispatch_source_set_cancel_handler(timerSource!, cancel)
+        dispatch_resume(timerSource!)
+    }
+    
+    /**
+     链式调用
+     GCD(name: "Test")
+     .cycle()
+     .event(10) { print("\(NSThread.currentThread())") }
+     .cancelEvent { print("Cancel") }
+     .resume()
+     */
+    func cycle(handlerQueue: dispatch_queue_t? = nil, interval: UInt64 = 1) -> GCD {
+        timerSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, handlerQueue ?? queue)
+        dispatch_source_set_timer(timerSource!, dispatch_walltime(nil, 0), NSEC_PER_SEC * interval, 0)
+        return self
+    }
+    /**
+     链式调用
+     GCD(name: "Test")
+     .cycle()
+     .event(10) { print("\(NSThread.currentThread())") }
+     .cancelEvent { print("Cancel") }
+     .resume()
+     */
+    func interval(interval: UInt64) -> GCD {
+        dispatch_source_set_timer(timerSource!, dispatch_walltime(nil, 0), NSEC_PER_SEC * interval, 0)
+        return self
+    }
+    /**
+     链式调用
+     GCD(name: "Test")
+     .cycle()
+     .event(10) { print("\(NSThread.currentThread())") }
+     .cancelEvent { print("Cancel") }
+     .resume()
+     */
+    func event(event: dispatch_block_t) -> GCD {
+        dispatch_source_set_event_handler(timerSource!, event)
+        return self
+    }
+    /**
+     链式调用
+     GCD(name: "Test")
+     .cycle()
+     .event(10) { print("\(NSThread.currentThread())") }
+     .cancelEvent { print("Cancel") }
+     .resume()
+     */
+    func event(times: UInt, event: dispatch_block_t) -> GCD {
+        value = Int(times)
+        dispatch_source_set_event_handler(timerSource!) { 
+            self.value -= 1
+            if self.value > 0 {
+                event()
+            } else {
+                dispatch_source_cancel(self.timerSource!)
+                self.timerSource = nil
+            }
+        }
+        return self
+    }
+    /**
+     链式调用
+     GCD(name: "Test")
+     .cycle()
+     .event(10) { print("\(NSThread.currentThread())") }
+     .cancelEvent { print("Cancel") }
+     .resume()
+     */
+    func cancelEvent(event: dispatch_block_t) -> GCD {
+        dispatch_source_set_cancel_handler(timerSource!, event)
+        return self
+    }
+    /**
+     链式调用
+     GCD(name: "Test")
+     .cycle()
+     .event(10) { print("\(NSThread.currentThread())") }
+     .cancelEvent { print("Cancel") }
+     .resume()
+     */
+    func resume() -> GCD {
+        dispatch_resume(timerSource!)
+        return self
+    }
+    
+    func cancel() {
+        dispatch_source_cancel(timerSource!)
+        timerSource = nil
+    }
 }
 
 // MARK: - Class Tools
