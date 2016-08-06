@@ -14,6 +14,10 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         //performSegueWithIdentifier("ValueViewControlller", sender: nil)
+        
+        
+        let a = 0
+        print(String(a, radix: 2))
     }
     
     
