@@ -8,6 +8,13 @@
  import file -> MyronWorkSpace/UIKit/AutoLayout.swift
  ARK: - Images 处可设置按钮具体的图片或图片获取方式
  var autoType: Bool 默认为 false. 打开后会自动监听方向并改变类型。
+ var autoHidden: Bool 默认为 false. 必须先调用过 autoLayoutToSuperView, 否则会出错。
+ 一般用法：
+ testView = VideoConsole()
+ testView.delegate = self
+ testView.autoType = true
+ superview.addSubview(testView)
+ testView.autoLayoutToSupview(true)
  */
 
 import UIKit
@@ -96,6 +103,7 @@ class VideoConsole: UIView {
         // 自动设置
         if autoType {
             monitorOrientation(true)
+            orientationDidChanged()
         }
     }
     
@@ -272,12 +280,16 @@ class VideoConsole: UIView {
         }
     }
     
-    // MARK: Button
+    // MARK: - Status
     
     /// 当前播放状态
     var play: Bool {
         set {
+            print("Status = \(newValue)")
             playButton.selected = newValue
+            if autoHidden {
+                hiddenAnimation(newValue)
+            }
         }
         get {
             return playButton.selected
@@ -298,12 +310,16 @@ class VideoConsole: UIView {
     func playAction(sender: UIButton) {
         sender.selected = !sender.selected
         delegate?.videoConsolePlayAction(self, play: sender.selected)
+        if sender.selected && autoHidden {
+            hiddenAnimation(true)
+        }
     }
     
     func fullAction(sender: UIButton) {
         sender.selected = !sender.selected
         delegate?.videoConsoleFullAction(self, full: sender.selected)
     }
+    
     
     func nextAction(sender: UIButton) {
         delegate?.videoConsolePreviousAndNextAction?(self, previous: false)
@@ -486,6 +502,18 @@ class VideoConsole: UIView {
         }
     }
     
+    /// 根据 View 获取他的 ViewController
+    private func superViewController(view: UIView) -> UIViewController? {
+        var responder: UIResponder? = view
+        while responder != nil {
+            responder = responder?.nextResponder()
+            if responder?.isKindOfClass(UIViewController.self) == true {
+                break
+            }
+        }
+        return responder as? UIViewController
+    }
+    
     // MARK: 位置
     
     weak var view: UIView?
@@ -497,7 +525,7 @@ class VideoConsole: UIView {
     weak var bottomConstraint: NSLayoutConstraint?
     
     /// 给父视图添加自动约束，请确认没有给该视图添加高度约束，或已将高度约束赋予 heightConstraint，否则将会失效。
-    func autoLayoutToSupview() {
+    func autoLayoutToSupview(autoHidden: Bool = false) {
         if let superView = superview {
             if superView !== view {
                 if heightConstraint == nil {
@@ -512,8 +540,78 @@ class VideoConsole: UIView {
                     self.leadingConstraint = $0[1]
                     self.trailingConstraint = $0[2]
                 }
+                if autoHidden {
+                    self.autoHidden = true
+                }
             }
         }
     }
+    
+    // MARK: 隐藏
+    
+    weak var hiddenButton: UIButton? = nil
+    
+    /// 是否触摸播放器会自动隐藏和显示，必须已经调用过 autoLayoutToSupview, 否则无效，会将 superview.slipSubView = true
+    @IBInspectable var autoHidden: Bool = false {
+        didSet {
+            if autoHidden {
+                if let superView = view {
+                    superView.clipsToBounds = true
+                    
+                    let hidden = UIButton()
+                    hiddenButton = hidden
+                    hiddenButton?.enabled = false
+                    hiddenButton?.addTarget(self, action: #selector(hiddenAction), forControlEvents: .TouchUpInside)
+                    superView.insertSubview(hiddenButton!, belowSubview: self)
+                    AutoLayout(superView, hiddenButton!).HorizontalVertical()
+                }
+            } else {
+                hiddenButton?.removeFromSuperview()
+            }
+        }
+    }
+    
+    @objc func hiddenAction() {
+        //print("hiddenAction")
+        hiddenAnimation(false)
+    }
+    
+    
+    deinit {
+        print("Deinit Video Console")
+        hiddenButton?.removeFromSuperview()
+    }
+    
+    // MARK: - Animation
+    
+    func hiddenAnimation(hide: Bool) {
+        if let bottom = bottomConstraint, let height = heightConstraint {
+            hiddenButton?.enabled = false
+            UIView.animateWithDuration(0.5, delay: 0, options: .CurveLinear, animations: {
+                bottom.constant = hide ? height.constant : 0
+                self.layoutIfNeeded()
+            }) {
+                print("Animation Complete \($0); \(NSThread.currentThread())")
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+                    NSThread.sleepForTimeInterval(1)
+                    dispatch_async(dispatch_get_main_queue()) {
+                        print("play = \(self.play); bottom = \(bottom.constant)")
+                        if self.play && bottom.constant == 0 {
+                            UIView.animateWithDuration(0.5, animations: { 
+                                bottom.constant = height.constant
+                                self.layoutIfNeeded()
+                            }) {
+                                print("Animation Complete In \($0); \(NSThread.currentThread())")
+                                self.hiddenButton?.enabled = true
+                            }
+                        } else {
+                            self.hiddenButton?.enabled = self.play
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
 }
 

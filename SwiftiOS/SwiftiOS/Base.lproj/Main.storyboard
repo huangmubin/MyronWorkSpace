@@ -70,7 +70,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="XwA-ZL-XmB"/>
+                    <navigationItem key="navigationItem" id="XwA-ZL-XmB">
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="q8x-lJ-qeo">
+                            <connections>
+                                <segue destination="Zpz-mr-2vX" kind="show" id="pke-si-JHI"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="ValueViewController" id="ruq-DO-VK4"/>
@@ -79,6 +85,36 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="13R-GX-M8F" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1202" y="393"/>
+        </scene>
+        <!--Title-->
+        <scene sceneID="Kgu-kO-TmS">
+            <objects>
+                <viewController id="Zpz-mr-2vX" customClass="SecondViewController" customModule="SwiftiOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="IL5-eI-3y4"/>
+                        <viewControllerLayoutGuide type="bottom" id="Aq7-f5-cNg"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ypz-t8-Z24">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <toolbarItems>
+                        <barButtonItem title="Item" id="1MU-30-fmj"/>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" title="Title" id="g3E-Xp-85d">
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="xQw-6J-DlI">
+                            <connections>
+                                <action selector="rightAction:" destination="Zpz-mr-2vX" id="hcl-PC-4ny"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="H0a-Mc-PkY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1652" y="393"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="wUx-u7-QnR">
