@@ -86,6 +86,9 @@
          location = "group:Catalog.swift">
       </FileRef>
       <FileRef
+         location = "group:ApiTool.swift">
+      </FileRef>
+      <FileRef
          location = "group:README.md">
       </FileRef>
    </Group>
