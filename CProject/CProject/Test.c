@@ -268,3 +268,58 @@ int Count_Digit(const int N, const int D) {
     return t;
 }
 */
+// MARK: 4-10 阶乘计算升级版
+/*
+#include <stdio.h>
+
+void Print_Factorial ( const int N );
+
+int main()
+{
+    int N;
+				
+    scanf("%d", &N);
+    Print_Factorial(N);
+    return 0;
+}
+
+#define MAX 10
+#define SIZE 3000
+
+void Print_Factorial(const int N) {
+    if (N < 0) {
+        printf("Invalid input");
+    } else {
+        int total[SIZE] = {0};
+        total[0] = 1;
+        int big = 1;
+        int add = 0;
+        int j = 0;
+        for (int i = 2; i <= N; i++) {
+            if (i == 15) {
+                printf("");
+            }
+            for (j = 0; j < big; j++) {
+                total[j] *= i;
+                total[j] += add;
+                add = total[j] / MAX;
+                total[j] %= MAX;
+            }
+            while (add > 0) {
+                big++;
+                total[big-1] = add % MAX;
+                add /= MAX;
+            }
+            //            printf("i = %d; ", i);
+            //            for (int m = big; m > 0; m--) {
+            //                printf("%d", total[m-1]);
+            //            }
+            //            printf("\n");
+        }
+        
+        for (; big > 0; big--) {
+            printf("%d", total[big-1]);
+        }
+    }
+}
+*/
