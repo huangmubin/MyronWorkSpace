@@ -323,3 +323,49 @@ void Print_Factorial(const int N) {
     }
 }
 */
+
+
+
+
+// MARK: 4-12 判断奇偶性
+/*
+#include <stdio.h>
+
+int even( int n );
+
+int main()
+{
+    int n;
+    
+    scanf("%d", &n);
+    if (even(n))
+        printf("%d is even.\n", n);
+    else
+        printf("%d is odd.\n", n);
+    
+    return 0;
+}
+
+int even(int n) {
+    return n%2 == 0;
+}
+*/
+
+
+// MARK: 5-1 厘米换算英尺英寸
+/*
+#include "stdio.h"
+
+int main() {
+    int a, b, c;
+    double t;
+    scanf("%d", &a);
+    if (a < 0)
+        return 0;
+    
+    t = (double)a / 100 / 0.3048;
+    b = (int)t;
+    c = (int)((t-b)*12);
+    printf("%d %d", b, c);
+}
+*/
