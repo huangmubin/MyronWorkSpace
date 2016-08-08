@@ -67,6 +67,7 @@ class TextView: UITextView, UITextViewDelegate {
     
     override var delegate: UITextViewDelegate? {
         didSet {
+            guard self.superview != nil else { return }
             if transformDelegate && delegate !== self {
                 transformDelegate = false
                 textViewDelegate = delegate

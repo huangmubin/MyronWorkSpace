@@ -125,6 +125,16 @@ class GCD: NSObject {
     }
     
     /**
+     在主线程中开启计时器
+     */
+    func cycle(interval: UInt64, event: dispatch_block_t) {
+        timerSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue())
+        dispatch_source_set_timer(timerSource!, dispatch_walltime(nil, 0), NSEC_PER_SEC * interval, 0)
+        dispatch_source_set_event_handler(timerSource!, event)
+        dispatch_resume(timerSource!)
+    }
+    
+    /**
      链式调用
      GCD(name: "Test")
      .cycle()
@@ -207,6 +217,7 @@ class GCD: NSObject {
         return self
     }
     
+    /// 取消 Cycle
     func cancel() {
         dispatch_source_cancel(timerSource!)
         timerSource = nil

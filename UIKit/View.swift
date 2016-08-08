@@ -8,36 +8,67 @@
 
 import UIKit
 
-/**
- 需要把背景颜色设置为 UIColor.clearColor()
- */
 class View: UIView {
     
     // MARK: - Values
     
     /// 视图圆角: x 左上角, y 右上角, h 右下角, w 左下角
-    @IBInspectable var cornerRadius: CGRect = CGRectZero { didSet { setNeedsDisplay() } }
+    @IBInspectable var cornerRadius: CGRect = CGRectZero { didSet { draw() } }
     /// 阴影透明度
-    @IBInspectable var shadowOpacity: Float = 0 { didSet { setNeedsDisplay() } }
+    @IBInspectable var shadowOpacity: Float = 0 { didSet { draw() } }
     /// 阴影扩展
-    @IBInspectable var shadowRadius: CGFloat = 0 { didSet { setNeedsDisplay() } }
+    @IBInspectable var shadowRadius: CGFloat = 0 { didSet { draw() } }
     /// 阴影偏移
-    @IBInspectable var shadowOffset: CGSize = CGSizeZero { didSet { setNeedsDisplay() } }
+    @IBInspectable var shadowOffset: CGSize = CGSizeZero { didSet { draw() } }
     /// 视图颜色
-    @IBInspectable var color: UIColor = UIColor.blueColor() { didSet { setNeedsDisplay() } }
+    @IBInspectable var color: UIColor = UIColor.blueColor() {
+        didSet {
+            backLayer.backgroundColor = color.CGColor
+            backgroundColor = UIColor.clearColor()
+            draw()
+        }
+    }
+    
+    // MARK: - Override
+    
+    override var backgroundColor: UIColor? {
+        didSet {
+            if backgroundColor != UIColor.clearColor() && backgroundColor != nil {
+                color = backgroundColor!
+            }
+        }
+    }
+    
+    override var frame: CGRect {
+        didSet {
+            backLayer.path = roundedPath(bounds.size, a: cornerRadius.origin.x, b: cornerRadius.origin.y, c: cornerRadius.height, d: cornerRadius.width).CGPath
+            layer.displayIfNeeded()
+        }
+    }
+    
+    override var bounds: CGRect {
+        didSet {
+            backLayer.path = roundedPath(bounds.size, a: cornerRadius.origin.x, b: cornerRadius.origin.y, c: cornerRadius.height, d: cornerRadius.width).CGPath
+            layer.displayIfNeeded()
+        }
+    }
     
     // MARK: - Draw
     
-    override func drawRect(rect: CGRect) {
+    private var backLayer: CAShapeLayer = CAShapeLayer()
+    
+    func draw() {
         backgroundColor = UIColor.clearColor()
-        layer.backgroundColor = UIColor.clearColor().CGColor
-        let path = roundedPath(rect.size, a: cornerRadius.origin.x, b: cornerRadius.origin.y, c: cornerRadius.height, d: cornerRadius.width)
-        color.setFill()
-        path.fill()
         layer.shadowOpacity = shadowOpacity
         layer.shadowRadius = shadowRadius
         layer.shadowOffset = shadowOffset
         layer.masksToBounds = clipsToBounds
+        layer.backgroundColor = UIColor.clearColor().CGColor
+        
+        backLayer.path = roundedPath(bounds.size, a: cornerRadius.origin.x, b: cornerRadius.origin.y, c: cornerRadius.height, d: cornerRadius.width).CGPath
+        backLayer.fillColor = color.CGColor
+        backLayer.strokeColor = UIColor.clearColor().CGColor
+        layer.insertSublayer(backLayer, atIndex: 0)
     }
     
     // MARK: - Drawer

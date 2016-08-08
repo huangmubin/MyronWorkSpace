@@ -46,6 +46,11 @@ class VideoConsole: UIView {
     
     // MARK: - Init
     
+    init() {
+        super.init(frame: CGRectZero)
+        load()
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         load()
@@ -253,7 +258,7 @@ class VideoConsole: UIView {
         }
     }
     
-    var current: CGFloat = 0.1 {
+    private var current: CGFloat = 0.1 {
         didSet {
             func format(time: CGFloat) -> String {
                 let t = Int(time) % 60
@@ -275,8 +280,7 @@ class VideoConsole: UIView {
     var value: CGFloat = 0 {
         didSet {
             slipper.value = value
-            current = longer * value
-            delegate?.videoConsoleValueChanged(self, value: value, current: current)
+            current = CGFloat(Int(longer * value + 0.5))
         }
     }
     
@@ -285,7 +289,7 @@ class VideoConsole: UIView {
     /// 当前播放状态
     var play: Bool {
         set {
-            print("Status = \(newValue)")
+            //print("Status = \(newValue)")
             playButton.selected = newValue
             if autoHidden {
                 hiddenAnimation(newValue)
@@ -355,6 +359,7 @@ class VideoConsole: UIView {
         default:
             break
         }
+        delegate?.videoConsoleValueChanged(self, value: value, current: current)
     }
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -369,6 +374,7 @@ class VideoConsole: UIView {
         default:
             break
         }
+        delegate?.videoConsoleValueChanged(self, value: value, current: current)
     }
     
     
@@ -390,7 +396,7 @@ class VideoConsole: UIView {
         
         var lineWidth: CGFloat = 2
         
-        var value: CGFloat = 1 {
+        var value: CGFloat = 0 {
             didSet {
                 CATransaction.begin()
                 CATransaction.setDisableActions(true)
@@ -471,7 +477,7 @@ class VideoConsole: UIView {
     // MARK: 方向
     
     /// 是否根据屏幕方向自动变化单行或双行
-    @IBInspectable var autoType: Bool = true {
+    @IBInspectable var autoType: Bool = false {
         didSet {
             monitorOrientation(autoType)
         }
@@ -528,17 +534,17 @@ class VideoConsole: UIView {
     func autoLayoutToSupview(autoHidden: Bool = false) {
         if let superView = superview {
             if superView !== view {
+                view = superView
                 if heightConstraint == nil {
                     let c: CGFloat = type == .OneLine ? 30 : 50
                     AutoLayout(self)
                         .Height(self, c)
                         .constrants { self.heightConstraint = $0[0] }
-                }
-                view = superView
-                AutoLayout(view!, self).Bottom().Leading().Trailing().constrants {
-                    self.bottomConstraint = $0[0]
-                    self.leadingConstraint = $0[1]
-                    self.trailingConstraint = $0[2]
+                    AutoLayout(view!, self).Bottom().Leading().Trailing().constrants {
+                        self.bottomConstraint = $0[0]
+                        self.leadingConstraint = $0[1]
+                        self.trailingConstraint = $0[2]
+                    }
                 }
                 if autoHidden {
                     self.autoHidden = true
@@ -591,17 +597,19 @@ class VideoConsole: UIView {
                 bottom.constant = hide ? height.constant : 0
                 self.layoutIfNeeded()
             }) {
-                print("Animation Complete \($0); \(NSThread.currentThread())")
+                if $0 {}
+                //print("Animation Complete \($0); \(NSThread.currentThread())")
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
                     NSThread.sleepForTimeInterval(1)
                     dispatch_async(dispatch_get_main_queue()) {
-                        print("play = \(self.play); bottom = \(bottom.constant)")
+                        //print("play = \(self.play); bottom = \(bottom.constant)")
                         if self.play && bottom.constant == 0 {
                             UIView.animateWithDuration(0.5, animations: { 
                                 bottom.constant = height.constant
                                 self.layoutIfNeeded()
                             }) {
-                                print("Animation Complete In \($0); \(NSThread.currentThread())")
+                                if $0 {}
+                                //print("Animation Complete In \($0); \(NSThread.currentThread())")
                                 self.hiddenButton?.enabled = true
                             }
                         } else {
