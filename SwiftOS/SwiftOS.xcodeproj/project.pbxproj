@@ -11,6 +11,7 @@
 		9C3CC6C51D4D13F3000FCD38 /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3CC6C41D4D13F3000FCD38 /* Text.swift */; };
 		9C78B41F1D56B10800AD4411 /* Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C78B41E1D56B10800AD4411 /* Type.swift */; };
 		9C78B4211D575AE500AD4411 /* ApiTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C78B4201D575AE500AD4411 /* ApiTool.swift */; };
+		B17F462E1D59D07600D66ECB /* CStruct.c in Sources */ = {isa = PBXBuildFile; fileRef = B17F462C1D59D07600D66ECB /* CStruct.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -32,6 +33,9 @@
 		9C78B41E1D56B10800AD4411 /* Type.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Type.swift; path = ../../Swift/Type.swift; sourceTree = "<group>"; };
 		9C78B4201D575AE500AD4411 /* ApiTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApiTool.swift; path = ../../Tools/ApiTool.swift; sourceTree = "<group>"; };
 		9C79FD2C1D54024A00A20D7F /* TestFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestFile.swift; sourceTree = "<group>"; };
+		B17F462B1D59D07500D66ECB /* SwiftOS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SwiftOS-Bridging-Header.h"; sourceTree = "<group>"; };
+		B17F462C1D59D07600D66ECB /* CStruct.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = CStruct.c; sourceTree = "<group>"; };
+		B17F462D1D59D07600D66ECB /* CStruct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CStruct.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,12 +69,39 @@
 			isa = PBXGroup;
 			children = (
 				9C3CC6BD1D4D135B000FCD38 /* main.swift */,
-				9C78B4201D575AE500AD4411 /* ApiTool.swift */,
-				9C78B41E1D56B10800AD4411 /* Type.swift */,
-				9C3CC6C41D4D13F3000FCD38 /* Text.swift */,
-				9C79FD2C1D54024A00A20D7F /* TestFile.swift */,
+				B17F462C1D59D07600D66ECB /* CStruct.c */,
+				B17F46311D59D0AA00D66ECB /* Resource */,
+				B17F46301D59D09500D66ECB /* Doing */,
+				B17F462F1D59D08500D66ECB /* Tools */,
 			);
 			path = SwiftOS;
+			sourceTree = "<group>";
+		};
+		B17F462F1D59D08500D66ECB /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				9C78B41E1D56B10800AD4411 /* Type.swift */,
+				9C3CC6C41D4D13F3000FCD38 /* Text.swift */,
+			);
+			name = Tools;
+			sourceTree = "<group>";
+		};
+		B17F46301D59D09500D66ECB /* Doing */ = {
+			isa = PBXGroup;
+			children = (
+				9C78B4201D575AE500AD4411 /* ApiTool.swift */,
+			);
+			name = Doing;
+			sourceTree = "<group>";
+		};
+		B17F46311D59D0AA00D66ECB /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				9C79FD2C1D54024A00A20D7F /* TestFile.swift */,
+				B17F462D1D59D07600D66ECB /* CStruct.h */,
+				B17F462B1D59D07500D66ECB /* SwiftOS-Bridging-Header.h */,
+			);
+			name = Resource;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -133,6 +164,7 @@
 				9C78B4211D575AE500AD4411 /* ApiTool.swift in Sources */,
 				9C3CC6C51D4D13F3000FCD38 /* Text.swift in Sources */,
 				9C3CC6BE1D4D135B000FCD38 /* main.swift in Sources */,
+				B17F462E1D59D07600D66ECB /* CStruct.c in Sources */,
 				9C78B41F1D56B10800AD4411 /* Type.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -225,14 +257,21 @@
 		9C3CC6C21D4D135B000FCD38 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SwiftOS/SwiftOS-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		9C3CC6C31D4D135B000FCD38 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SwiftOS/SwiftOS-Bridging-Header.h";
 			};
 			name = Release;
 		};
