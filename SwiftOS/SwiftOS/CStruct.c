@@ -130,8 +130,155 @@ typedef struct GNode {
     struct GNode *Next;
 } GList;
 
+// MARK: - 堆栈 Stack
+
+// MARK: 数据结构
+typedef struct StackNode {
+    ElementType Data;
+    struct StackNode *Next;
+} LinkStack;
+
+// MARK: 操作方法
+
+// 建立空栈
+LinkStack *CreateStack() {
+    LinkStack *S;
+    S = (LinkStack *)malloc(sizeof(struct StackNode));
+    S->Next = NULL;
+    return S;
+}
+
+// 判断是否为空
+int IsEmpty(LinkStack *s) {
+    return (s->Next == NULL);
+}
+
+// 入栈
+void Push(ElementType item, LinkStack *s) {
+    struct StackNode *tmpCell;
+    tmpCell = (LinkStack *)malloc(sizeof(struct StackNode));
+    tmpCell->Data = item;
+    tmpCell->Next = s->Next;
+    s->Next = tmpCell;
+}
+
+// 删除并返回栈顶元素
+ElementType Pop(LinkStack *s) {
+    struct StackNode *firstCell;
+    ElementType topElem;
+    if (IsEmpty(s)) {
+        printf("堆栈空");
+        return NULL;
+    } else {
+        firstCell = s->Next;
+        s->Next = firstCell->Next;
+        topElem = firstCell->Data;
+        free(firstCell);
+        return topElem;
+    }
+}
+
+// MARK: 实例 表达式求值
+union {
+    // 数据
+    ElementType Data;
+    // 或广义表
+    struct GNode *SubList;
+} URegion;
+#define TestDataType int
+typedef struct TestStackNode {
+    union {
+        TestDataType v;
+        char c;
+    } uregion;
+    struct TestStackNode *next;
+} TestStack;
+
+// 建立空栈
+TestStack *CreateTestStack() {
+    TestStack *S;
+    S = (TestStack *)malloc(sizeof(struct TestStackNode));
+    S->next = NULL;
+    return S;
+}
+
+// 判断是否为空
+int TestIsEmpty(TestStack *s) {
+    return (s->next == NULL);
+}
+
+// 入栈
+void TestPush(TestDataType item, TestStack *s) {
+    TestStack *tmp;
+    tmp = (TestStack *)malloc(sizeof(struct TestStackNode));
+    tmp->uregion.v = item;
+    tmp->next = s->next;
+    s->next = tmp;
+}
+
+// 删除并返回栈顶元素
+TestDataType TestPop(TestStack *s) {
+    TestStack *firstCell;
+    TestDataType topElem;
+    if (TestIsEmpty(s)) {
+        printf("堆栈空");
+        return 0;
+    } else {
+        firstCell = s->next;
+        s->next = firstCell->next;
+        topElem = firstCell->uregion.v;
+        free(firstCell);
+        return topElem;
+    }
+}
+
+
+TestDataType ValueOfExpressions() {
+    ValueStack *v;
+    SignStack *s;
+    v = (ValueStack *)malloc(sizeof(ValueStack));
+    s = (SignStack *)malloc(sizeof(SignStack));
+    
+    TestDataType result;
+    char c;
+    while (1) {
+        if (scanf("%d", &result)) {
+            
+            printf("input a int %d\n", result);
+        } else if (scanf("%c", &c)) {
+            switch (c) {
+                case '(':
+                    printf("(\n");
+                    break;
+                case ')':
+                    printf(")\n");
+                    break;
+                case '+':
+                    printf("+\n");
+                    break;
+                case '-':
+                    printf("-\n");
+                    break;
+                case '*':
+                    printf("*\n");
+                    break;
+                case '/':
+                    printf("/\n");
+                    break;
+                case '%':
+                    printf("%%\n");
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+    
+    return result;
+}
+
 
 // MARK: - Main Funcion
 void cTestFunction() {
-    
+    ValueOfExpressions();
 }
