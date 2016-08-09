@@ -11,8 +11,10 @@ import UIKit
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var tableView: TableView!
-    
+    var number = 10
     @IBAction func leftAction(sender: UIBarButtonItem) {
+        number = number == 10 ? 0 : 10
+        tableView.reloadData()
     }
     
     @IBAction func rightAction(sender: UIBarButtonItem) {
@@ -26,13 +28,23 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
+        return number
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
-        cell.textLabel?.text = "Test Section \(indexPath.section) - Row \(indexPath.row)"
+        let time = Int(arc4random() % 10)
+        var text = "Test Section \(indexPath.section) - Row \(indexPath.row)"
+        for _ in 0 ..< time {
+            text += "0123456789;  "
+        }
+        cell.textLabel?.numberOfLines = 0
+        cell.textLabel?.text = text
         return cell
+    }
+    
+    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 44
     }
     
     

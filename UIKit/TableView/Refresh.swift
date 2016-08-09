@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Refresh: UIView, IndicatorDelegate, TableViewHeaderRefreshProtocol {
+class Refresh: UIView, IndicatorDelegate, TableViewRefreshProtocol {
 
     // MARK: - Init
     
@@ -48,9 +48,10 @@ class Refresh: UIView, IndicatorDelegate, TableViewHeaderRefreshProtocol {
     @IBInspectable var value: CGFloat = 0 {
         didSet {
             if value <= 0 {
-                label.hidden = true
+                self.label.hidden = true
+                indicator.progress = 0
             } else {
-                label.hidden = false
+                self.label.hidden = false
                 indicator.progress = value
             }
         }

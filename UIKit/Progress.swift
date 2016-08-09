@@ -53,7 +53,7 @@ class Progress: UIView {
         }
     }
     /// 进度条类型
-    var type: Type = .Round {
+    var type: Type = .Line {
         didSet {
             deploy()
         }
@@ -254,4 +254,19 @@ class Progress: UIView {
         return gradient
     }
     
+}
+
+// MARK: - Table View Header Refresh Protocol
+extension Progress: TableViewRefreshProtocol {
+    
+    /// 运行刷新动画
+    func run() {
+        value = 1
+        animationRun?()
+    }
+    /// 结束刷新动画
+    func end() {
+        animationStop?()
+        value = 0
+    }
 }
