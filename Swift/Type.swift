@@ -9,6 +9,7 @@
 //import UIKit
 
 // MARK: - 堆栈
+
 struct Stack<T> {
     private var _value = [T]()
     subscript(i: Int) -> T {
