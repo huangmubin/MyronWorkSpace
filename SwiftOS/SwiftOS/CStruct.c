@@ -178,21 +178,19 @@ ElementType Pop(LinkStack *s) {
     }
 }
 
-//// MARK: 实例 表达式求值
+//// MARK: 实例 表达式求值 ?? Error
 
 typedef struct ExpressionsStackNode {
-    // 0: Value; 1: Sign;
-    int tag;
-    union {
-        double v;
-        char c;
-    } data;
+    double v;
+    char c;
     struct ExpressionsStackNode *next;
 } EStack;
 
 EStack *CreateExpression() {
     EStack *s;
     s = (EStack *)malloc(sizeof(struct ExpressionsStackNode));
+    s->c = ' ';
+    s->v = 0;
     s->next = NULL;
     return s;
 }
@@ -201,15 +199,23 @@ int IsEmptyExpression(EStack *s) {
     return (s->next == NULL);
 }
 
-void PushExpression(double v, EStack *s) {
+void PushValue(double v, EStack *s) {
     EStack *tmp;
     tmp = (EStack *)malloc(sizeof(struct ExpressionsStackNode));
-    tmp->data.v = v;
+    tmp->v = v;
     tmp->next = s->next;
     s->next = tmp;
 }
 
-double PopExpression(EStack *s) {
+void PushChar(char v, EStack *s) {
+    EStack *tmp;
+    tmp = (EStack *)malloc(sizeof(struct ExpressionsStackNode));
+    tmp->c = v;
+    tmp->next = s->next;
+    s->next = tmp;
+}
+
+double PopValue(EStack *s) {
     EStack *top;
     double v;
     if (IsEmptyExpression(s)) {
@@ -217,7 +223,21 @@ double PopExpression(EStack *s) {
     } else {
         top = s->next;
         s->next = top->next;
-        v = top->data.v;
+        v = top->v;
+        free(top);
+        return v;
+    }
+}
+
+char PopChar(EStack *s) {
+    EStack *top;
+    char v;
+    if (IsEmptyExpression(s)) {
+        return 0;
+    } else {
+        top = s->next;
+        s->next = top->next;
+        v = top->c;
         free(top);
         return v;
     }
@@ -236,18 +256,112 @@ double ValueOfExpressions() {
     EStack *v, *s;
     v = CreateExpression();
     s = CreateExpression();
-    v->tag = 0;
-    s->tag = 1;
+    PushValue(0, v);
     
-    double result = 0;
-    double a;
-    double d;
-    char c;
+    double value = 0;
+    char sign;
+    char count;
+    double a, b;
     while (1) {
-        
+        if (scanf("%lf", &value)) {
+            PushValue(value, v);
+            // printf("value: %.2lf; ", value);
+        } else if (scanf("%c", &sign)) {
+            if (sign == '=') {
+                count = PopChar(s);
+                b = PopValue(v);
+                a = PopValue(v);
+                switch (count) {
+                    case '+':
+                        return a + b;
+                    case '-':
+                        return a - b;
+                    case '*':
+                        return a * b;
+                    case '/':
+                        return a / b;
+                }
+            } else if (IsEmptyExpression(s) && (sign == '+' || sign == '-' || sign == '(' || sign == '*' || sign == '/')) {
+                PushChar(sign, s);
+            } else {
+                if (sign == '(' || s->next->c == '(') {
+                    PushChar(sign, s);
+                } else if (sign == '+' || sign == '-') {
+                    count = PopChar(s);
+                    b = PopValue(v);
+                    a = PopValue(v);
+                    switch (count) {
+                        case '+':
+                            PushValue(a + b, v);
+                            break;
+                        case '-':
+                            PushValue(a - b, v);
+                            break;
+                        case '*':
+                            PushValue(a * b, v);
+                            break;
+                        case '/':
+                            PushValue(a / b, v);
+                            break;
+                    }
+                    PushChar(sign, s);
+                } else if (sign == '*' || sign == '/') {
+                    if (s->next->c == '+' || s->next->c == '-') {
+                        PushChar(sign, s);
+                    } else {
+                        count = PopChar(s);
+                        b = PopValue(v);
+                        a = PopValue(v);
+                        switch (count) {
+                            case '+':
+                                PushValue(a + b, v);
+                                break;
+                            case '-':
+                                PushValue(a - b, v);
+                                break;
+                        }
+                        PushChar(sign, s);
+                    }
+                } else if (sign == ')') {
+                    count = PopChar(s);
+                    while (count != '(' && !IsEmptyExpression(s)) {
+                        b = PopValue(v);
+                        a = PopValue(v);
+                        switch (count) {
+                            case '+':
+                                PushValue(a + b, v);
+                                break;
+                            case '-':
+                                PushValue(a - b, v);
+                                break;
+                            case '*':
+                                PushValue(a * b, v);
+                                break;
+                            case '/':
+                                PushValue(a / b, v);
+                                break;
+                        }
+                        count = PopChar(s);
+                    }
+                }
+            }
+        }
     }
 }
 // MARK: - Main Funcion
 void cTestFunction() {
-    
+    char a;
+    do {
+        while (1) {
+            scanf("%c", &a);
+            if (a == '\n') {
+                break;
+            }
+        }
+//        if (a == ':') {
+            printf("\nresult = %lf;\n", ValueOfExpressions());
+//        } else {
+//            return;
+//        }
+    } while (1);
 }
