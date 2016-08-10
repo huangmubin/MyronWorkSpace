@@ -14,6 +14,7 @@ class ValueViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        test._type = 1
         view.addSubview(test)
     }
 

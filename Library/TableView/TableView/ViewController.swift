@@ -11,7 +11,7 @@ import UIKit
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var tableView: TableView!
-    var number = 10
+    var number = 1
     @IBAction func leftAction(sender: UIBarButtonItem) {
         number = number == 10 ? 0 : 10
         tableView.reloadData()

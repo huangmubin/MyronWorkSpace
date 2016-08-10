@@ -41,6 +41,22 @@ class Refresh: UIView, IndicatorDelegate, TableViewRefreshProtocol {
     var label: UILabel!
     var indicator: Indicator!
     
+    // MARK: - Overrides
+    
+    override var frame: CGRect {
+        didSet {
+            indicator?.center = CGPoint(x: bounds.width / 2, y: bounds.height / 2)
+            label?.center = CGPoint(x: bounds.width / 2, y: indicator.frame.maxY + label.bounds.height / 2)
+        }
+    }
+    
+    override var bounds: CGRect {
+        didSet {
+            indicator?.center = CGPoint(x: bounds.width / 2, y: bounds.height / 2)
+            label?.center = CGPoint(x: bounds.width / 2, y: indicator.frame.maxY + label.bounds.height / 2)
+        }
+    }
+    
     // MARK: - Values
     
     // MARK: Size

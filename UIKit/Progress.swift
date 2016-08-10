@@ -177,6 +177,7 @@ class Progress: UIView {
     // MARK: - Methods
     
     func deploy() {
+        print("deploy")
         backLayer?.removeFromSuperlayer()
         progressLayer?.removeFromSuperlayer()
         gradientLayer?.removeFromSuperlayer()
@@ -204,6 +205,7 @@ class Progress: UIView {
     }
     
     func colorLineAnimationRun() {
+        print("colorLineAnimationRun")
         let colorLine = CABasicAnimation(keyPath: "position.x")
         colorLine.toValue = gradientLayer.bounds.width / 2
         colorLine.repeatCount = 1000000

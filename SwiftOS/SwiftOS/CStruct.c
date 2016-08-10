@@ -168,7 +168,7 @@ ElementType Pop(LinkStack *s) {
     ElementType topElem;
     if (IsEmpty(s)) {
         printf("堆栈空");
-        return NULL;
+        return 0;
     } else {
         firstCell = s->Next;
         s->Next = firstCell->Next;
@@ -178,107 +178,76 @@ ElementType Pop(LinkStack *s) {
     }
 }
 
-// MARK: 实例 表达式求值
-union {
-    // 数据
-    ElementType Data;
-    // 或广义表
-    struct GNode *SubList;
-} URegion;
-#define TestDataType int
-typedef struct TestStackNode {
-    union {
-        TestDataType v;
-        char c;
-    } uregion;
-    struct TestStackNode *next;
-} TestStack;
+//// MARK: 实例 表达式求值
 
-// 建立空栈
-TestStack *CreateTestStack() {
-    TestStack *S;
-    S = (TestStack *)malloc(sizeof(struct TestStackNode));
-    S->next = NULL;
-    return S;
+typedef struct ExpressionsStackNode {
+    // 0: Value; 1: Sign;
+    int tag;
+    union {
+        double v;
+        char c;
+    } data;
+    struct ExpressionsStackNode *next;
+} EStack;
+
+EStack *CreateExpression() {
+    EStack *s;
+    s = (EStack *)malloc(sizeof(struct ExpressionsStackNode));
+    s->next = NULL;
+    return s;
 }
 
-// 判断是否为空
-int TestIsEmpty(TestStack *s) {
+int IsEmptyExpression(EStack *s) {
     return (s->next == NULL);
 }
 
-// 入栈
-void TestPush(TestDataType item, TestStack *s) {
-    TestStack *tmp;
-    tmp = (TestStack *)malloc(sizeof(struct TestStackNode));
-    tmp->uregion.v = item;
+void PushExpression(double v, EStack *s) {
+    EStack *tmp;
+    tmp = (EStack *)malloc(sizeof(struct ExpressionsStackNode));
+    tmp->data.v = v;
     tmp->next = s->next;
     s->next = tmp;
 }
 
-// 删除并返回栈顶元素
-TestDataType TestPop(TestStack *s) {
-    TestStack *firstCell;
-    TestDataType topElem;
-    if (TestIsEmpty(s)) {
-        printf("堆栈空");
+double PopExpression(EStack *s) {
+    EStack *top;
+    double v;
+    if (IsEmptyExpression(s)) {
         return 0;
     } else {
-        firstCell = s->next;
-        s->next = firstCell->next;
-        topElem = firstCell->uregion.v;
-        free(firstCell);
-        return topElem;
+        top = s->next;
+        s->next = top->next;
+        v = top->data.v;
+        free(top);
+        return v;
     }
 }
 
+void DeleteExpression(EStack *s) {
+    EStack *tmp;
+    while (s->next) {
+        tmp = s->next;
+        s = tmp->next;
+        free(tmp);
+    }
+}
 
-TestDataType ValueOfExpressions() {
-    ValueStack *v;
-    SignStack *s;
-    v = (ValueStack *)malloc(sizeof(ValueStack));
-    s = (SignStack *)malloc(sizeof(SignStack));
+double ValueOfExpressions() {
+    EStack *v, *s;
+    v = CreateExpression();
+    s = CreateExpression();
+    v->tag = 0;
+    s->tag = 1;
     
-    TestDataType result;
+    double result = 0;
+    double a;
+    double d;
     char c;
     while (1) {
-        if (scanf("%d", &result)) {
-            
-            printf("input a int %d\n", result);
-        } else if (scanf("%c", &c)) {
-            switch (c) {
-                case '(':
-                    printf("(\n");
-                    break;
-                case ')':
-                    printf(")\n");
-                    break;
-                case '+':
-                    printf("+\n");
-                    break;
-                case '-':
-                    printf("-\n");
-                    break;
-                case '*':
-                    printf("*\n");
-                    break;
-                case '/':
-                    printf("/\n");
-                    break;
-                case '%':
-                    printf("%%\n");
-                    break;
-                default:
-                    break;
-            }
-        }
+        
     }
-    
-    return result;
 }
-
-
 // MARK: - Main Funcion
 void cTestFunction() {
-    ValueOfExpressions();
+    
 }

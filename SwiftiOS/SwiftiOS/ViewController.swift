@@ -13,31 +13,8 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //performSegueWithIdentifier("ValueViewControlller", sender: nil)
+        performSegueWithIdentifier("ValueViewController", sender: nil)
         
-        print("Portrait: \(UIInterfaceOrientationMask.Portrait.rawValue)")
-        print("LandscapeLeft: \(UIInterfaceOrientationMask.LandscapeLeft.rawValue)")
-        print("LandscapeRight: \(UIInterfaceOrientationMask.LandscapeRight.rawValue)")
-        print("PortraitUpsideDown: \(UIInterfaceOrientationMask.PortraitUpsideDown.rawValue)")
-        print("Landscape: \(UIInterfaceOrientationMask.Landscape.rawValue)")
-        print("All: \(UIInterfaceOrientationMask.All.rawValue)")
-        print("AllButUpsideDown: \(UIInterfaceOrientationMask.AllButUpsideDown.rawValue)")
-        print("")
-        print("Unknown \(UIInterfaceOrientation.Unknown.rawValue)")
-        print("Portrait \(UIInterfaceOrientation.Portrait.rawValue)")
-        print("PortraitUpsideDown \(UIInterfaceOrientation.PortraitUpsideDown.rawValue)")
-        print("LandscapeLeft \(UIInterfaceOrientation.LandscapeLeft.rawValue)")
-        print("LandscapeRight \(UIInterfaceOrientation.LandscapeRight.rawValue)")
-        print("")
-        print("\(Int(UIInterfaceOrientationMask.Portrait.rawValue) == 1 << UIInterfaceOrientation.Portrait.rawValue)")
-        print("\(Int(UIInterfaceOrientationMask.LandscapeLeft.rawValue) == 1 << UIInterfaceOrientation.LandscapeLeft.rawValue)")
-        print("\(Int(UIInterfaceOrientationMask.LandscapeRight.rawValue) == 1 << UIInterfaceOrientation.LandscapeRight.rawValue)")
-        print("\(Int(UIInterfaceOrientationMask.PortraitUpsideDown.rawValue) == 1 << UIInterfaceOrientation.PortraitUpsideDown.rawValue)")
-        
-        
-        print("\(UIInterfaceOrientationMask.Landscape.rawValue == UIInterfaceOrientationMask.LandscapeLeft.rawValue | UIInterfaceOrientationMask.LandscapeRight.rawValue)")
-        print("\(UIInterfaceOrientationMask.All.rawValue == UIInterfaceOrientationMask.LandscapeLeft.rawValue | UIInterfaceOrientationMask.LandscapeRight.rawValue | UIInterfaceOrientationMask.Portrait.rawValue | UIInterfaceOrientationMask.PortraitUpsideDown.rawValue)")
-        print("\(UIInterfaceOrientationMask.AllButUpsideDown.rawValue == UIInterfaceOrientationMask.LandscapeLeft.rawValue | UIInterfaceOrientationMask.LandscapeRight.rawValue | UIInterfaceOrientationMask.Portrait.rawValue)")
     }
     
     

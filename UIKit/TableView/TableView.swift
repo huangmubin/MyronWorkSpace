@@ -42,7 +42,7 @@ class TableView: UITableView {
         progress.center.y = (contentSize.height > frame.height ? contentSize.height : frame.height) - 1
         progress.value = 0
         progress.backColor = UIColor.clearColor()
-        progress.colors = [UIColor.blueColor().CGColor, UIColor.purpleColor().CGColor, UIColor.whiteColor().CGColor]
+        //progress.colors = [UIColor.blueColor().CGColor, UIColor.purpleColor().CGColor, UIColor.whiteColor().CGColor]
         progress._type = 1
         insertSubview(progress, atIndex: 0)
         footerRefresh = progress
@@ -52,9 +52,13 @@ class TableView: UITableView {
     }
     
     func deploy() {
-        headerRefresh?.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.width)
-        footerRefresh?.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.width)
-        footerRefresh?.center.y = (contentSize.height > frame.height ? contentSize.height : frame.height) - 1
+        if headerRefresh?.bounds.width != frame.width {
+            headerRefresh?.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.width)
+        }
+        if footerRefresh?.bounds.width != frame.width {
+            footerRefresh?.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.width)
+            footerRefresh?.center.y = (contentSize.height > frame.height ? contentSize.height : frame.height) - 1
+        }
     }
 
     // MARK: - Views
@@ -145,8 +149,32 @@ class TableView: UITableView {
     // MARK: - Values
     
     @IBInspectable var refreshSpace: CGFloat = 50
-    @IBInspectable var refreshHeaderOpen: Bool = true
-    @IBInspectable var refreshFootOpen: Bool = true
+    @IBInspectable var refreshHeaderOpen: Bool = true {
+        didSet {
+            if refreshHeaderOpen {
+                if let view = headerRefresh as? UIView {
+                    insertSubview(view, atIndex: 0)
+                }
+            } else {
+                if let view = headerRefresh as? UIView {
+                    view.removeFromSuperview()
+                }
+            }
+        }
+    }
+    @IBInspectable var refreshFooterOpen: Bool = true {
+        didSet {
+            if refreshFooterOpen {
+                if let view = footerRefresh as? UIView {
+                    insertSubview(view, atIndex: 0)
+                }
+            } else {
+                if let view = footerRefresh as? UIView {
+                    view.removeFromSuperview()
+                }
+            }
+        }
+    }
     
     // MARK: Private
     
@@ -165,6 +193,14 @@ class TableView: UITableView {
     }
     
     // MARK: - Override
+    
+    // MARK: Size
+    
+    override var bounds: CGRect {
+        didSet {
+            deploy()
+        }
+    }
     
     // MARK: Content
     
@@ -249,7 +285,7 @@ class TableView: UITableView {
             
             /// 上拉
             if footerRefresh != nil {
-                if refreshFootOpen && contentOffset.y > 0 {
+                if refreshFooterOpen && contentOffset.y > 0 {
                     if bounds.height > contentSize.height {
                         if contentOffset.y <= refreshSpace {
                             //print("contentOffset.y / refreshSpace = \(contentOffset.y / refreshSpace)")
@@ -312,7 +348,7 @@ protocol TableViewRefreshProtocol: NSObjectProtocol {
     
     var frame: CGRect { get set }
     var center: CGPoint { get set }
-    
+    var bounds: CGRect { get set }
     /// 色调
     var color: UIColor { get set }
     
