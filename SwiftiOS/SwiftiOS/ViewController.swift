@@ -8,64 +8,105 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class Json {
     
+    // MARK: Value
+    /// 数据
+    var json: AnyObject?
+    
+    // MARK: Init
+    init(_ data: NSData?) {
+        if let data = data {
+            if let json = try? NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments) {
+                self.json = json
+            }
+        }
+    }
+    
+    // 下标访问
+    
+    subscript(keys: String...) -> AnyObject? {
+        if var dic = json as? [String: AnyObject] {
+            for (i,key) in keys.enumerate() {
+                if i == keys.count-1 {
+                    return dic[key]
+                } else {
+                    if let tmp = dic[key] as? [String: AnyObject] {
+                        dic = tmp
+                    } else {
+                        return nil
+                    }
+                }
+            }
+        }
+        return nil
+    }
+    
+    // MARK: 函数访问
+    
+    func array<T>(keys: String...) -> T? {
+        
+        return nil
+    }
+    
+    func value(key: String, _ null: String = "") -> String {
+        if let dic = json as? [String: AnyObject] {
+            if let value = dic[key] as? String {
+                return value
+            }
+        }
+        return null
+    }
+    
+    func value<T>(key: String, _ null: T) -> T {
+        if let dic = json as? [String: AnyObject] {
+            if let value = dic[key] as? T {
+                return value
+            }
+        }
+        return null
+    }
+    
+}
+
+
+
+class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //performSegueWithIdentifier("ValueViewController", sender: nil)
-        let net = Network()
         
-        net.linkTask("Test")
-            .linkReques("https://github.com/huangmubin/huangmubin.github.io/archive/master.zip")
-            .linkAddTask { (name, data, response, error) -> NSURLRequest? in
-                print("Test 1 \(NSThread.currentThread()): error = \(error)")
-                if error == nil {
-                    return Network.request("https://github.com/huangmubin/huangmubin.github.io/archive/master.zip", method: "GET")
-                } else {
-                    return nil
-                }
-            }
-            .linkAddTask { (name, data, response, error) -> NSURLRequest? in
-                print("Test 2 \(NSThread.currentThread()): error = \(error)")
-                if error == nil {
-                    return Network.request("https://github.com/huangmubin/huangmubin.github.io/archive/master.zip", method: "GET")
-                } else {
-                    return nil
-                }
-            }
-            .linkAddTask { (name, data, response, error) -> NSURLRequest? in
-                print("Test 3 \(NSThread.currentThread()): error = \(error)")
-                if error == nil {
-                    return Network.request("https://github.com/huangmubin/huangmubin.github.io/archive/master.zip", method: "GET")
-                } else {
-                    return nil
-                }
-            }
-            .linkAddTask { (name, data, response, error) -> NSURLRequest? in
-                print("Test 4 \(NSThread.currentThread()): error = \(error)")
-//                if error == nil {
-//                    return Network.request("https://github.com/huangmubin/huangmubin.github.io/archive/master.zip", method: "GET")
-//                } else {
-                    return nil
-//                }
-            }
-            .linkAddTask { (name, data, response, error) -> NSURLRequest? in
-                print("Test 5 \(NSThread.currentThread()): error = \(error)")
-                if error == nil {
-                    return Network.request("https://github.com/huangmubin/huangmubin.github.io/archive/master.zip", method: "GET")
-                } else {
-                    return nil
-                }
-            }
-            .linkAddTask { (name, data, response, error) -> NSURLRequest? in
-                print("Test 6 \(NSThread.currentThread()): error = \(error)")
-                if error == nil {
-                    return Network.request("https://github.com/huangmubin/huangmubin.github.io/archive/master.zip", method: "GET")
-                } else {
-                    return nil
-                }
-            }.linkTaskResume()
+        let data = Network.data([
+            "name": "Yes",
+            "code": 0,
+            "double": 0.0,
+            "sub": [
+                    "a": [
+                        "aa": "sub.a.aa"
+                    ],
+                    "b": [
+                        "bb": "sub.b.bb"
+                    ]
+                ]
+                
+            ])
+        
+        let json = Json(data)
+        //let name = json["name"]
+        //let ty = json.value("sub", [[String:AnyObject]]())
+        //let ty = json.array("sub", [String: AnyObject]())
+        let ty = json["sub", "a", "aa"]
+        print(ty)
+        
+//        let count = UnsafeMutablePointer<UInt32>.alloc(1)
+//        let properties = class_copyPropertyList(Test1.classForCoder(), count)
+//        for i in 0 ..< Int(count.memory) {
+//            let property = properties[i]
+//            
+//            let name = String(UTF8String: property_getName(property))
+//            let type = String(UTF8String: property_getAttributes(property))
+//            print("name = \(name); Attributes = \(type)")
+//        }
     }
     
     

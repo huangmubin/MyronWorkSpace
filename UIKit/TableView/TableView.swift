@@ -16,6 +16,10 @@ import UIKit
 
 class TableView: UITableView {
     
+    // MARK: - Tableview Delegate
+    
+    weak var actions: TableViewActions?
+    
     // MARK: - Init
     
     override init(frame: CGRect, style: UITableViewStyle) {
@@ -278,7 +282,7 @@ class TableView: UITableView {
                     headerRefresh.center.y = contentOffset.y + refreshSpace
                     
                     // 调用代理
-                    delegate?.tableViewRefresh(self, headOrFootRefresh: true)
+                    actions?.tableViewRefresh?(self, headOrFootRefresh: true)
                 }
                 
             }
@@ -299,7 +303,7 @@ class TableView: UITableView {
                             footerRefresh.run()
                             
                             // 调用代理
-                            delegate?.tableViewRefresh(self, headOrFootRefresh: false)
+                            actions?.tableViewRefresh?(self, headOrFootRefresh: false)
                         }
                     } else {
                         let offset = contentOffset.y + bounds.height - contentSize.height
@@ -315,7 +319,7 @@ class TableView: UITableView {
                                 footerRefresh.run()
                                 
                                 // 调用代理
-                                delegate?.tableViewRefresh(self, headOrFootRefresh: false)
+                                actions?.tableViewRefresh?(self, headOrFootRefresh: false)
                             }
                         }
                     }
@@ -333,11 +337,9 @@ class TableView: UITableView {
 
 // MARK: Extension UITableViewDelegate
 
-extension UITableViewDelegate {
+@objc protocol TableViewActions: NSObjectProtocol {
     
-    func tableViewRefresh(tableView: TableView, headOrFootRefresh head: Bool) {
-        print("TableView Refresh \(head)")
-    }
+    optional func tableViewRefresh(tableView: TableView, headOrFootRefresh head: Bool)
     
 }
 

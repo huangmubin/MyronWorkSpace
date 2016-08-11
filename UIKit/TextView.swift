@@ -52,7 +52,6 @@ class TextView: UITextView, UITextViewDelegate {
     
     override var font: UIFont? {
         didSet {
-            print("set font")
             placeholderLabel.font = font
         }
     }
