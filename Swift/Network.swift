@@ -29,6 +29,7 @@ public class Network: NSObject {
         
         var receive: ((name: String, data: NSMutableData?) -> Void)?
         var complete: ((name: String, data: NSData?, response: NSURLResponse?, error: NSError?) -> Void)?
+        var httpResponse: ((response: Response) -> Void)?
         
         init(name: String, data: NSMutableData? = nil) {
             self.name = name
@@ -39,11 +40,18 @@ public class Network: NSObject {
     // MARK: Link Network Data Struct
     
     public class LinkTask {
+        enum LinkTaskResponse {
+            case task((name: String, data: NSData?, response: NSURLResponse?, error: NSError?) -> NSURLRequest?)
+            case response((response: Response) -> NSURLRequest?)
+        }
+        
         var queue: NSOperationQueue = NSOperationQueue()
         var session: NSURLSession!
         var request: NSURLRequest?
         var name: String
-        var tasks: [(name: String, data: NSData?, response: NSURLResponse?, error: NSError?) -> NSURLRequest?] = []
+//        var tasks: [(name: String, data: NSData?, response: NSURLResponse?, error: NSError?) -> NSURLRequest?] = []
+//        var responses: [(response: Response) -> NSURLRequest?] = []
+        var tasks: [LinkTaskResponse] = []
         
         //
         init(name: String) {
@@ -57,6 +65,125 @@ public class Network: NSObject {
         }
     }
     
+    // MARK: 响应结构
+    
+    public class Response {
+        var name: String!
+        var data: NSData?
+        var response: NSURLResponse?
+        var error: NSError?
+        
+        var code: Int = 0
+        var headers: [NSObject: AnyObject] = [:]
+        var json: AnyObject?
+        
+        // MARK: Init
+        init(name: String, data: NSData?, response: NSURLResponse?, error: NSError?) {
+            self.name = name
+            self.data = data
+            self.error = error
+            
+            if let http = response as? NSHTTPURLResponse {
+                self.headers = http.allHeaderFields
+                self.code = http.statusCode
+            }
+            
+            if let data = data {
+                if let json = try? NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments) {
+                    self.json = json
+                }
+            }
+        }
+        
+        // 下标访问
+        subscript(keys: String...) -> AnyObject? {
+            if var dic = json as? [String: AnyObject] {
+                for (i,key) in keys.enumerate() {
+                    if i == keys.count-1 {
+                        return dic[key]
+                    } else {
+                        if let tmp = dic[key] as? [String: AnyObject] {
+                            dic = tmp
+                        } else {
+                            return nil
+                        }
+                    }
+                }
+            }
+            return nil
+        }
+        
+        // MARK: 函数访问
+        
+        /// 根据字符串列表逐步解压，最后解压出来 [AnyObject] 格式。
+        func array(keys: String...) -> [AnyObject] {
+            if var dic = json as? [String: AnyObject] {
+                for (i, key) in keys.enumerate() {
+                    if i == keys.count-1 {
+                        if let tmp = dic[key] as? [AnyObject] {
+                            return tmp
+                        }
+                    } else {
+                        if let tmp = dic[key] as? [String: AnyObject] {
+                            dic = tmp
+                        } else {
+                            break
+                        }
+                    }
+                }
+            }
+            return []
+        }
+        
+        /// 根据 Key 解压出 String 字段，如果解压不到则返回空字符串
+        func value(key: String, _ null: String = "") -> String {
+            if let dic = json as? [String: AnyObject] {
+                if let value = dic[key] as? String {
+                    return value
+                }
+            }
+            return null
+        }
+        
+        /// 根据 Key 解压出 T 类型字段，如果解压不到则返回 null 参数
+        func value<T>(key: String, _ null: T) -> T {
+            if let dic = json as? [String: AnyObject] {
+                if let value = dic[key] as? T {
+                    return value
+                }
+            }
+            return null
+        }
+        
+        /// 根据 null 的字符串类型，按照 keys 逐步解压出 T 类型的字段，如果解压不到则返回 null 参数
+        func value<T>(null: T, _ keys: String...) -> T {
+            if var dic = json as? [String: AnyObject] {
+                for (i,key) in keys.enumerate() {
+                    if i == keys.count-1 {
+                        if let tmp = dic[key] as? T {
+                            return tmp
+                        }
+                    } else {
+                        if let tmp = dic[key] as? [String: AnyObject] {
+                            dic = tmp
+                        } else {
+                            break
+                        }
+                    }
+                }
+            }
+            return null
+        }
+    }
+    
+    // MARK: Init
+    
+    override init() {
+        super.init()
+        queue.maxConcurrentOperationCount = 1
+        session = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration(), delegate: self, delegateQueue: queue)
+    }
+    
     // MARK: Values
     
     private var queue = NSOperationQueue()
@@ -67,20 +194,10 @@ public class Network: NSObject {
     /// 任务链对象
     var linkTask: LinkTask?
     
-    // MARK: Init
-    override init() {
-        super.init()
-        queue.maxConcurrentOperationCount = 1
-        session = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration(), delegate: self, delegateQueue: queue)
-    }
-    
-    
 }
 
-// MARK: - Methods
+// MARK: - Methods: Task Operations
 extension Network {
-    
-    // MARK: Task Operations
     
     /// 添加下载任务
     func add(task: Task, request: NSURLRequest) {
@@ -120,8 +237,10 @@ extension Network {
             }
         }
     }
-    
-    // MARK: Download
+}
+
+// MARK: - Methods: Download
+extension Network {
     
     func download(name: String, url: String, method: String = "GET", data: NSData? = nil, header: [String: String]? = nil, body: NSData? = nil, receive: ((name: String, data: NSMutableData?) -> Void)? = nil, complete: ((name: String, data: NSData?, response: NSURLResponse?, error: NSError?) -> Void)? = nil) -> Task? {
         
@@ -175,6 +294,71 @@ extension Network {
     }
 }
 
+
+// MARK: - Methods: Response Order
+
+extension Network {
+    
+    func downloadResponse(name: String,
+                  url: String,
+                  method: String = "GET",
+                  data: NSData? = nil,
+                  header: [String: String]? = nil,
+                  body: NSData? = nil,
+                  receive: ((name: String, data: NSMutableData?) -> Void)? = nil,
+                  complete: ((response: Response) -> Void)?) -> Task?
+    {
+        
+        guard let request = Network.request(url, method: method, header: header, body: body, time: nil) else { return nil }
+        
+        let task = Task(name: name, data: data == nil ? NSMutableData() : NSMutableData(data: data!))
+        
+        if data != nil {
+            if header == nil {
+                request.allHTTPHeaderFields = ["Range": "bytes=\(data!.length)-"]
+            } else {
+                request.allHTTPHeaderFields!["Range"] = "bytes=\(data!.length)-"
+            }
+        }
+        
+        task.receive  = receive
+        task.httpResponse = complete
+        add(task, request: request)
+        resume(task)
+        return task
+    }
+    
+    func GET(name: String, url: String, completed: ((response: Response) -> Void)?) {
+        if downloadResponse(name, url: url, method: "GET", data: nil, header: nil, receive: nil, complete: completed) == nil {
+            completed?(response: Response(name: name, data: nil, response: nil, error: NSError(domain: "Task Create Error", code: 0, userInfo: ["name":name, "url": url, "type": "GET", "message": "Task Create Error"])))
+        }
+    }
+    
+    func GET(name: String, url: String, header: [String: String]?, completed: ((response: Response) -> Void)?) {
+        if downloadResponse(name, url: url, method: "GET", data: nil, header: header, receive: nil, complete: completed) == nil {
+            completed?(response: Response(name: name, data: nil, response: nil, error: NSError(domain: "Task Create Error", code: 0, userInfo: ["name":name, "url": url, "type": "GET", "message": "Task Create Error"])))
+        }
+    }
+    
+    func POST(name: String, url: String, header: [String: String]? = nil, body: NSData?, completed: ((response: Response) -> Void)?) {
+        if downloadResponse(name, url: url, method: "POST", data: nil, header: header, body: body, receive: nil, complete: completed) == nil {
+            completed?(response: Response(name: name, data: nil, response: nil, error: NSError(domain: "Task Create Error", code: 0, userInfo: ["name":name, "url": url, "type": "POST", "message": "Task Create Error"])))
+        }
+    }
+    
+    func PUT(name: String, url: String, header: [String: String]?, body: NSData?, completed: ((response: Response) -> Void)?) {
+        if downloadResponse(name, url: url, method: "PUT", data: nil, header: header, body: body, receive: nil, complete: completed) == nil {
+            completed?(response: Response(name: name, data: nil, response: nil, error: NSError(domain: "Task Create Error", code: 0, userInfo: ["name":name, "url": url, "type": "PUT", "message": "Task Create Error"])))
+        }
+    }
+    
+    func DELETE(name: String, url: String, header: [String: String]?, body: NSData?, completed: ((response: Response) -> Void)?) {
+        if downloadResponse(name, url: url, method: "DELETE", data: nil, header: header, body: body, receive: nil, complete: completed) == nil {
+            completed?(response: Response(name: name, data: nil, response: nil, error: NSError(domain: "Task Create Error", code: 0, userInfo: ["name":name, "url": url, "type": "DELETE", "message": "Task Create Error"])))
+        }
+    }
+}
+
 // MARK: - NSURLSessionDelegate
 extension Network: NSURLSessionDelegate {
     
@@ -200,6 +384,7 @@ extension Network: NSURLSessionDelegate {
         let index = tasks.indexOf({ task.taskDescription == $0.name })!
         let task = tasks.removeAtIndex(index)
         task.complete?(name: task.name, data: task.data, response: task.response, error: error)
+        task.httpResponse?(response: Response(name: task.name, data: task.data, response: task.response, error: error))
         delegate?.networkDidCompleteWithError(task, didCompleteWithError: error)
     }
     
@@ -210,7 +395,7 @@ extension Network: NSURLSessionDelegate {
 extension Network {
         
     /// 创建任务链
-    func linkTask(name: String) -> Network {
+    func linkTask(name: String, type: Bool = false) -> Network {
         if let link = linkTask {
             link.tasks.removeAll()
         }
@@ -226,7 +411,13 @@ extension Network {
     
     /// 添加任务链下载任务回调
     func linkAddTask(block: (name: String, data: NSData?, response: NSURLResponse?, error: NSError?) -> NSURLRequest?) -> Network {
-        self.linkTask?.tasks.append(block)
+        self.linkTask?.tasks.append(LinkTask.LinkTaskResponse.task(block))
+        return self
+    }
+    
+    /// 添加任务链下载任务回调
+    func linkAddTask(block: (response: Response) -> NSURLRequest?) -> Network {
+        self.linkTask?.tasks.append(LinkTask.LinkTaskResponse.response(block))
         return self
     }
     
@@ -236,15 +427,24 @@ extension Network {
             link.session.dataTaskWithRequest(request) { [weak self] (data, response, error) in
                 if link.tasks.count > 0 {
                     let block = link.tasks.removeFirst()
-                    if let newRequest = block(name: link.name, data: data, response: response, error: error) {
-                        self?.linkTask?.request = newRequest
-                        self?.linkTaskResume()
-                        return
+                    switch block {
+                    case .task(let block):
+                        if let newRequest = block(name: link.name, data: data, response: response, error: error) {
+                            self?.linkTask?.request = newRequest
+                            self?.linkTaskResume()
+                            return
+                        }
+                    case .response(let block):
+                        if let newRequest = block(response: Response(name: link.name, data: data, response: response, error: error)) {
+                            self?.linkTask?.request = newRequest
+                            self?.linkTaskResume()
+                            return
+                        }
                     }
                 }
                 self?.linkTask?.tasks.removeAll()
                 self?.linkTask = nil
-                }.resume()
+            }.resume()
         }
     }
 }
@@ -336,3 +536,99 @@ extension Network {
     
 }
 
+// MARK: - Json 数据处理
+class Json {
+    
+    // MARK: Value
+    /// 数据
+    var json: AnyObject?
+    
+    // MARK: Init
+    init(_ data: NSData?) {
+        if let data = data {
+            if let json = try? NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments) {
+                self.json = json
+            }
+        }
+    }
+    
+    // 下标访问
+    subscript(keys: String...) -> AnyObject? {
+        if var dic = json as? [String: AnyObject] {
+            for (i,key) in keys.enumerate() {
+                if i == keys.count-1 {
+                    return dic[key]
+                } else {
+                    if let tmp = dic[key] as? [String: AnyObject] {
+                        dic = tmp
+                    } else {
+                        return nil
+                    }
+                }
+            }
+        }
+        return nil
+    }
+    
+    // MARK: 函数访问
+    
+    /// 根据字符串列表逐步解压，最后解压出来 [AnyObject] 格式。
+    func array(keys: String...) -> [AnyObject] {
+        if var dic = json as? [String: AnyObject] {
+            for (i, key) in keys.enumerate() {
+                if i == keys.count-1 {
+                    if let tmp = dic[key] as? [AnyObject] {
+                        return tmp
+                    }
+                } else {
+                    if let tmp = dic[key] as? [String: AnyObject] {
+                        dic = tmp
+                    } else {
+                        break
+                    }
+                }
+            }
+        }
+        return []
+    }
+    
+    /// 根据 Key 解压出 String 字段，如果解压不到则返回空字符串
+    func value(key: String, _ null: String = "") -> String {
+        if let dic = json as? [String: AnyObject] {
+            if let value = dic[key] as? String {
+                return value
+            }
+        }
+        return null
+    }
+    
+    /// 根据 Key 解压出 T 类型字段，如果解压不到则返回 null 参数
+    func value<T>(key: String, _ null: T) -> T {
+        if let dic = json as? [String: AnyObject] {
+            if let value = dic[key] as? T {
+                return value
+            }
+        }
+        return null
+    }
+    
+    /// 根据 null 的字符串类型，按照 keys 逐步解压出 T 类型的字段，如果解压不到则返回 null 参数
+    func value<T>(null: T, _ keys: String...) -> T {
+        if var dic = json as? [String: AnyObject] {
+            for (i,key) in keys.enumerate() {
+                if i == keys.count-1 {
+                    if let tmp = dic[key] as? T {
+                        return tmp
+                    }
+                } else {
+                    if let tmp = dic[key] as? [String: AnyObject] {
+                        dic = tmp
+                    } else {
+                        break
+                    }
+                }
+            }
+        }
+        return null
+    }
+}
