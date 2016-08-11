@@ -8,10 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		9C3CC6BE1D4D135B000FCD38 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3CC6BD1D4D135B000FCD38 /* main.swift */; };
-		9C3CC6C51D4D13F3000FCD38 /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3CC6C41D4D13F3000FCD38 /* Text.swift */; };
-		9C78B41F1D56B10800AD4411 /* Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C78B41E1D56B10800AD4411 /* Type.swift */; };
 		9C78B4211D575AE500AD4411 /* ApiTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C78B4201D575AE500AD4411 /* ApiTool.swift */; };
 		B17F462E1D59D07600D66ECB /* CStruct.c in Sources */ = {isa = PBXBuildFile; fileRef = B17F462C1D59D07600D66ECB /* CStruct.c */; };
+		B1E248481D5C176B00E516D1 /* GCD.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E248401D5C174B00E516D1 /* GCD.swift */; };
+		B1E248491D5C176B00E516D1 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E248411D5C174B00E516D1 /* Network.swift */; };
+		B1E2484A1D5C176B00E516D1 /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E248431D5C174B00E516D1 /* Text.swift */; };
+		B1E2484B1D5C176B00E516D1 /* Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E248441D5C174B00E516D1 /* Type.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -29,13 +31,15 @@
 /* Begin PBXFileReference section */
 		9C3CC6BA1D4D135B000FCD38 /* SwiftOS */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SwiftOS; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C3CC6BD1D4D135B000FCD38 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		9C3CC6C41D4D13F3000FCD38 /* Text.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Text.swift; path = ../../Swift/Text.swift; sourceTree = "<group>"; };
-		9C78B41E1D56B10800AD4411 /* Type.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Type.swift; path = ../../Swift/Type.swift; sourceTree = "<group>"; };
 		9C78B4201D575AE500AD4411 /* ApiTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApiTool.swift; path = ../../Tools/ApiTool.swift; sourceTree = "<group>"; };
 		9C79FD2C1D54024A00A20D7F /* TestFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestFile.swift; sourceTree = "<group>"; };
 		B17F462B1D59D07500D66ECB /* SwiftOS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SwiftOS-Bridging-Header.h"; sourceTree = "<group>"; };
 		B17F462C1D59D07600D66ECB /* CStruct.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = CStruct.c; sourceTree = "<group>"; };
 		B17F462D1D59D07600D66ECB /* CStruct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CStruct.h; sourceTree = "<group>"; };
+		B1E248401D5C174B00E516D1 /* GCD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCD.swift; sourceTree = "<group>"; };
+		B1E248411D5C174B00E516D1 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		B1E248431D5C174B00E516D1 /* Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
+		B1E248441D5C174B00E516D1 /* Type.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Type.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,8 +84,7 @@
 		B17F462F1D59D08500D66ECB /* Tools */ = {
 			isa = PBXGroup;
 			children = (
-				9C78B41E1D56B10800AD4411 /* Type.swift */,
-				9C3CC6C41D4D13F3000FCD38 /* Text.swift */,
+				B1E2483C1D5C174B00E516D1 /* Swift */,
 			);
 			name = Tools;
 			sourceTree = "<group>";
@@ -102,6 +105,18 @@
 				B17F462B1D59D07500D66ECB /* SwiftOS-Bridging-Header.h */,
 			);
 			name = Resource;
+			sourceTree = "<group>";
+		};
+		B1E2483C1D5C174B00E516D1 /* Swift */ = {
+			isa = PBXGroup;
+			children = (
+				B1E248401D5C174B00E516D1 /* GCD.swift */,
+				B1E248411D5C174B00E516D1 /* Network.swift */,
+				B1E248431D5C174B00E516D1 /* Text.swift */,
+				B1E248441D5C174B00E516D1 /* Type.swift */,
+			);
+			name = Swift;
+			path = ../../Swift;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -161,11 +176,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1E248481D5C176B00E516D1 /* GCD.swift in Sources */,
 				9C78B4211D575AE500AD4411 /* ApiTool.swift in Sources */,
-				9C3CC6C51D4D13F3000FCD38 /* Text.swift in Sources */,
+				B1E248491D5C176B00E516D1 /* Network.swift in Sources */,
 				9C3CC6BE1D4D135B000FCD38 /* main.swift in Sources */,
+				B1E2484A1D5C176B00E516D1 /* Text.swift in Sources */,
+				B1E2484B1D5C176B00E516D1 /* Type.swift in Sources */,
 				B17F462E1D59D07600D66ECB /* CStruct.c in Sources */,
-				9C78B41F1D56B10800AD4411 /* Type.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

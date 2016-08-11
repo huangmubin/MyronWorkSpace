@@ -13,8 +13,59 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        performSegueWithIdentifier("ValueViewController", sender: nil)
+        //performSegueWithIdentifier("ValueViewController", sender: nil)
+        let net = Network()
         
+        net.linkTask("Test")
+            .linkReques("https://github.com/huangmubin/huangmubin.github.io/archive/master.zip")
+            .linkAddTask { (name, data, response, error) -> NSURLRequest? in
+                print("Test 1 \(NSThread.currentThread()): error = \(error)")
+                if error == nil {
+                    return Network.request("https://github.com/huangmubin/huangmubin.github.io/archive/master.zip", method: "GET")
+                } else {
+                    return nil
+                }
+            }
+            .linkAddTask { (name, data, response, error) -> NSURLRequest? in
+                print("Test 2 \(NSThread.currentThread()): error = \(error)")
+                if error == nil {
+                    return Network.request("https://github.com/huangmubin/huangmubin.github.io/archive/master.zip", method: "GET")
+                } else {
+                    return nil
+                }
+            }
+            .linkAddTask { (name, data, response, error) -> NSURLRequest? in
+                print("Test 3 \(NSThread.currentThread()): error = \(error)")
+                if error == nil {
+                    return Network.request("https://github.com/huangmubin/huangmubin.github.io/archive/master.zip", method: "GET")
+                } else {
+                    return nil
+                }
+            }
+            .linkAddTask { (name, data, response, error) -> NSURLRequest? in
+                print("Test 4 \(NSThread.currentThread()): error = \(error)")
+//                if error == nil {
+//                    return Network.request("https://github.com/huangmubin/huangmubin.github.io/archive/master.zip", method: "GET")
+//                } else {
+                    return nil
+//                }
+            }
+            .linkAddTask { (name, data, response, error) -> NSURLRequest? in
+                print("Test 5 \(NSThread.currentThread()): error = \(error)")
+                if error == nil {
+                    return Network.request("https://github.com/huangmubin/huangmubin.github.io/archive/master.zip", method: "GET")
+                } else {
+                    return nil
+                }
+            }
+            .linkAddTask { (name, data, response, error) -> NSURLRequest? in
+                print("Test 6 \(NSThread.currentThread()): error = \(error)")
+                if error == nil {
+                    return Network.request("https://github.com/huangmubin/huangmubin.github.io/archive/master.zip", method: "GET")
+                } else {
+                    return nil
+                }
+            }.linkTaskResume()
     }
     
     

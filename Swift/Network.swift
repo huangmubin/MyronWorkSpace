@@ -6,7 +6,7 @@
 //
 //
 
-import UIKit
+import Foundation
 
 // MARK: - Protocol
 protocol NetworkDelegate: NSObjectProtocol {
@@ -20,7 +20,7 @@ protocol NetworkDelegate: NSObjectProtocol {
 // MARK: - Network Data
 public class Network: NSObject {
     
-    // MARK: Data Struct
+    // MARK: Task Data Struct
     public class Task {
         var name: String
         var data: NSMutableData?
@@ -36,6 +36,27 @@ public class Network: NSObject {
         }
     }
     
+    // MARK: Link Network Data Struct
+    
+    public class LinkTask {
+        var queue: NSOperationQueue = NSOperationQueue()
+        var session: NSURLSession!
+        var request: NSURLRequest?
+        var name: String
+        var tasks: [(name: String, data: NSData?, response: NSURLResponse?, error: NSError?) -> NSURLRequest?] = []
+        
+        //
+        init(name: String) {
+            queue.maxConcurrentOperationCount = 1
+            session = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration(), delegate: nil, delegateQueue: queue)
+            self.name = name
+        }
+        
+        deinit {
+            print("LinkTask deinit")
+        }
+    }
+    
     // MARK: Values
     
     private var queue = NSOperationQueue()
@@ -43,6 +64,8 @@ public class Network: NSObject {
     var tasks = [Task]()
     weak var delegate: NetworkDelegate?
     
+    /// 任务链对象
+    var linkTask: LinkTask?
     
     // MARK: Init
     override init() {
@@ -50,6 +73,7 @@ public class Network: NSObject {
         queue.maxConcurrentOperationCount = 1
         session = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration(), delegate: self, delegateQueue: queue)
     }
+    
     
 }
 
@@ -181,6 +205,50 @@ extension Network: NSURLSessionDelegate {
     
 }
 
+// MARK: - Link Task 任务链方法
+
+extension Network {
+        
+    /// 创建任务链
+    func linkTask(name: String) -> Network {
+        if let link = linkTask {
+            link.tasks.removeAll()
+        }
+        linkTask = LinkTask(name: name)
+        return self
+    }
+    
+    /// 创建任务链初始请求
+    func linkReques(path: String, method: String = "GET", header: [String: String]? = nil, body: NSData? = nil, time: NSTimeInterval? = nil) -> Network {
+        self.linkTask?.request = Network.request(path, method: method, header: header, body: body, time: time)
+        return self
+    }
+    
+    /// 添加任务链下载任务回调
+    func linkAddTask(block: (name: String, data: NSData?, response: NSURLResponse?, error: NSError?) -> NSURLRequest?) -> Network {
+        self.linkTask?.tasks.append(block)
+        return self
+    }
+    
+    /// 启动任务链
+    func linkTaskResume() {
+        if let link = linkTask, let request = linkTask?.request {
+            link.session.dataTaskWithRequest(request) { [weak self] (data, response, error) in
+                if link.tasks.count > 0 {
+                    let block = link.tasks.removeFirst()
+                    if let newRequest = block(name: link.name, data: data, response: response, error: error) {
+                        self?.linkTask?.request = newRequest
+                        self?.linkTaskResume()
+                        return
+                    }
+                }
+                self?.linkTask?.tasks.removeAll()
+                self?.linkTask = nil
+                }.resume()
+        }
+    }
+}
+
 // MARK: - Tools
 extension Network {
     
@@ -267,3 +335,4 @@ extension Network {
     }
     
 }
+

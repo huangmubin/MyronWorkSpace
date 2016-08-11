@@ -6,30 +6,10 @@
 //
 //
 
-import UIKit
+import Foundation
 
 // TODO: - 看到不明所以待验证的 GCD 用法
-/*
-/// 进行定时，倒数设定的时间之后，调用完成块或调用隐藏方法。
-private func delayDismiss(time: NSTimeInterval?, completion: HUDCompletedBlock?) {
-    guard let time = time else { return }
-    guard time > 0 else { return }
-    var timeOut = time
-    timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue())
-    dispatch_source_set_timer(timer!, dispatch_walltime(nil, 0), NSEC_PER_SEC, 0)
-    dispatch_source_set_event_handler(timer!) {
-        if timeOut <= 0 {
-            dispatch_async(dispatch_get_main_queue()) {
-                HUD.dismiss()
-                completion?()
-            }
-        } else {
-            timeOut -= 1
-        }
-    }
-    dispatch_resume(timer!)
-}
-*/
+
 
 // MARK: - GCD
 
