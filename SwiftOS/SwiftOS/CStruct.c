@@ -19,7 +19,7 @@
 typedef struct Node {
     ElementType Data;
     struct Node *Next;
-} List;
+} List, QueueNote;
 
 // MARK: 操作方式
 
@@ -198,6 +198,25 @@ int countOfStack(Stack *s) {
     }
     return number;
 }
+
+// MARK: - 队列 Queue
+
+// Node 添加 QueueNode
+typedef struct QueueStruct {
+    QueueNote *front;
+    QueueNote *rear;
+} Queue;
+
+Queue *createQueue() {
+    Queue *q = (Queue *)malloc(sizeof(struct QueueStruct));
+    q->front = q->rear = (QueueNote *)malloc(sizeof(struct Node));
+    return q;
+}
+
+void deleteQueue(Queue *q) {
+    
+}
+
 
 // MARK: - Main Funcion
 void cTestFunction() {
