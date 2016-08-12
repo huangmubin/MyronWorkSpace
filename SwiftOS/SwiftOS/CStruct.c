@@ -210,13 +210,22 @@ typedef struct QueueStruct {
 Queue *createQueue() {
     Queue *q = (Queue *)malloc(sizeof(struct QueueStruct));
     q->front = q->rear = (QueueNote *)malloc(sizeof(struct Node));
+    q->front->Data = 0;
+    q->front->Next = 0;
     return q;
 }
 
 void deleteQueue(Queue *q) {
-    
+    while (q->front) {
+        q->rear = q->front->Next;
+        free(q->front);
+        q->front = q->rear;
+    }
 }
 
+void clearQueue(Queue *q) {
+    
+}
 
 // MARK: - Main Funcion
 void cTestFunction() {
