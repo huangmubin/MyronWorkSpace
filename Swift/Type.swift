@@ -11,32 +11,48 @@ import Foundation
 
 // MARK: - 堆栈
 
-struct Stack<T> {
+class Stack<T> {
+    
     private var _value = [T]()
+    
     subscript(i: Int) -> T {
-        set { _value[i] = newValue }
-        get { return _value[i] }
+        set {
+            _value[i] = newValue
+        }
+        get {
+            return _value[i]
+        }
     }
-    mutating func pop() -> T? {
+    
+    func isEmpty() -> Bool {
+        return _value.isEmpty;
+    }
+    
+    func empty() {
+        _value.removeAll(keepCapacity: true)
+    }
+    
+    func copy() -> [T] {
+        return _value;
+    }
+    
+    func push(v: T) {
+        _value.append(v)
+    }
+    
+    func pop() -> T? {
         if _value.count > 0 {
             return _value.removeLast()
         } else {
             return nil
         }
     }
-    mutating func push(v: T) {
-        _value.append(v)
-    }
-    mutating func empty() {
-        _value.removeAll(keepCapacity: true)
-    }
+    
     func top() -> T? {
         return _value.last
     }
+    
     func count() -> Int {
         return _value.count
-    }
-    func isEmpty() -> Bool {
-        return _value.count == 0
     }
 }

@@ -21,7 +21,6 @@ typedef struct Node {
     struct Node *Next;
 } List;
 
-
 // MARK: 操作方式
 
 // 求表长
@@ -132,236 +131,96 @@ typedef struct GNode {
 
 // MARK: - 堆栈 Stack
 
-// MARK: 数据结构
 typedef struct StackNode {
-    ElementType Data;
-    struct StackNode *Next;
-} LinkStack;
+    ElementType data;
+    struct StackNode *next;
+} Stack;
 
-// MARK: 操作方法
-
-// 建立空栈
-LinkStack *CreateStack() {
-    LinkStack *S;
-    S = (LinkStack *)malloc(sizeof(struct StackNode));
-    S->Next = NULL;
-    return S;
-}
-
-// 判断是否为空
-int IsEmpty(LinkStack *s) {
-    return (s->Next == NULL);
-}
-
-// 入栈
-void Push(ElementType item, LinkStack *s) {
-    struct StackNode *tmpCell;
-    tmpCell = (LinkStack *)malloc(sizeof(struct StackNode));
-    tmpCell->Data = item;
-    tmpCell->Next = s->Next;
-    s->Next = tmpCell;
-}
-
-// 删除并返回栈顶元素
-ElementType Pop(LinkStack *s) {
-    struct StackNode *firstCell;
-    ElementType topElem;
-    if (IsEmpty(s)) {
-        printf("堆栈空");
-        return 0;
-    } else {
-        firstCell = s->Next;
-        s->Next = firstCell->Next;
-        topElem = firstCell->Data;
-        free(firstCell);
-        return topElem;
-    }
-}
-
-//// MARK: 实例 表达式求值 ?? Error
-
-typedef struct ExpressionsStackNode {
-    double v;
-    char c;
-    struct ExpressionsStackNode *next;
-} EStack;
-
-EStack *CreateExpression() {
-    EStack *s;
-    s = (EStack *)malloc(sizeof(struct ExpressionsStackNode));
-    s->c = ' ';
-    s->v = 0;
+Stack *createStack() {
+    Stack *s;
+    s = (Stack *)malloc(sizeof(struct StackNode));
+    s->data = 0;
     s->next = NULL;
     return s;
 }
 
-int IsEmptyExpression(EStack *s) {
-    return (s->next == NULL);
+int isEmptyStack(Stack *s) {
+    return s->next == NULL;
 }
 
-void PushValue(double v, EStack *s) {
-    EStack *tmp;
-    tmp = (EStack *)malloc(sizeof(struct ExpressionsStackNode));
-    tmp->v = v;
-    tmp->next = s->next;
-    s->next = tmp;
-}
-
-void PushChar(char v, EStack *s) {
-    EStack *tmp;
-    tmp = (EStack *)malloc(sizeof(struct ExpressionsStackNode));
-    tmp->c = v;
-    tmp->next = s->next;
-    s->next = tmp;
-}
-
-double PopValue(EStack *s) {
-    EStack *top;
-    double v;
-    if (IsEmptyExpression(s)) {
-        return 0;
-    } else {
-        top = s->next;
-        s->next = top->next;
-        v = top->v;
-        free(top);
-        return v;
+void deleteStack(Stack *s) {
+    Stack *p;
+    while (s != NULL) {
+        p = s->next;
+        free(s);
+        s = p;
     }
 }
 
-char PopChar(EStack *s) {
-    EStack *top;
-    char v;
-    if (IsEmptyExpression(s)) {
-        return 0;
-    } else {
-        top = s->next;
-        s->next = top->next;
-        v = top->c;
-        free(top);
-        return v;
+void printfStack(Stack *s) {
+    Stack *p;
+    p = s->next;
+    while (p != NULL) {
+        printf("%d - ", p->data);
+        p = p->next;
     }
 }
 
-void DeleteExpression(EStack *s) {
-    EStack *tmp;
-    while (s->next) {
-        tmp = s->next;
-        s = tmp->next;
-        free(tmp);
-    }
+void pushStack(Stack *s, ElementType item) {
+    Stack *new;
+    new = (Stack *)malloc(sizeof(struct StackNode));
+    new->data = item;
+    new->next = s->next;
+    s->next = new;
 }
 
-double ValueOfExpressions() {
-    EStack *v, *s;
-    v = CreateExpression();
-    s = CreateExpression();
-    PushValue(0, v);
-    
-    double value = 0;
-    char sign;
-    char count;
-    double a, b;
-    while (1) {
-        if (scanf("%lf", &value)) {
-            PushValue(value, v);
-            // printf("value: %.2lf; ", value);
-        } else if (scanf("%c", &sign)) {
-            if (sign == '=') {
-                count = PopChar(s);
-                b = PopValue(v);
-                a = PopValue(v);
-                switch (count) {
-                    case '+':
-                        return a + b;
-                    case '-':
-                        return a - b;
-                    case '*':
-                        return a * b;
-                    case '/':
-                        return a / b;
-                }
-            } else if (IsEmptyExpression(s) && (sign == '+' || sign == '-' || sign == '(' || sign == '*' || sign == '/')) {
-                PushChar(sign, s);
-            } else {
-                if (sign == '(' || s->next->c == '(') {
-                    PushChar(sign, s);
-                } else if (sign == '+' || sign == '-') {
-                    count = PopChar(s);
-                    b = PopValue(v);
-                    a = PopValue(v);
-                    switch (count) {
-                        case '+':
-                            PushValue(a + b, v);
-                            break;
-                        case '-':
-                            PushValue(a - b, v);
-                            break;
-                        case '*':
-                            PushValue(a * b, v);
-                            break;
-                        case '/':
-                            PushValue(a / b, v);
-                            break;
-                    }
-                    PushChar(sign, s);
-                } else if (sign == '*' || sign == '/') {
-                    if (s->next->c == '+' || s->next->c == '-') {
-                        PushChar(sign, s);
-                    } else {
-                        count = PopChar(s);
-                        b = PopValue(v);
-                        a = PopValue(v);
-                        switch (count) {
-                            case '+':
-                                PushValue(a + b, v);
-                                break;
-                            case '-':
-                                PushValue(a - b, v);
-                                break;
-                        }
-                        PushChar(sign, s);
-                    }
-                } else if (sign == ')') {
-                    count = PopChar(s);
-                    while (count != '(' && !IsEmptyExpression(s)) {
-                        b = PopValue(v);
-                        a = PopValue(v);
-                        switch (count) {
-                            case '+':
-                                PushValue(a + b, v);
-                                break;
-                            case '-':
-                                PushValue(a - b, v);
-                                break;
-                            case '*':
-                                PushValue(a * b, v);
-                                break;
-                            case '/':
-                                PushValue(a / b, v);
-                                break;
-                        }
-                        count = PopChar(s);
-                    }
-                }
-            }
-        }
-    }
+ElementType popStack(Stack *s) {
+    ElementType data;
+    Stack *top;
+    top = s->next;
+    data = top->data;
+    s->next = top->next;
+    free(top);
+    return data;
 }
+
+ElementType topStack(Stack *s) {
+    return s->next->data;
+}
+
+int countOfStack(Stack *s) {
+    Stack *p;
+    int number = 0;
+    p = s->next;
+    while (p != NULL) {
+        number += 1;
+        p = p->next;
+    }
+    return number;
+}
+
 // MARK: - Main Funcion
 void cTestFunction() {
-    char a;
-    do {
-        while (1) {
-            scanf("%c", &a);
-            if (a == '\n') {
-                break;
-            }
-        }
-//        if (a == ':') {
-            printf("\nresult = %lf;\n", ValueOfExpressions());
-//        } else {
-//            return;
-//        }
-    } while (1);
+    Stack *s;
+    s = createStack();
+    printfStack(s);
+    printf("\nPrintf 1\n");
+    for (int i = 0; i < 10; i++) {
+        pushStack(s, i);
+    }
+    printfStack(s);
+    printf("\nPrintf 2\n");
+    popStack(s);
+    popStack(s);
+    popStack(s);
+    ElementType x;
+    x = topStack(s);
+    printf("x = %d", x);
+    printf("\nPrintf 3\n");
+    x = countOfStack(s);
+    printf("x = %d", x);
+    printf("\nPrintf 4\n");
+    deleteStack(s);
+    printf("\nPrintf 5\n");
+    
 }
