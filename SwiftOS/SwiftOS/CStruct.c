@@ -19,7 +19,7 @@
 typedef struct Node {
     ElementType Data;
     struct Node *Next;
-} List;
+} List, QueueNote;
 
 // MARK: 操作方式
 
@@ -199,28 +199,102 @@ int countOfStack(Stack *s) {
     return number;
 }
 
+// MARK: - 队列 Queue
+
+// Node 添加 QueueNode
+typedef struct QueueStruct {
+    QueueNote *front;
+    QueueNote *rear;
+} Queue;
+
+Queue *createQueue() {
+    Queue *q = (Queue *)malloc(sizeof(struct QueueStruct));
+    q->front = q->rear = (QueueNote *)malloc(sizeof(struct Node));
+    q->front->Data = 0;
+    q->front->Next = 0;
+    return q;
+}
+
+void deleteQueue(Queue *q) {
+    while (q->front) {
+        q->rear = q->front->Next;
+        free(q->front);
+        q->front = q->rear;
+    }
+    free(q);
+}
+
+void clearQueue(Queue *q) {
+    while (q->front->Next) {
+        q->rear = q->front->Next;
+        free(q->front);
+        q->front = q->rear;
+    }
+}
+
+int isEmptyQueue(Queue *q) {
+    return q->front == q->rear;
+}
+
+int countQueue(Queue *q) {
+    int i;
+    QueueNote *t = q->front;
+    while (t != q->rear) {
+        i++;
+        t = t->Next;
+    }
+    return i;
+}
+
+ElementType topQueueItem(Queue *q) {
+    return q->front->Data;
+}
+
+ElementType popQueue(Queue *q) {
+    ElementType i;
+    QueueNote *t;
+    if (isEmptyQueue(q)) {
+        printf("Queue is Empty, can't pop.\n");
+        exit(1);
+    } else {
+        t = q->front->Next;
+        free(q->front);
+        q->front = t;
+        i = t->Data;
+        return i;
+    }
+}
+
+void pushQueue(Queue *q, ElementType i) {
+    QueueNote *t = (QueueNote *)malloc(sizeof(struct Node));
+    t->Data = i;
+    t->Next = NULL;
+    q->rear->Next = t;
+    q->rear = t;
+}
+
+void printQueue(Queue *q) {
+    if (isEmptyQueue(q)) {
+        printf("Queue is Empty");
+        return;
+    }
+    QueueNote *t = q->front->Next;
+    while (t) {
+        printf("%d ", t->Data);
+        t = t->Next;
+    }
+    printf("\n");
+}
+
 // MARK: - Main Funcion
 void cTestFunction() {
-    Stack *s;
-    s = createStack();
-    printfStack(s);
-    printf("\nPrintf 1\n");
-    for (int i = 0; i < 10; i++) {
-        pushStack(s, i);
-    }
-    printfStack(s);
-    printf("\nPrintf 2\n");
-    popStack(s);
-    popStack(s);
-    popStack(s);
-    ElementType x;
-    x = topStack(s);
-    printf("x = %d", x);
-    printf("\nPrintf 3\n");
-    x = countOfStack(s);
-    printf("x = %d", x);
-    printf("\nPrintf 4\n");
-    deleteStack(s);
-    printf("\nPrintf 5\n");
     
+    Queue *q = createQueue();
+    
+    for (int i = 0; i < 10; i++)
+        pushQueue(q, i);
+    
+    printQueue(q);
+    deleteQueue(q);
+    printQueue(q);
 }

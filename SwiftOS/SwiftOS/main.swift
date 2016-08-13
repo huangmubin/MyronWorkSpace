@@ -10,6 +10,7 @@ import Foundation
 
 //cTestFunction()
 
+<<<<<<< HEAD
 
 // MARK: - Json 数据处理
 class Json2 {
@@ -135,3 +136,15 @@ let json = Json(data)
 
 //print(json["e", 3, "a"].result)
 print(json.array("e"))
+=======
+let q = Queue<Int>()
+
+for i in 0..<10 {
+    q.push(i)
+}
+
+for i in 0 ..< 10 {
+    print(q.pop())
+}
+print()
+>>>>>>> origin/master
