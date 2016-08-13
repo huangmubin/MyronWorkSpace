@@ -68,18 +68,31 @@
                     <view key="view" contentMode="scaleToFill" id="zgf-Yb-X1m">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="j0E-92-YEB">
+                                <rect key="frame" x="98" y="499" width="97" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="XwA-ZL-XmB">
+                        <barButtonItem key="leftBarButtonItem" title="Item" id="4Yc-Df-Yzj">
+                            <connections>
+                                <action selector="leftAction:" destination="uQU-hD-h3K" id="GVU-S6-SLi"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Item" id="q8x-lJ-qeo">
                             <connections>
-                                <segue destination="Zpz-mr-2vX" kind="show" id="pke-si-JHI"/>
+                                <action selector="rightAction:" destination="uQU-hD-h3K" id="UBV-7C-D2T"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="ValueViewController" id="ruq-DO-VK4"/>
+                        <segue destination="Zpz-mr-2vX" kind="show" identifier="SecondViewController" id="Tcy-dZ-dcB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="13R-GX-M8F" userLabel="First Responder" sceneMemberID="firstResponder"/>
