@@ -9,100 +9,51 @@
 import Foundation
 //cTestFunction()
 
-/*
- Text.swift
- */
-class JsonFormatTool {
-    
-    // MARK: Datas
-    
-    /// 数据内容
-    var json: AnyObject!
-    var text: String = ""
-    /// 结果
-    var result: String = ""
-    
-    // MARK: Main Run
-    func main(file: String) -> String {
-        guard readFile(file) else { return "Read File Error" }
-        guard textAnalysis() else { return "Text Analysis Error" }
-        
-        return "Done"
-    }
-    
-    // MARK: Actions
-    
-    private func readFile(file: String) -> Bool {
-        /*
-        if let data = NSData(contentsOfFile: file) {
-            if let json = try? NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) {
-                self.json = json
-                return true
-            }
+private func jsonFormat(json: String) -> String {
+    var _space = 0
+    var space: String {
+        var s = ""
+        for _ in 0 ..< _space {
+            s += "    "
         }
-         */
-        if let file = file.read() {
-            text = file
-            return true
-        }
-        return false
+        return s
     }
+    var type = true
+    var result = json
+    result.removeAll(keepCapacity: true)
     
-    enum Type {
-        case normal
-        case string
-    }
-    
-    var stack = [Int]()
-    
-    private func textAnalysis() -> Bool {
-        func space() -> String {
-            var s = ""
-            for _ in 0 ..< stack.count {
-                s += "    "
-            }
-            return s
-        }
-        var type = Type.normal
-        
-        
-        
-        for c in text.characters {
-            switch type {
-            case .normal:
-                if c == "\"" {
-                    result.append(c)
-                    type = .string
-                } else if c == "," {
-                    result.append(c)
-                    result += "\n" + space()
-                } else if c == "{" || c == "[" {
-                    result.append(c)
-                    
-                    result += "\n" + space()
-                } else if c == "]" || c == "}" {
-                    
-                }
-            case .string:
+    for c in json.characters {
+        if type {
+            switch c {
+            case "\"":
                 result.append(c)
-                if c == "\"" {
-                    type = .string
-                }
+                type = false
+            case ",":
+                result.append(c)
+                result += "\n" + space
+            case "{", "[":
+                result.append(c)
+                _space += 1
+                result += "\n" + space
+            case "}", "]":
+                _space -= 1
+                result += "\n" + space
+                result.append(c)
+            default:
+                result.append(c)
+            }
+        } else {
+            result.append(c)
+            if c == "\"" {
+                type = true
             }
         }
-        
-        /*
-        if let values = json as? [String: AnyObject] {
-            for (key, value) in values {
-                print("key = \(key); value = \(value)")
-            }
-        }
-         */
-        return false
     }
+    return result
 }
 
-let file = "/Users/Myron/GitHub/MyronWorkSpace/SwiftOS/SwiftOS/TestFile.swift"
+//let file = "/Users/Myron/GitHub/MyronWorkSpace/SwiftOS/SwiftOS/TestFile.swift"
+let file = "/Users/Myron/职业生涯文档/GitHub/MyronWorkSpace/SwiftOS/SwiftOS/TestFile.swift"
 
 //if let data = NSData(contentsOfFile: file) {
 //    if let json = try? NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) {
@@ -110,8 +61,7 @@ let file = "/Users/Myron/GitHub/MyronWorkSpace/SwiftOS/SwiftOS/TestFile.swift"
 //    }
 //}
 
-let json = JsonFormatTool()
-print(json.main(file))
+print(jsonFormat(file.read()!))
 
 //let data = "{\"code\":0,\"message\":\"Login Success\",\"result\":{\"address\":\"pubPort:48080\",\"secret\":"bxtmXpbutaR0F7DF3BUAmJghLyD8HYV8Y8eDiQodk+3G+nDHmx+Jic/vZ7vxSZtXJBm+jwiZYI3XUWvYEKpwuUVHEWVCkxX4AhqY/7lTXXMHHIHhs8W3uAApRixDuOmJ9tinmwmQRiLFGH3itSE45JnNkv9VkkOTc1DIp0TQsLI="}}"
 

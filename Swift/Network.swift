@@ -650,4 +650,51 @@ class Json {
         return null
     }
     
+    
+    // MARK: - 一些其他的 Json 有关的方法
+    
+    /// 格式化 Json 字符串
+    class func jsonFormat(json: String) -> String {
+        var _space = 0
+        var space: String {
+            var s = ""
+            for _ in 0 ..< _space {
+                s += "    "
+            }
+            return s
+        }
+        var type = true
+        var result = json
+        result.removeAll(keepCapacity: true)
+        
+        for c in json.characters {
+            if type {
+                switch c {
+                case "\"":
+                    result.append(c)
+                    type = false
+                case ",":
+                    result.append(c)
+                    result += "\n" + space
+                case "{", "[":
+                    result.append(c)
+                    _space += 1
+                    result += "\n" + space
+                case "}", "]":
+                    _space -= 1
+                    result += "\n" + space
+                    result.append(c)
+                default:
+                    result.append(c)
+                }
+            } else {
+                result.append(c)
+                if c == "\"" {
+                    type = true
+                }
+            }
+        }
+        return result
+    }
+    
 }
