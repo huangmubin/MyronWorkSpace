@@ -83,7 +83,7 @@ class SpeakView: UIView, UITextFieldDelegate {
     }
 
     private func load() {
-        self.backgroundColor = UIColor.darkGrayColor()
+        //self.backgroundColor = UIColor.darkGrayColor()
         
         //
         textField.borderStyle = .RoundedRect
@@ -104,6 +104,14 @@ class SpeakView: UIView, UITextFieldDelegate {
     
     deinit {
         removeKeyboard()
+    }
+    
+    // MARK: - Override
+    
+    override var backgroundColor: UIColor? {
+        didSet {
+            showButton.backgroundColor = self.backgroundColor
+        }
     }
     
     // MARK: - Deploy
