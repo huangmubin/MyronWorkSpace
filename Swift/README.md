@@ -58,14 +58,14 @@ view1.att1 (==, >=, <=) view2.attr2 * mulitiplier + constant
 
 所以要完成一个约束，
 * 有三个关键对象要搞清楚
-* superview: 这是以上约束中没有的参数，但是，这是最重要的，就是你的约束要添加的视图，也就是 view1 跟 view2 的共同父类。
-* view1: 添加约束的视图。
-* view2: 参考视图。
+	* superview: 这是以上约束中没有的参数，但是，这是最重要的，就是你的约束要添加的视图，也就是 view1 跟 view2 的共同父类。
+	* view1: 添加约束的视图。
+	* view2: 参考视图。
 * 一种关系必须明确
-* relation: 是等于，还是大于，还是小于？
+	* relation: 是等于，还是大于，还是小于？
 * 两个属性要知道
-* att1: 要进行约束的那条边
-* att2: 用来参考的那条边
+	* att1: 要进行约束的那条边
+	* att2: 用来参考的那条边
 
 #### AutoLayout
 
@@ -193,7 +193,192 @@ AutoLayout(superview, view1)
 
 ## Network
 
-* 简易的网络封装
+简易的网络封装
+
+* 优点：
+	* 轻量化
+	* 调用简易，代码简洁
+	* 功能完整
+* 使用方式：
+	* 初始化 Network。
+	* 根据自己的需求调用相应的 GET, PUT 等方法。
+		* 返回类型
+			* (name: String, data: NSData?, response: NSURLResponse?, error: NSError?) -> Void)?
+				* 常见返回类型，与系统原生 NSURLSecssion 返回类型相匹配。多出来的 name 参数是调用时加入的标示符。
+			* (response: Response) -> Void)?
+				* 封装类型，对数据进行二次处理，可直接使用其中的属性，获取 code 等常用参数。
+				* 封装了自定义类 Json 以及相应的调用方法，可使用下标直接获取 Json 数据。
+	* 根据需求，设置 delegate, 可获取下载进度等信息。
+* 特殊用法
+	* link 系列方法：创建链式网络逐步调用。在一个网络调用结束后根据返回值才进行下一次调用。
+	* Json 数据处理类：可通过下标等方法，便捷的获取到 Json 数据。
+	* JsonModel 基类：通过 KVC 方法将 Json 数据直接设置到新建的类类型当中。
+
+### 使用示例
+
+* 普通调用
+
+```
+func networkExample() {
+    let network = Network()
+    let url = "http://www.xxxx.com/xxxx/xx.png" // 链接地址
+    let taskName = "Examplt" // 任务名称，同一名称的任务未调用完毕，无法再次调用。
+    let header = ["name": "value"] // 请求头设置
+    let body = Network.data(["name": "value"]) // 通过类方法，将字典转换成为 Json 数据。
+    
+    /// 普通返回类型完整调用方法，部分参数有默认值，如果为空可以不设置，详细查看方法列表
+    network.POST(taskName, url: url, header: header, body: body) { (name, data, response, error) in
+        /* ... */
+    }
+    
+    /// Response 返回类型完整调用方法，方法名称大小写不同，部分参数有默认值，如果为空可以不设置，详细查看方法列表
+    network.Post(taskName, url: url, header: header, body: body) { (response) in
+        /* ... */
+    }
+    
+    /// 简便方法
+    Network().Get("G", url: url) { (response) in
+        /* ... */
+    }
+}
+```
+* link 系列方法调用
+
+```
+func networkLinkExample() {
+    let network = Network()
+    let url = "http://www.xxxx.com/xxxx/xx.png" // 链接地址
+    let taskName = "Examplt" // 任务名称，同一名称的任务未调用完毕，无法再次调用。
+    let header = ["name": "value"] // 请求头设置
+    let body = Network.data(["name": "value"]) // 通过类方法，将字典转换成为 Json 数据。
+    
+    /**
+     Link 调用步骤
+     1. linkTask 设置 标示符
+     2. linkRequest 设置第一个调用的 NSURLRequest 信息。(已设置默认参数，可根据情况不写参数，简洁代码)
+     3. linkAddTask / linkAddTaskR 自选返回格式来设置请求回调操作，并返回 NSURLRequest 开启下一步调用。如果返回 nil，则到此中断调用，不执行下一步调用。
+     4. linkTaskResume 开始任务
+     */
+    
+    network.linkTask(taskName)
+        .linkRequest(url, method: "GET", header: header, body: body, time: nil).linkAddTask { (name, data, response, error) -> NSURLRequest? in
+            /* ... */
+            return Network.request(url, method: "GET", header: header, body: body, time: nil)
+        }.linkAddTaskR { (response) -> NSURLRequest? in
+            /* ... */
+            return Network.request(url, method: "GET", header: header, body: body, time: nil)
+        }.linkAddTaskR { (response) -> NSURLRequest? in
+            /* ... */
+            return Network.request(url, method: "GET", header: header, body: body, time: nil)
+        }.linkTaskResume()
+}
+```
+### Json
+
+Json 数据的容器，并提供大量便捷调用方法，让开发者轻松获取 Json 当中的数据，保持代码优雅简洁。
+
+```
+func jsonExample(data: NSData?) {
+    
+    // 将 Json 数据装入
+    var json: Json
+    json = Json(data)       // 初始化网络获取到的 NSData 格式的 Json 数据
+    json = Json(json.json!) // 初始化已经解压好的 Json 数据
+    json.json = json        // 直接传入已经解压好的 Json 数据
+    
+    // 利用下标进行读取，然后要求返回相应类型的 optional 值
+    let name1 = json["result"]["name"].string
+    let name2 = json["result", "name"].string
+    let data1 = json["result", "data"].int
+    
+    // 利用下标进行读取，然后根据调用 type 方法，返回设置的值类型，如果获取失败，则返回传入的值。
+    let name3 = json["result", "name"].type("") // 返回 name 否则 “”
+    let data2 = json["result", "data"].type(-1) // 返回 data 否则 -1
+    
+    // 函数调用法
+    let array = json.array("result", "types") // types 需要是一个数组，否则返回 []
+    let value = json.value(0, "result", "data") // 返回 Int 类型 data，否则返回 0
+}
+```
+
+### JsonModel 使用
+
+使用 KVC 的使用，模仿 JSONModel。简便 Json 数据读取操作。
+
+* 使用步骤
+	1. 设置响应的数据类型，都必须继承自 JsonModel
+	2. 设置数据类型键值对，JsonModel.types，例如此处 
+		* AClass 中参数 result 是子类 [BClass] 类型。
+		* AClass 中参数 test 是子类 BClass 类型。
+		* AClass 中参数 types 是子类 CClass 类型。
+		* BClass 中参数 types 是子类 CClass 类型。
+		* 所以设置 JsonModel.types = ["result": BClass(), "test": BClass(), "types": CClass()] // 重名不用多次设置。
+	3. 初始化最外层类
+	4. 最外层的类调用 setModel 方法将网络接收到 NSData 格式的 json 数据传入。
+	5. 没有了…… 数据已经设置好了。
+
+* 注意事项
+	* 数据模型设置的时候，必须提供无参数版 init() 方法。
+	* 如果 Json 中出现的字段数据类型中没有设置，将不进行赋值，控制台打印 undefined 信息。
+	* 如果数据模型中有，Json 中没有的字段，将不进行设置。
+
+```
+// 1. 设置响应的数据类型
+class AClass: JsonModel {
+    var code: Int = -1
+    var message: String = "Error"
+    var result: [BClass] = []
+    var types: [CClass] = []
+    var test: BClass = BClass()
+}
+
+class CClass: JsonModel {
+    var type: Bool = false
+}
+
+class BClass: JsonModel {
+    var data: Int = 0
+    var name: String = ""
+    var types: [CClass] = []
+}
+
+func jsonModelExample() {
+    // 2. 设置数据类型键值对
+    JsonModel.types = ["result": BClass(), "types": CClass(), "test": BClass()]
+    
+    // 3. 初始化最外层类
+    let json = AClass()
+    
+    // 4. 使用 setModel 方法将网络接收到 NSData 格式的 json 数据传入。
+    json.setModel(data)
+}
+
+// 模拟数据，使用 Network.data() 方法把字典转换成 NSData 格式的 json 数据
+let data = Network.data([
+    "code": 10,
+    "message": "OK",
+    "test": [
+        "data": 202,
+        "name": "r-2",
+        "types": [
+            ["type": 1, "Error Property": "Error!"],
+            ["type": 0]
+        ]
+    ],
+    "result": [
+        [
+            "data": 100,
+            "name": "r-0",
+            "types": [
+                ["type": 0]
+            ]
+        ]
+    ],
+    "types": [
+        ["type": 0]
+    ]
+])
+```
 
 ## GCD
 

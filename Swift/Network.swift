@@ -329,7 +329,7 @@ extension Network {
     }
     
     /// 创建任务链初始请求
-    func linkReques(path: String, method: String = "GET", header: [String: String]? = nil, body: NSData? = nil, time: NSTimeInterval? = nil) -> Network {
+    func linkRequest(path: String, method: String = "GET", header: [String: String]? = nil, body: NSData? = nil, time: NSTimeInterval? = nil) -> Network {
         self.linkTask?.request = Network.request(path, method: method, header: header, body: body, time: time)
         return self
     }
@@ -341,7 +341,7 @@ extension Network {
     }
     
     /// 添加任务链下载任务回调
-    func linkAddTask(block: (response: Response) -> NSURLRequest?) -> Network {
+    func linkAddTaskR(block: (response: Response) -> NSURLRequest?) -> Network {
         self.linkTask?.tasks.append(LinkTask.LinkTaskResponse.response(block))
         return self
     }
@@ -458,6 +458,52 @@ extension Network {
         }
         return nil
     }
+    
+    
+    /// 格式化 Json 字符串
+    class func jsonFormat(json: String) -> String {
+        var _space = 0
+        var space: String {
+            var s = ""
+            for _ in 0 ..< _space {
+                s += "    "
+            }
+            return s
+        }
+        var type = true
+        var result = json
+        result.removeAll(keepCapacity: true)
+        
+        for c in json.characters {
+            if type {
+                switch c {
+                case "\"":
+                    result.append(c)
+                    type = false
+                case ",":
+                    result.append(c)
+                    result += "\n" + space
+                case "{", "[":
+                    result.append(c)
+                    _space += 1
+                    result += "\n" + space
+                case "}", "]":
+                    _space -= 1
+                    result += "\n" + space
+                    result.append(c)
+                default:
+                    result.append(c)
+                }
+            } else {
+                result.append(c)
+                if c == "\"" {
+                    type = true
+                }
+            }
+        }
+        return result
+    }
+
     
 }
 
@@ -650,51 +696,71 @@ class Json {
         return null
     }
     
+}
+
+// MARK: - Json Model
+
+/**
+ Json 数据对象化基类。
+ 使用方法:
+ 1. 根据 Json 内容格式建立继承自 JsonModel 的子类。
+ 2. 设置 JsonModel.types; 该值为子对象数据类型的键值对，比如 result 字段要解析成 BClass 或 [BClass], 则需要添加 ["result": BClass()] 键值对。否则将无法创建子对象。
+ 3. 初始化最外层的 Model, 并调用其 setModel 方法。
+ */
+class JsonModel: NSObject {
     
-    // MARK: - 一些其他的 Json 有关的方法
     
-    /// 格式化 Json 字符串
-    class func jsonFormat(json: String) -> String {
-        var _space = 0
-        var space: String {
-            var s = ""
-            for _ in 0 ..< _space {
-                s += "    "
-            }
-            return s
-        }
-        var type = true
-        var result = json
-        result.removeAll(keepCapacity: true)
-        
-        for c in json.characters {
-            if type {
-                switch c {
-                case "\"":
-                    result.append(c)
-                    type = false
-                case ",":
-                    result.append(c)
-                    result += "\n" + space
-                case "{", "[":
-                    result.append(c)
-                    _space += 1
-                    result += "\n" + space
-                case "}", "]":
-                    _space -= 1
-                    result += "\n" + space
-                    result.append(c)
-                default:
-                    result.append(c)
-                }
-            } else {
-                result.append(c)
-                if c == "\"" {
-                    type = true
-                }
-            }
-        }
-        return result
+    // MARK: 子类类型键值对
+    
+    /// 子类类型键值对，例如 result:
+    static var types: [String: JsonModel] = [:]
+    
+    
+    required override init() {
+        super.init()
     }
     
+    /// 将 Json 数据存入对象
+    func setModel(data: NSData?) {
+        if let obj = data {
+            if let json = try? NSJSONSerialization.JSONObjectWithData(obj, options: NSJSONReadingOptions.AllowFragments) {
+                jsonKeySetValue("", key: "", json: json)
+            }
+        }
+    }
+    
+    // MARK: 设置不存在 Key 时不退出程序
+    
+    override func setValue(value: AnyObject?, forUndefinedKey key: String) {
+        print("\(self) -> key: \(key) is Undefined; value: \(value);")
+    }
+    
+    /// 对象存入
+    private func jsonKeySetValue(path: String, key: String, json: AnyObject) {
+        if let dic = json as? [String: AnyObject] {
+            for (k, v) in dic {
+                if key.isEmpty {
+                    jsonKeySetValue("\(k)", key: "\(k)", json: v)
+                } else {
+                    jsonKeySetValue("\(path).\(k)", key: "\(k)", json: v)
+                }
+            }
+        } else if let arr = json as? [AnyObject] {
+            var typeKey = key
+            if key.isEmpty {
+                typeKey = "ArrayTypeKey"
+            }
+            if let type = JsonModel.types[typeKey] {
+                var value = [JsonModel]()
+                for v in arr {
+                    let sub = type.dynamicType.init()
+                    sub.jsonKeySetValue("", key: "", json: v)
+                    value.append(sub)
+                }
+                setValue(value, forKeyPath: path)
+            }
+        } else {
+            setValue(json, forKeyPath: path)
+        }
+    }
 }

@@ -36,6 +36,7 @@
 
 /* Begin PBXFileReference section */
 		9C3F3D911D5376C700E6576C /* CGSizes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CGSizes.swift; path = ../../Swift/CGSizes.swift; sourceTree = "<group>"; };
+		9C6576371D5F812E0099ED88 /* SwiftOther.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftOther.swift; path = ../../Swift/SwiftOther.swift; sourceTree = "<group>"; };
 		9CA32F711D50443A00AEB3DF /* TextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextView.swift; path = ../../UIKit/TextView.swift; sourceTree = "<group>"; };
 		9CA32F721D50443A00AEB3DF /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Button.swift; path = ../../UIKit/Button.swift; sourceTree = "<group>"; };
 		9CE8AC9D1D4E108700AE8204 /* SwiftiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -142,6 +143,7 @@
 				B15541191D532A6500D37A7C /* Network.swift */,
 				B1711B281D549A8F00D3BAE4 /* GCD.swift */,
 				B1C8A3951D5EC7CA00EDC9F6 /* Notify.swift */,
+				9C6576371D5F812E0099ED88 /* SwiftOther.swift */,
 			);
 			name = Swift;
 			sourceTree = "<group>";
