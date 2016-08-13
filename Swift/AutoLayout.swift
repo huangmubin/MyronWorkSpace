@@ -8,9 +8,60 @@
 
 import UIKit
 
+// 示例
+func AutoLayoutShow() {
+    let superview = UIView()
+    let view1 = UIView()
+    let view2 = UIView()
+    
+    superview.addSubview(view1)
+    superview.addSubview(view2)
+    
+    AutoLayout(superview, view1)
+        .Top()
+        .Leading()
+        .Trailing()
+        .Bottom()
+        .constrants { (layouts) in
+            // layouts[0] = top
+            // layouts[1] = leading
+            // layouts[2] = trailing
+            // layouts[3] = bottom
+        }
+    AutoLayout(superview, view1)
+        .HorizontalVertical()
+        .constrants { (layouts) in
+        // layouts[0] = leading
+        // layouts[1] = trailing
+        // layouts[2] = top
+        // layouts[3] = bottom
+    }
+    
+    
+    AutoLayout(superview, view1)
+        .Center()
+        .Size()
+    
+    AutoLayout(superview, view2, view1)
+        .BottomLeadingTrailing()
+        .Height(multiplier: 0.5)
+    
+    
+    
+}
+
+
+
 // MARK: - 配置内容
 
 class AutoLayout {
+    
+    
+    // MARK: Views
+    
+    weak var view: UIView!
+    weak var first: UIView!
+    weak var second: UIView?
     
     // MARK: 初始化
     /*
@@ -39,12 +90,6 @@ class AutoLayout {
         self.first.translatesAutoresizingMaskIntoConstraints = false
         self.second?.translatesAutoresizingMaskIntoConstraints = false
     }
-    
-    // MARK: Views
-    
-    weak var view: UIView!
-    weak var first: UIView!
-    weak var second: UIView?
     
     /// 设置 superview
     func superview(view: UIView) -> AutoLayout {
@@ -173,7 +218,7 @@ extension AutoLayout {
         return self
     }
     
-    func Height(constant: CGFloat = 0, _ multiplier: CGFloat = 1, _ related: NSLayoutRelation = .Equal, priority: Float = 1000) -> AutoLayout {
+    func Height(constant: CGFloat = 0, multiplier: CGFloat = 1, related: NSLayoutRelation = .Equal, priority: Float = 1000) -> AutoLayout {
         let constraint = NSLayoutConstraint(item: first, attribute: .Height, relatedBy: related, toItem: second, attribute: .Height, multiplier: multiplier, constant: constant)
         constraint.priority = priority
         _constrants.append(constraint)
