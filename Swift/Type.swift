@@ -56,3 +56,43 @@ class Stack<T> {
         return _value.count
     }
 }
+
+// MARK: - 队列
+
+class Queue<T> {
+    
+    private var _value = [T]()
+    
+    subscript(i: Int) -> T {
+        return _value[i]
+    }
+    
+    func clear() {
+        _value.removeAll(keepCapacity: true)
+    }
+    
+    func isEmpty() -> Bool {
+        return _value.count == 0
+    }
+    
+    func count() -> Int {
+        return _value.count
+    }
+    
+    func top() -> T? {
+        return _value.first
+    }
+    
+    func push(v: T) {
+        _value.append(v)
+    }
+    
+    func pop() -> T? {
+        if _value.count > 0 {
+            return _value.removeFirst()
+        } else {
+            return nil
+        }
+    }
+    
+}

@@ -10,5 +10,13 @@ import Foundation
 
 //cTestFunction()
 
-var s = Stack<Int>()
+let q = Queue<Int>()
 
+for i in 0..<10 {
+    q.push(i)
+}
+
+for i in 0 ..< 10 {
+    print(q.pop())
+}
+print()
