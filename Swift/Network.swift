@@ -75,7 +75,11 @@ public class Network: NSObject {
         
         var code: Int = 0
         var headers: [NSObject: AnyObject] = [:]
-        var json: AnyObject?
+        
+        
+        // MARK: Json
+        
+        var json: Json
         
         // MARK: Init
         init(name: String, data: NSData?, response: NSURLResponse?, error: NSError?) {
@@ -88,91 +92,12 @@ public class Network: NSObject {
                 self.code = http.statusCode
             }
             
-            if let data = data {
-                if let json = try? NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments) {
-                    self.json = json
-                }
-            }
+            json = Json(data)
         }
         
         // 下标访问
-        subscript(keys: String...) -> AnyObject? {
-            if var dic = json as? [String: AnyObject] {
-                for (i,key) in keys.enumerate() {
-                    if i == keys.count-1 {
-                        return dic[key]
-                    } else {
-                        if let tmp = dic[key] as? [String: AnyObject] {
-                            dic = tmp
-                        } else {
-                            return nil
-                        }
-                    }
-                }
-            }
-            return nil
-        }
-        
-        // MARK: 函数访问
-        
-        /// 根据字符串列表逐步解压，最后解压出来 [AnyObject] 格式。
-        func array(keys: String...) -> [AnyObject] {
-            if var dic = json as? [String: AnyObject] {
-                for (i, key) in keys.enumerate() {
-                    if i == keys.count-1 {
-                        if let tmp = dic[key] as? [AnyObject] {
-                            return tmp
-                        }
-                    } else {
-                        if let tmp = dic[key] as? [String: AnyObject] {
-                            dic = tmp
-                        } else {
-                            break
-                        }
-                    }
-                }
-            }
-            return []
-        }
-        
-        /// 根据 Key 解压出 String 字段，如果解压不到则返回空字符串
-        func value(key: String, _ null: String = "") -> String {
-            if let dic = json as? [String: AnyObject] {
-                if let value = dic[key] as? String {
-                    return value
-                }
-            }
-            return null
-        }
-        
-        /// 根据 Key 解压出 T 类型字段，如果解压不到则返回 null 参数
-        func value<T>(key: String, _ null: T) -> T {
-            if let dic = json as? [String: AnyObject] {
-                if let value = dic[key] as? T {
-                    return value
-                }
-            }
-            return null
-        }
-        
-        /// 根据 null 的字符串类型，按照 keys 逐步解压出 T 类型的字段，如果解压不到则返回 null 参数
-        func value<T>(null: T, _ keys: String...) -> T {
-            if var dic = json as? [String: AnyObject] {
-                for (i,key) in keys.enumerate() {
-                    if i == keys.count-1 {
-                        if let tmp = dic[key] as? T {
-                            return tmp
-                        }
-                    } else {
-                        if let tmp = dic[key] as? [String: AnyObject] {
-                            dic = tmp
-                        } else {
-                            break
-                        }
-                    }
-                }
-            }
-            return null
+        subscript(keys: String...) -> String {
+            return json[keys].type("")
         }
     }
     
@@ -328,31 +253,31 @@ extension Network {
         return task
     }
     
-    func GET(name: String, url: String, completed: ((response: Response) -> Void)?) {
+    func Get(name: String, url: String, completed: ((response: Response) -> Void)?) {
         if downloadResponse(name, url: url, method: "GET", data: nil, header: nil, receive: nil, complete: completed) == nil {
             completed?(response: Response(name: name, data: nil, response: nil, error: NSError(domain: "Task Create Error", code: 0, userInfo: ["name":name, "url": url, "type": "GET", "message": "Task Create Error"])))
         }
     }
     
-    func GET(name: String, url: String, header: [String: String]?, completed: ((response: Response) -> Void)?) {
+    func Get(name: String, url: String, header: [String: String]?, completed: ((response: Response) -> Void)?) {
         if downloadResponse(name, url: url, method: "GET", data: nil, header: header, receive: nil, complete: completed) == nil {
             completed?(response: Response(name: name, data: nil, response: nil, error: NSError(domain: "Task Create Error", code: 0, userInfo: ["name":name, "url": url, "type": "GET", "message": "Task Create Error"])))
         }
     }
     
-    func POST(name: String, url: String, header: [String: String]? = nil, body: NSData?, completed: ((response: Response) -> Void)?) {
+    func Post(name: String, url: String, header: [String: String]? = nil, body: NSData?, completed: ((response: Response) -> Void)?) {
         if downloadResponse(name, url: url, method: "POST", data: nil, header: header, body: body, receive: nil, complete: completed) == nil {
             completed?(response: Response(name: name, data: nil, response: nil, error: NSError(domain: "Task Create Error", code: 0, userInfo: ["name":name, "url": url, "type": "POST", "message": "Task Create Error"])))
         }
     }
     
-    func PUT(name: String, url: String, header: [String: String]?, body: NSData?, completed: ((response: Response) -> Void)?) {
+    func Put(name: String, url: String, header: [String: String]?, body: NSData?, completed: ((response: Response) -> Void)?) {
         if downloadResponse(name, url: url, method: "PUT", data: nil, header: header, body: body, receive: nil, complete: completed) == nil {
             completed?(response: Response(name: name, data: nil, response: nil, error: NSError(domain: "Task Create Error", code: 0, userInfo: ["name":name, "url": url, "type": "PUT", "message": "Task Create Error"])))
         }
     }
     
-    func DELETE(name: String, url: String, header: [String: String]?, body: NSData?, completed: ((response: Response) -> Void)?) {
+    func Delete(name: String, url: String, header: [String: String]?, body: NSData?, completed: ((response: Response) -> Void)?) {
         if downloadResponse(name, url: url, method: "DELETE", data: nil, header: header, body: body, receive: nil, complete: completed) == nil {
             completed?(response: Response(name: name, data: nil, response: nil, error: NSError(domain: "Task Create Error", code: 0, userInfo: ["name":name, "url": url, "type": "DELETE", "message": "Task Create Error"])))
         }
@@ -541,56 +466,169 @@ class Json {
     
     // MARK: Value
     /// 数据
-    var json: AnyObject?
+    var json: AnyObject? {
+        didSet {
+            result = json
+        }
+    }
+    var result: AnyObject?
     
     // MARK: Init
+    
     init(_ data: NSData?) {
         if let data = data {
             if let json = try? NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments) {
                 self.json = json
+                self.result = json
             }
         }
     }
+    init(_ data: AnyObject) {
+        json = data
+        result = data
+    }
     
-    // 下标访问
-    subscript(keys: String...) -> AnyObject? {
-        if var dic = json as? [String: AnyObject] {
-            for (i,key) in keys.enumerate() {
-                if i == keys.count-1 {
-                    return dic[key]
-                } else {
-                    if let tmp = dic[key] as? [String: AnyObject] {
-                        dic = tmp
-                    } else {
-                        return nil
+    // 下标访问，返回 Json 数据
+    subscript(keys: AnyObject...) -> Json {
+        var tmp: AnyObject? = result
+        for (i, key) in keys.enumerate() {
+            if i == keys.count-1 {
+                if let data = tmp as? [String: AnyObject], let v = key as? String {
+                    result = data[v]
+                    continue
+                } else if let data = tmp as? [AnyObject], let v = key as? Int {
+                    if v < data.count {
+                        result = data[v]
+                        continue
+                    }
+                }
+            } else {
+                if let data = tmp as? [String: AnyObject], let v = key as? String  {
+                    tmp = data[v]
+                    continue
+                } else if let data = tmp as? [AnyObject], let v = key as? Int {
+                    if v < data.count {
+                        tmp = data[v]
+                        continue
                     }
                 }
             }
+            tmp = nil
         }
-        return nil
+        return self
     }
     
     // MARK: 函数访问
     
+    // MARK: 访问 result 方法
+    var int: Int? {
+        let value = result as? Int
+        result = json
+        return value
+    }
+    var double: Double? {
+        let value = result as? Double
+        result = json
+        return value
+    }
+    var string: String? {
+        let value = result as? String
+        result = json
+        return value
+    }
+    var array: [Json] {
+        if let value = result as? [AnyObject] {
+            result = json
+            var arr = [Json]()
+            for v in value {
+                arr.append(Json(v))
+            }
+            return arr
+        }
+        result = json
+        return []
+    }
+    
+    var dictionary: [String: Json] {
+        if var value = result as? [String: AnyObject] {
+            result = json
+            for (k, v) in value {
+                value[k] = Json(v)
+            }
+            return value as! [String: Json]
+        }
+        result = json
+        return [:]
+    }
+    func type<T>(null: T) -> T {
+        if let v = result as? T {
+            result = json
+            return v
+        } else {
+            result = json
+            return null
+        }
+    }
+    
+    // MARK: 直接访问方法
+    
     /// 根据字符串列表逐步解压，最后解压出来 [AnyObject] 格式。
-    func array(keys: String...) -> [AnyObject] {
-        if var dic = json as? [String: AnyObject] {
-            for (i, key) in keys.enumerate() {
-                if i == keys.count-1 {
-                    if let tmp = dic[key] as? [AnyObject] {
-                        return tmp
+    func array(keys: AnyObject...) -> [AnyObject] {
+        var tmp: AnyObject? = json
+        for (i, key) in keys.enumerate() {
+            if i == keys.count-1 {
+                if let data = tmp as? [String: AnyObject], let v = key as? String {
+                    return (data[v] as? [AnyObject]) ?? []
+                } else if let data = tmp as? [AnyObject], let v = key as? Int {
+                    if v < data.count {
+                        return (data[v] as? [AnyObject]) ?? []
                     }
-                } else {
-                    if let tmp = dic[key] as? [String: AnyObject] {
-                        dic = tmp
-                    } else {
+                }
+            } else {
+                if let data = tmp as? [String: AnyObject], let v = key as? String  {
+                    tmp = data[v]
+                    break
+                } else if let data = tmp as? [AnyObject], let v = key as? Int {
+                    if v < data.count {
+                        tmp = data[v]
                         break
                     }
                 }
             }
+            tmp = nil
         }
         return []
     }
+    
+    /// 根据 null 的字符串类型，按照 keys 逐步解压出 T 类型的字段，如果解压不到则返回 null 参数
+    func value<T>(type: T, _ keys: AnyObject...) -> T {
+        var tmp: AnyObject? = json
+        for (i, key) in keys.enumerate() {
+            if i == keys.count-1 {
+                if let data = tmp as? [String: AnyObject], let v = key as? String {
+                    return (data[v] as? T) ?? type
+                } else if let data = tmp as? [AnyObject], let v = key as? Int {
+                    if v < data.count {
+                        return (data[v] as? T) ?? type
+                    }
+                }
+            } else {
+                if let data = tmp as? [String: AnyObject], let v = key as? String  {
+                    tmp = data[v]
+                    break
+                } else if let data = tmp as? [AnyObject], let v = key as? Int {
+                    if v < data.count {
+                        tmp = data[v]
+                        break
+                    }
+                }
+            }
+            tmp = nil
+        }
+        return type
+    }
+    
+    // MARK: 等待废除
     
     /// 根据 Key 解压出 String 字段，如果解压不到则返回空字符串
     func value(key: String, _ null: String = "") -> String {
@@ -612,23 +650,4 @@ class Json {
         return null
     }
     
-    /// 根据 null 的字符串类型，按照 keys 逐步解压出 T 类型的字段，如果解压不到则返回 null 参数
-    func value<T>(null: T, _ keys: String...) -> T {
-        if var dic = json as? [String: AnyObject] {
-            for (i,key) in keys.enumerate() {
-                if i == keys.count-1 {
-                    if let tmp = dic[key] as? T {
-                        return tmp
-                    }
-                } else {
-                    if let tmp = dic[key] as? [String: AnyObject] {
-                        dic = tmp
-                    } else {
-                        break
-                    }
-                }
-            }
-        }
-        return null
-    }
 }
