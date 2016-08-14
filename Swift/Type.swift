@@ -96,3 +96,160 @@ class Queue<T> {
     }
     
 }
+
+
+// MARK: - Tree
+
+class Tree<T> {
+    
+    var data: T!
+    var left: Tree?
+    var right: Tree?
+    
+    // MARK: 先序遍历
+    
+    class func preOrder(tree: Tree?) {
+        if let tree = tree {
+            print(tree.data)
+            preOrder(tree.left)
+            preOrder(tree.right)
+        }
+    }
+    
+    class func preOrder2(tree: Tree?) {
+        var tree = tree
+        var stack = [Tree]()
+        
+        while tree != nil || stack.count > 0 {
+            while tree != nil {
+                print(tree?.data)
+                stack.append(tree!)
+                tree = tree?.left
+            }
+            if stack.count > 0 {
+                tree = stack.removeLast().right
+            }
+        }
+    }
+    
+    // MARK: 中序遍历
+    
+    class func inOrder(tree: Tree?) {
+        if let tree = tree {
+            inOrder(tree.left)
+            print(tree.data)
+            inOrder(tree.right)
+        }
+    }
+    
+    class func inOrder2(tree: Tree?) {
+        var tree = tree
+        var stack = [Tree]()
+        
+        while tree != nil || stack.count > 0 {
+            while tree != nil {
+                stack.append(tree!)
+                tree = tree?.left
+            }
+            if stack.count > 0 {
+                tree = stack.removeLast()
+                print(tree?.data)
+                tree = tree?.right
+            }
+        }
+    }
+    
+    // MARK: 后续遍历
+    
+    class func postOrder(tree: Tree?) {
+        if let tree = tree {
+            postOrder(tree.left)
+            postOrder(tree.right)
+            print(tree.data)
+        }
+    }
+    
+    
+    lazy var visited: Bool = false
+    class func postOrder2(tree: Tree?) {
+        var tree = tree
+        var stack = [Tree]()
+        
+        while tree != nil || stack.count > 0 {
+            while tree != nil && tree?.visited == false {
+                stack.append(tree!)
+                tree = tree?.left
+            }
+            if stack.count > 0 {
+                tree = stack.removeLast()
+                if tree?.visited == true {
+                    print(tree?.data)
+                } else {
+                    if tree?.right != nil {
+                        tree?.visited = true
+                        stack.append(tree!)
+                        tree = tree?.right
+                    } else {
+                        print(tree?.data)
+                        tree = nil
+                    }
+                }
+            }
+        }
+    }
+}
+
+func typeTest() {
+    let tree = createTestTree()
+    
+    Tree.postOrder2(tree)
+}
+/*
+        A
+    B       C
+  D   E   F   G
+ H I J K L M N O
+ */
+func createTestTree() -> Tree<String> {
+    
+    let tree = Tree<String>()
+    tree.data = "A"
+    
+    tree.left = Tree<String>()
+    tree.left?.data = "B"
+    tree.right = Tree<String>()
+    tree.right?.data = "C"
+    
+    tree.left?.left = Tree<String>()
+    tree.left?.left?.data = "D"
+    tree.left?.right = Tree<String>()
+    tree.left?.right?.data = "E"
+    
+    tree.right?.left = Tree<String>()
+    tree.right?.left?.data = "F"
+    tree.right?.right = Tree<String>()
+    tree.right?.right?.data = "G"
+    
+    tree.left?.left?.left = Tree<String>()
+    tree.left?.left?.left?.data = "H"
+    tree.left?.left?.right = Tree<String>()
+    tree.left?.left?.right?.data = "I"
+    
+    tree.left?.right?.left = Tree<String>()
+    tree.left?.right?.left?.data = "J"
+    tree.left?.right?.right = Tree<String>()
+    tree.left?.right?.right?.data = "K"
+    
+    
+    tree.right?.left?.left = Tree<String>()
+    tree.right?.left?.left?.data = "L"
+    tree.right?.left?.right = Tree<String>()
+    tree.right?.left?.right?.data = "M"
+    
+    tree.right?.right?.left = Tree<String>()
+    tree.right?.right?.left?.data = "N"
+    tree.right?.right?.right = Tree<String>()
+    tree.right?.right?.right?.data = "O"
+    
+    return tree
+}

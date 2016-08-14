@@ -286,6 +286,78 @@ void printQueue(Queue *q) {
     printf("\n");
 }
 
+// MARK: - Tree
+
+typedef struct TreeNode {
+    ElementType data;
+    struct TreeNode *left;
+    struct TreeNode *right;
+} BinTree;
+
+/**
+ 先序遍历
+ 1. 访问根节点
+ 2. 先序遍历左子树
+ 3. 先序遍历右子树
+ */
+void preOrderTraversal(BinTree *bt) {
+    // /* 递归法
+    if (bt) {
+        printf("%d", bt->data);
+        preOrderTraversal(bt->left);
+        preOrderTraversal(bt->right);
+    }
+    // */
+    /* 非递归法，使用堆栈进行
+    BinTree *t = bt;
+     */
+}
+
+/**
+ 中序遍历
+ 1. 中序遍历左子树
+ 2. 根节点
+ 3. 中序遍历右子树
+ */
+void inOrderTraversal(BinTree *bt) {
+    // /* 递归法
+    if (bt) {
+        preOrderTraversal(bt->left);
+        printf("%d", bt->data);
+        preOrderTraversal(bt->right);
+    }
+    //  */
+    // /* 非递归法，使用堆栈进行
+    BinTree *t = bt;
+    Stack *s = createStack();
+    while (t || !isEmptyStack(s)) {
+        while (t) {
+            pushStack(s, t->data);
+            t = t->left;
+        }
+        if (!isEmptyStack(s)) {
+            printf("%5d", popStack(s));
+            t = t->right;
+        }
+    }
+    //  */
+}
+
+/**
+ 后序遍历
+ 1. 后序遍历左子树
+ 2. 后序遍历右子树
+ 3. 访问根节点
+ */
+void postOrderTraversal(BinTree *bt) {
+    if (bt) {
+        preOrderTraversal(bt->left);
+        preOrderTraversal(bt->right);
+        printf("%d", bt->data);
+    }
+}
+
+
 // MARK: - Main Funcion
 void cTestFunction() {
     
