@@ -88,7 +88,7 @@
          location = "group:Type.swift">
       </FileRef>
       <FileRef
-         location = "group:FileManager.swift">
+         location = "group:Explorer.swift">
       </FileRef>
    </Group>
    <Group

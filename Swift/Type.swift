@@ -197,12 +197,30 @@ class Tree<T> {
             }
         }
     }
+    
+    // MARK: 层序遍历
+    
+    class func levelOrder(tree: Tree?) {
+        guard let tree = tree else { return }
+        var queue = [tree]
+        while queue.count > 0 {
+            let node = queue.removeFirst()
+            print(node.data)
+            if let left = node.left {
+                queue.append(left)
+            }
+            if let right = node.right {
+                queue.append(right)
+            }
+        }
+        
+    }
 }
 
 func typeTest() {
     let tree = createTestTree()
     
-    Tree.postOrder2(tree)
+    Tree.levelOrder(tree)
 }
 /*
         A

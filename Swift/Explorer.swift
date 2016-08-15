@@ -23,13 +23,6 @@ import Foundation
     3. file
  
  */
-enum FileType {
-    case Image
-    case Video
-    case Other
-    case Tmp
-}
-
 class Explorer {
 
     // MARK: Init
@@ -38,41 +31,27 @@ class Explorer {
     init() {
         //
         print(NSHomeDirectory())
-        if !manager.fileExistsAtPath("\(NSHomeDirectory())/Library/Preferences/Explorer_File_Index.plist") {
-            NSUserDefaults.standardUserDefaults().addSuiteNamed("Explorer_File_Index")
-            NSUserDefaults.standardUserDefaults().addSuiteNamed("Explorer_File_Save")
+        if !manager.fileExistsAtPath("\(NSHomeDirectory())/Library/Preferences/Explorer_File_Tmp.plist") {
             NSUserDefaults.standardUserDefaults().addSuiteNamed("Explorer_File_Tmp")
         }
-        indexPlist = NSUserDefaults(suiteName: "Explorer_File_Index")!
-        indexSave = NSUserDefaults(suiteName: "Explorer_File_Save")!
         indexTmp = NSUserDefaults(suiteName: "Explorer_File_Tmp")!
         
         clearTmp()
     }
     
-    private var indexPlist: NSUserDefaults!
-    private var indexSave: NSUserDefaults!
     private var indexTmp: NSUserDefaults!
     
     // MARK: - Data
     
-    struct File {
-        var name: String
-        var type: String
-        var path: String
-        var time: Double
-    }
-    
-    // MARK: Private
-    
     private var manager = NSFileManager.defaultManager()
-    private var index = [File]()
+    private var save = "\(NSHomeDirectory())/Documents/Explorer_Folder/Save/"
+    private var tmp = "\(NSHomeDirectory())/Documents/Explorer_Folder/Tmp/"
     
     // MARK: - Methods
     
     /// 保存数据; data: 要保存的数据; replace: 如果存在是否覆盖，默认 false; names: 文件名 ...要自定义的路径...
-    func save(name: String, data: NSData?, paths: [String]? = nil, replace: Bool = false) -> Bool {
-        let path = "\(NSHomeDirectory())/Documents/Explorer_Folder/Save/" + spliceName(paths) + name
+    private func save(name: String, data: NSData?, paths: [String]? = nil, replace: Bool = false) -> Bool {
+        let path = save + spliceName(paths) + name
         
         if replace {
             if data?.writeToFile(path, atomically: true) == true {
@@ -91,9 +70,9 @@ class Explorer {
     }
     
     /// 保存临时数据; data: 要保存的数据; names: 文件名 ...要自定义的路径; time: 保存时间; replace: 是否覆盖;
-    func save(name: String, data: NSData?, time: Double, paths: [String]? = nil, replace: Bool = false) -> Bool {
+    private func save(name: String, data: NSData?, time: Double, paths: [String]? = nil, replace: Bool = false) -> Bool {
         let folder = spliceName(paths)
-        let path = "\(NSHomeDirectory())/Documents/Explorer_Folder/Tmp/" + folder + name
+        let path = tmp + folder + name
         
         if replace {
             if data?.writeToFile(path, atomically: true) == true {
@@ -105,7 +84,7 @@ class Explorer {
                 return true
             } else {
                 if data?.writeToFile(path, atomically: true) == true {
-                    indexTmp.setObject(["time": NSDate().timeIntervalSince1970 + time, "name": name, "folder": folder], forKey: name)
+                    indexTmp.setObject(["time": NSDate().timeIntervalSince1970 + time, "name": name, "folder": folder], forKey: folder + name)
                     return true
                 }
             }
@@ -113,26 +92,55 @@ class Explorer {
         return false
     }
     
-    func read(tmp: Bool = false, name: String, paths: [String]? = nil) -> NSData? {
-        if tmp {
-            return NSData(contentsOfFile: "\(NSHomeDirectory())/Documents/Explorer_Folder/Tmp/" + spliceName(paths) + name)
-        } else {
-            return NSData(contentsOfFile: "\(NSHomeDirectory())/Documents/Explorer_Folder/Save/" + spliceName(paths) + name)
+    /// 获取
+    private func read(tmp: Bool = false, name: String, paths: [String]? = nil) -> NSData? {
+        return NSData(contentsOfFile: (tmp ? self.tmp : save) + spliceName(paths) + name)
+    }
+    
+    /// 移动文件
+    private func move(name: String, paths: [String]? = nil, toName: String?, toPaths: [String]? = nil) -> Bool {
+        let toname = toName ?? name
+        let path = spliceName(paths)
+        let topath = spliceName(toPaths)
+        if !(toname == name && path == topath) {
+            do {
+                try manager.moveItemAtPath(save + path + name, toPath: save + topath + toname)
+                return true
+            } catch {
+                return false
+            }
+        }
+        return false
+    }
+    
+    /// 拷贝文件
+    private func copy(name: String, paths: [String]? = nil, toName: String?, toPaths: [String]? = nil) -> Bool {
+        let toname = toName ?? name
+        let path = spliceName(paths)
+        let topath = spliceName(toPaths)
+        if !(toname == name && path == topath) {
+            do {
+                try manager.copyItemAtPath(save + path + name, toPath: save + topath + toname)
+                return true
+            } catch {
+                return false
+            }
+        }
+        return false
+    }
+    
+    /// 删除文件
+    private func delete(tmp: Bool = false, name: String, paths: [String]? = nil) -> Bool {
+        do {
+            try manager.removeItemAtPath((tmp ? self.tmp : save) + spliceName(paths) + name)
+            return true
+        } catch {
+            return false
         }
     }
     
-    // MARK: Private
-    
-    /// 拼接路径和名称
-    private func spliceName(paths: [String]?) -> String {
-        guard let paths = paths else { return "" }
-        var path = ""
-        for i in paths {
-            path += "\(i)/"
-        }
-        return path
-    }
-    
+    // MARK: - Tmp
+    /// 清理 Tmp 文件
     private func clearTmp() {
         if let file = NSDictionary(contentsOfFile: "\(NSHomeDirectory())/Library/Preferences/Explorer_File_Tmp.plist") {
             let now = NSDate().timeIntervalSince1970
@@ -154,6 +162,20 @@ class Explorer {
                 }
             }
         }
+    }
+    
+    
+    
+    // MARK: Tools
+    
+    /// 拼接路径和名称
+    private func spliceName(paths: [String]?) -> String {
+        guard let paths = paths else { return "" }
+        var path = ""
+        for i in paths {
+            path += "\(i)/"
+        }
+        return path
     }
     
 }
