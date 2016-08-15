@@ -34,6 +34,7 @@ class SecondViewController: UIViewController, VideoConsoleDelegate {
         print("Done")
     }
     
+    
     @IBAction func rightAction(sender: UIBarButtonItem) {
         testView.play = !testView.play
     }

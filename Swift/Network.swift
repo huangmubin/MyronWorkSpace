@@ -97,7 +97,10 @@ public class Network: NSObject {
         
         // 下标访问
         subscript(keys: String...) -> String {
-            return json[keys].type("")
+            for key in keys {
+                json[key]
+            }
+            return json.type("")
         }
     }
     

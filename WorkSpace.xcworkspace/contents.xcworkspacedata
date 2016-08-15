@@ -48,6 +48,9 @@
          location = "group:Other.swift">
       </FileRef>
       <FileRef
+         location = "group:SpeakView.swift">
+      </FileRef>
+      <FileRef
          location = "group:README.md">
       </FileRef>
    </Group>
@@ -73,10 +76,19 @@
          location = "group:GCD.swift">
       </FileRef>
       <FileRef
+         location = "group:Notify.swift">
+      </FileRef>
+      <FileRef
          location = "group:README.md">
       </FileRef>
       <FileRef
+         location = "group:SwiftOther.swift">
+      </FileRef>
+      <FileRef
          location = "group:Type.swift">
+      </FileRef>
+      <FileRef
+         location = "group:FileManager.swift">
       </FileRef>
    </Group>
    <Group
