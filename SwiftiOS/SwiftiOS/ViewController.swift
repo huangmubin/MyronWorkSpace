@@ -14,25 +14,23 @@ class ViewController: UIViewController{
     
     // MARK: - Cycle
     
+    var datas = [Int]()
+    var lock = NSLock()
+    var lock1 = NSLock()
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(Explorer.shared)
-        
-        view.addSubview(image)
-        image.type = ImagePlayerType.Scale(16, 9)
-        AutoLayout(self.view, image).Center().Size()
-        image.images = [
-            UIImage(named: "1")!,
-            UIImage(named: "2")!,
-            UIImage(named: "3")!,
-            UIImage(named: "4")!,
-            UIImage(named: "5")!,
-        ]
+        //Explorer.shared.delete(name: "")
+//        lock.lock()
+//        print("lock 1")
+//        lock1.lock()
+//        print("lock 2")
+//        lock1.unlock()
+//        lock.unlock()
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        
+        print("Start")
     }
     
     // MARK: - Action

@@ -202,6 +202,57 @@ class GCD: NSObject {
         dispatch_source_cancel(timerSource!)
         timerSource = nil
     }
+    
+    // MARK: - 锁
+    
+    /// 创建信号量，通过信号量来加锁
+    lazy var lock_dispatch_semaphore: dispatch_semaphore_t = dispatch_semaphore_create(1)
+    
+    /// 信号量 -1，进行加锁
+    func lock_semaphore() {
+        dispatch_semaphore_wait(lock_dispatch_semaphore, DISPATCH_TIME_FOREVER);
+    }
+    
+    /// 信号量 +1，进行解锁
+    func unlock_semaphore() {
+        dispatch_semaphore_signal(lock_dispatch_semaphore)
+    }
+    
+    /// 创建 NSLock 互斥锁
+    lazy var lock_nslock_lock: NSLock = NSLock()
+    
+    /// 进行加锁
+    func lock_nslock() {
+        lock_nslock_lock.lock()
+    }
+    
+    /// 进行解锁
+    func unlock_nslock() {
+        lock_nslock_lock.unlock()
+    }
+    
+    /// 尝试加锁
+    func lock_nslock_try() -> Bool {
+        return lock_nslock_lock.tryLock()
+    }
+    
+    /// 在某个时间之前尝试加锁
+    func lock_nslock_try(limit: NSDate) -> Bool {
+        return lock_nslock_lock.lockBeforeDate(limit)
+    }
+    
+    /// 创建递归锁
+    lazy var lock_recuresive_lock: NSRecursiveLock = NSRecursiveLock()
+    
+    /// 进行加锁
+    func lock_recuresive() {
+        lock_recuresive_lock.lock()
+    }
+    
+    /// 进行解锁
+    func unlock_recuresive() {
+        lock_recuresive_lock.unlock()
+    }
 }
 
 // MARK: - Class Tools

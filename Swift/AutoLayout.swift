@@ -425,9 +425,9 @@ extension AutoLayout {
     /// 下对齐。 Bottom -= constant; Leading += constant; Trailing -= constant;
     func BottomLeadingTrailing(constant: CGFloat = 0, priority: Float = 1000) -> AutoLayout {
         _constrants.removeAll(keepCapacity: true)
+        _constrants.append(NSLayoutConstraint(item: first, attribute: .Bottom, relatedBy: .Equal, toItem: second, attribute: .Bottom, multiplier: 1, constant: -constant))
         _constrants.append(NSLayoutConstraint(item: first, attribute: .Leading, relatedBy: .Equal, toItem: second, attribute: .Leading, multiplier: 1, constant: constant))
         _constrants.append(NSLayoutConstraint(item: first, attribute: .Trailing, relatedBy: .Equal, toItem: second, attribute: .Trailing, multiplier: 1, constant: -constant))
-        _constrants.append(NSLayoutConstraint(item: first, attribute: .Bottom, relatedBy: .Equal, toItem: second, attribute: .Bottom, multiplier: 1, constant: -constant))
         _constrants.forEach {
             $0.priority = priority
             view.addConstraint($0)
