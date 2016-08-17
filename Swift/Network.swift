@@ -27,6 +27,7 @@ public class Network: NSObject {
         var task: NSURLSessionTask?
         var response: NSURLResponse?
         
+        var taskReceive: ((task: Task) -> Void)?
         var receive: ((name: String, data: NSMutableData?) -> Void)?
         var complete: ((name: String, data: NSData?, response: NSURLResponse?, error: NSError?) -> Void)?
         var httpResponse: ((response: Response) -> Void)?
@@ -82,6 +83,10 @@ public class Network: NSObject {
         var json: Json
         
         // MARK: Init
+        init() {
+            json = Json(nil)
+        }
+        
         init(name: String, data: NSData?, response: NSURLResponse?, error: NSError?) {
             self.name = name
             self.data = data
@@ -158,6 +163,14 @@ extension Network {
         }
     }
     
+    /// 是否在下载中
+    func loading(name: String) -> Bool {
+        if let index = self.tasks.indexOf({ $0.name == name }) {
+            return self.tasks[index].task?.state == NSURLSessionTaskState.Running
+        }
+        return false
+    }
+    
     func operation(operation: (Task)->Void, name: String) {
         queue.addOperationWithBlock {
             if let index = self.tasks.indexOf({ $0.name == name }) {
@@ -226,6 +239,35 @@ extension Network {
 // MARK: - Methods: Response Order
 
 extension Network {
+    
+    func downloadResponse2(name: String,
+                          url: String,
+                          method: String = "GET",
+                          data: NSData? = nil,
+                          header: [String: String]? = nil,
+                          body: NSData? = nil,
+                          taskReceive: ((task: Task) -> Void)?,
+                          complete: ((response: Response) -> Void)?) -> Task?
+    {
+        
+        guard let request = Network.request(url, method: method, header: header, body: body, time: nil) else { return nil }
+        
+        let task = Task(name: name, data: data == nil ? NSMutableData() : NSMutableData(data: data!))
+        
+        if data != nil {
+            if header == nil {
+                request.allHTTPHeaderFields = ["Range": "bytes=\(data!.length)-"]
+            } else {
+                request.allHTTPHeaderFields!["Range"] = "bytes=\(data!.length)-"
+            }
+        }
+        
+        task.taskReceive  = taskReceive
+        task.httpResponse = complete
+        add(task, request: request)
+        resume(task)
+        return task
+    }
     
     func downloadResponse(name: String,
                   url: String,
@@ -304,6 +346,7 @@ extension Network: NSURLSessionDelegate {
         let index = tasks.indexOf({ dataTask.taskDescription == $0.name })!
         let task  = tasks[index]
         task.data?.appendData(data)
+        task.taskReceive?(task: task)
         task.receive?(name: task.name, data: task.data)
         delegate?.networkDidReceiveData(tasks[index])
     }
