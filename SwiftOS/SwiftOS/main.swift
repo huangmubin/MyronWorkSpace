@@ -11,6 +11,9 @@ import Foundation
 
 typeTest()
 
+typeTest()
+
+
 //
 //private func jsonFormat(json: String) -> String {
 //    var _space = 0

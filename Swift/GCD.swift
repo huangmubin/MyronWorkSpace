@@ -8,9 +8,6 @@
 
 import Foundation
 
-// TODO: - 看到不明所以待验证的 GCD 用法
-
-
 // MARK: - GCD
 
 class GCD: NSObject {
