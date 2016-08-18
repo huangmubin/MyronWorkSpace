@@ -217,6 +217,65 @@ class Tree<T> {
     }
 }
 
+// MAKR: - 二叉查找树
+
+class SearchTree<T> {
+    
+    var index: T!
+    var left: SearchTree?
+    var right: SearchTree?
+    
+    /// 对比条件，必须提供，true 为 $0 > $1，false 为 $0 < $1，nil $0 == $1
+    var compare: (T, T) -> Bool?
+    
+    // MARK: 初始化
+    init(index: T, compare: (T, T) -> Bool?) {
+        self.compare = compare
+        self.index = index
+    }
+    
+    // MARK: 方法
+    /// 查找值
+    func find(index: T) -> SearchTree? {
+        var tree: SearchTree? = self
+        while tree != nil {
+            if let result = compare(tree!.index, index) {
+                if result {
+                    tree = tree!.left
+                } else {
+                    tree = tree!.right
+                }
+            } else {
+                return tree
+            }
+        }
+        return nil
+    }
+    
+    /// 查找最大值
+    func max() -> SearchTree? {
+        var tree: SearchTree? = self
+        while tree?.right != nil {
+            tree = tree?.right
+        }
+        return tree
+    }
+    
+    /// 查找最小值
+    func min() -> SearchTree? {
+        var tree: SearchTree? = self
+        while tree?.left != nil {
+            tree = tree?.left
+        }
+        return tree
+    }
+    
+    /// 插入
+    
+    /// 删除
+    
+}
+
 func typeTest() {
     let tree = createTestTree()
     
