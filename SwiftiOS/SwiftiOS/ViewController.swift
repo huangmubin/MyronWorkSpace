@@ -19,6 +19,7 @@ class ViewController: UIViewController{
     var lock1 = NSLock()
     override func viewDidLoad() {
         super.viewDidLoad()
+        Explorer.read(name: "")
         //Explorer.shared.delete(name: "")
 //        lock.lock()
 //        print("lock 1")
