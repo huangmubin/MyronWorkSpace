@@ -343,7 +343,15 @@ extension Explorer {
         return Explorer.shared.fileSize(isTmp, name: name, paths: paths)
     }
 
-    // MARK: Tools
+    
+    /// 获取 URL
+    class func url(isTmp: Bool = false, name: String, paths: [String]? = nil) -> NSURL? {
+        var path = isTmp ? shared.tmp : shared.save
+        path += shared.spliceName(paths) + name
+        return NSURL(string: path)
+    }
+    
+    // MARK: - Tools
     
     /// 获取某个文件夹大小，非 Explorer 管理，非线程安全
     class func folderSize(paths: [String]? = nil, traverseSub: Bool = true) -> Double {
